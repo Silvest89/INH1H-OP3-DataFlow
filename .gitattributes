@@ -18,4 +18,4 @@
 
 *.xml linguist-language=Java
  # Vendored dependencies
- - thirdparty/ nbprojects
+ - thirdparty/ nbproject
