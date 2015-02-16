@@ -16,6 +16,4 @@
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
 
-
- # Vendored dependencies
- - thirdparty/ nbproject
+*.xml linguist-language=Java
