@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="320.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dreamteam.LoginControllerController">
+    <stylesheets>
+        <URL value="@logincontroller.css" />
+    </stylesheets>
+   <children>
+      <TextField fx:id="username" layoutX="86.0" layoutY="52.0" promptText="Username" />
+      <TextField fx:id="password" layoutX="86.0" layoutY="88.0" promptText="Password" />
+      <Button layoutX="135.0" layoutY="124.0" mnemonicParsing="false" onAction="#login" text="Login" />
+      <Label fx:id="label" alignment="CENTER" layoutX="18.0" layoutY="169.0" prefHeight="17.0" prefWidth="280.0" />
+      <Label fx:id="loginHeader" alignment="CENTER" layoutX="94.0" layoutY="14.0" prefHeight="32.0" prefWidth="134.0" text="DreamTeam" />
+   </children>
+</AnchorPane>
