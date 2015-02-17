@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dreamteam;
+package dataflow;
 
 import java.util.HashMap;
 import javafx.animation.KeyFrame;

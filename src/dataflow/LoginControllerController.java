@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dreamteam;
+package dataflow;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,7 +48,7 @@ public class LoginControllerController implements Initializable, ControlledScree
             label.setTextFill(Color.web("#00AF33"));
             label.setText("Logging in.");
             mySQL.validateLogin(username.getText(), password.getText());
-            if(DreamTeam.account != null){
+            if(DataFlow.account != null){
                 
             }
             else{

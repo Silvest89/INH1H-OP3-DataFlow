@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dreamteam;
+package dataflow;
 
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  *
  * @author Johnnie Ho
  */
-public class DreamTeam extends Application {
+public class DataFlow extends Application {
     
     public static Account account = null;
     public static final String MAIN_SCREEN = "LoginController"; 
@@ -24,10 +24,10 @@ public class DreamTeam extends Application {
     public void start(Stage stage) throws Exception {
         
         ScreensController mainContainer = new ScreensController(); 
-        mainContainer.loadScreen(DreamTeam.MAIN_SCREEN, 
-                            DreamTeam.MAIN_SCREEN_FXML); 
+        mainContainer.loadScreen(DataFlow.MAIN_SCREEN, 
+                            DataFlow.MAIN_SCREEN_FXML); 
        
-        mainContainer.setScreen(DreamTeam.MAIN_SCREEN); 
+        mainContainer.setScreen(DataFlow.MAIN_SCREEN); 
         
         Group root = new Group(); 
         root.getChildren().addAll(mainContainer); 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dreamteam;
+package dataflow;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -43,7 +43,7 @@ public class Database {
           
           account.setLoggedIn(true);
           account.setUserName(resultSet.getString("username"));
-          DreamTeam.account = account;
+          DataFlow.account = account;
       }
       
     } catch (Exception e) {
