@@ -17,22 +17,30 @@ import javafx.stage.Stage;
 public class DataFlow extends Application {
     
     public static Account account = null;
-    public static final String MAIN_SCREEN = "LoginController"; 
-    public static final String MAIN_SCREEN_FXML = "LoginController.fxml"; 
+    public static final String LOGIN_SCREEN = "Login"; 
+    public static final String LOGIN_SCREEN_FXML = "Login.fxml"; 
+    public static final String MAIN_SCREEN = "Main"; 
+    public static final String MAIN_SCREEN_FXML = "Main.fxml"; 
+    public static Stage stage;
      
     @Override
     public void start(Stage stage) throws Exception {
+        this.stage = stage;
         
         ScreensController mainContainer = new ScreensController(); 
+        mainContainer.loadScreen(DataFlow.LOGIN_SCREEN, 
+                            DataFlow.LOGIN_SCREEN_FXML); 
         mainContainer.loadScreen(DataFlow.MAIN_SCREEN, 
-                            DataFlow.MAIN_SCREEN_FXML); 
-       
-        mainContainer.setScreen(DataFlow.MAIN_SCREEN); 
+                            DataFlow.MAIN_SCREEN_FXML);        
+        mainContainer.setScreen(DataFlow.LOGIN_SCREEN); 
         
         Group root = new Group(); 
         root.getChildren().addAll(mainContainer); 
-        Scene scene = new Scene(root); 
+        Scene scene = new Scene(root);         
         stage.setScene(scene); 
+        stage.setWidth(320);
+        stage.setHeight(230);
+        stage.setResizable(false);
         stage.show(); 
         //Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
@@ -49,4 +57,8 @@ public class DataFlow extends Application {
         launch(args);
     }
     
+    public static void setMainWindowSize(){
+        stage.setWidth(800);    
+        stage.setHeight(600);
+    }
 }

@@ -21,7 +21,7 @@ import javafx.scene.paint.Color;
  *
  * @author Johnnie Ho
  */
-public class LoginControllerController implements Initializable, ControlledScreen {
+public class LoginController implements Initializable, ControlledScreen {
 
     ScreensController myController;
     
@@ -45,11 +45,11 @@ public class LoginControllerController implements Initializable, ControlledScree
         }
         
         try {
-            label.setTextFill(Color.web("#00AF33"));
-            label.setText("Logging in.");
             mySQL.validateLogin(username.getText(), password.getText());
             if(DataFlow.account != null){
-                
+                label.setTextFill(Color.web("#00AF33"));
+                label.setText("Logging in.");
+                myController.setScreen(DataFlow.MAIN_SCREEN);                
             }
             else{
                 label.setTextFill(Color.web("#9D1309"));
@@ -57,7 +57,7 @@ public class LoginControllerController implements Initializable, ControlledScree
             }
         } catch (Exception ex) {
             label.setText("Error.");
-            Logger.getLogger(LoginControllerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

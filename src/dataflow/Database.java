@@ -42,8 +42,9 @@ public class Database {
           Account account = new Account();
           
           account.setLoggedIn(true);
-          account.setUserName(resultSet.getString("username"));
+          account.setUserName(resultSet.getString("username"));          
           DataFlow.account = account;
+          System.out.println(DataFlow.account);
       }
       
     } catch (Exception e) {
