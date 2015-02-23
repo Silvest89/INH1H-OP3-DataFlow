@@ -29,8 +29,8 @@ public class Database {
       Class.forName("com.mysql.jdbc.Driver");
       // Setup the connection with the DB
       connect = DriverManager
-          .getConnection("jdbc:mysql://195.238.74.60/silven1q_dreamteam?"
-              + "user=silven1q_dream&password=test123");
+          .getConnection("jdbc:mysql://178.62.163.116/dataflow?"
+              + "user=dataflow&password=test12@#");
 
       preparedStatement = connect
           .prepareStatement("SELECT * from accounts where username = ? and password = ? LIMIT 1");
@@ -44,7 +44,6 @@ public class Database {
           account.setLoggedIn(true);
           account.setUserName(resultSet.getString("username"));          
           DataFlow.account = account;
-          System.out.println(DataFlow.account);
       }
       
     } catch (Exception e) {

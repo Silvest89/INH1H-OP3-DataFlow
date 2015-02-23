@@ -49,7 +49,7 @@ public class LoginController implements Initializable, ControlledScreen {
             if(DataFlow.account != null){
                 label.setTextFill(Color.web("#00AF33"));
                 label.setText("Logging in.");
-                myController.setScreen(DataFlow.MAIN_SCREEN);                
+                myController.setScreen(DataFlow.MAIN_SCREEN);                     
             }
             else{
                 label.setTextFill(Color.web("#9D1309"));

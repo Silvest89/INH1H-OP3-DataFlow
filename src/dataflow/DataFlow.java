@@ -30,16 +30,17 @@ public class DataFlow extends Application {
         ScreensController mainContainer = new ScreensController(); 
         mainContainer.loadScreen(DataFlow.LOGIN_SCREEN, 
                             DataFlow.LOGIN_SCREEN_FXML); 
+        mainContainer.setScreen(DataFlow.LOGIN_SCREEN); 
         mainContainer.loadScreen(DataFlow.MAIN_SCREEN, 
                             DataFlow.MAIN_SCREEN_FXML);        
-        mainContainer.setScreen(DataFlow.LOGIN_SCREEN); 
+        
         
         Group root = new Group(); 
-        root.getChildren().addAll(mainContainer); 
-        Scene scene = new Scene(root);         
+        //root.getChildren().addAll(mainContainer); 
+        Scene scene = new Scene(mainContainer);         
         stage.setScene(scene); 
-        stage.setWidth(320);
-        stage.setHeight(230);
+        //stage.setWidth(320);
+        //stage.setHeight(230);
         stage.setResizable(false);
         stage.show(); 
         //Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));

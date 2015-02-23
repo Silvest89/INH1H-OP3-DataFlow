@@ -7,7 +7,9 @@ package dataflow;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -18,13 +20,22 @@ public class MainController implements Initializable, ControlledScreen {
 
     ScreensController myController;
     
+    Account account = DataFlow.account;
+    
+    @FXML
+    private Label label;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // TODO        
     }    
+    
+    public void prepare(){
+        label.setText(account.getUserName());
+    }
     
     public void setScreenParent(ScreensController screenParent){ 
         myController = screenParent; 
