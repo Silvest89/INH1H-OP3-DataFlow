@@ -5,6 +5,7 @@
  */
 package dataflow;
 
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import sun.misc.BASE64Encoder;
 
 /**
  *
@@ -25,17 +27,20 @@ public class Database {
     
   public void validateLogin(String username, String password) throws Exception {
     try {
-      // This will load the MySQL driver, each DB has its own driver
-      Class.forName("com.mysql.jdbc.Driver");
-      // Setup the connection with the DB
-      connect = DriverManager
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(password.getBytes("UTF-8"));
+        byte[] hash = md.digest();
+        // This will load the MySQL driver, each DB has its own driver
+        Class.forName("com.mysql.jdbc.Driver");
+        // Setup the connection with the DB
+        connect = DriverManager
           .getConnection("jdbc:mysql://178.62.163.116/dataflow?"
               + "user=dataflow&password=test12@#");
 
       preparedStatement = connect
           .prepareStatement("SELECT * from accounts where username = ? and password = ? LIMIT 1");
       preparedStatement.setString(1, username);
-      preparedStatement.setString(2, password);
+      preparedStatement.setString(2, new BASE64Encoder().encode(hash));
       resultSet = preparedStatement.executeQuery();      
       if(resultSet.next())
       {
