@@ -7,12 +7,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataflow.MainController">
+<AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="786.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataflow.MainController">
     <stylesheets>
         <URL value="@main.css" />
     </stylesheets>
    <children>
-      <ComboBox layoutX="281.0" layoutY="134.0" prefWidth="150.0" />
+      <ComboBox layoutX="622.0" layoutY="53.0" prefWidth="150.0" />
       <Label fx:id="label" layoutX="220.0" layoutY="29.0" prefHeight="48.0" prefWidth="122.0" />
+      <MenuBar layoutY="6.0" prefHeight="32.0" prefWidth="786.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Home">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Statistics">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Pie charts" />
+              <MenuItem mnemonicParsing="false" text="Histograms" />
+              <MenuItem mnemonicParsing="false" text="Bar charts" />
+              <MenuItem mnemonicParsing="false" text="Geographic statistics" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>
