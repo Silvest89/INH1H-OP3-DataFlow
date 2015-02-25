@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -12,9 +14,11 @@
         <URL value="@main.css" />
     </stylesheets>
    <children>
-      <ComboBox layoutX="622.0" layoutY="53.0" prefWidth="150.0" />
-      <Label fx:id="label" layoutX="220.0" layoutY="29.0" prefHeight="48.0" prefWidth="122.0" />
-      <MenuBar layoutY="6.0" prefHeight="32.0" prefWidth="786.0">
+      <Label fx:id="label" prefHeight="57.0" prefWidth="790.0" text="Dataflow Pro" textFill="#838383">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="34.0" />
+         </font></Label>
+      <MenuBar layoutX="214.0" layoutY="6.0" prefHeight="32.0" prefWidth="576.0">
         <menus>
           <Menu mnemonicParsing="false" text="Home">
             <items>
