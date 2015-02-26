@@ -61,7 +61,7 @@ public class LoginControllerController implements Initializable, ControlledScree
         }
         
     }
-    
+   
     /**
      * Initializes the controller class.
      */
