@@ -37,7 +37,7 @@ public class LoginController implements Initializable, ControlledScreen {
     @FXML
     private void login(ActionEvent event) {
         
-        Database mySQL = new Database();        
+        Database mySQL = new Database();  
         if(username.getLength() <= 0 || password.getLength() <= 0){
             label.setTextFill(Color.web("#9D1309"));
             label.setText("Username and/or password cannot be empty.");
@@ -49,7 +49,9 @@ public class LoginController implements Initializable, ControlledScreen {
             if(DataFlow.account != null){
                 label.setTextFill(Color.web("#00AF33"));
                 label.setText("Logging in.");
-                myController.setScreen(DataFlow.MAIN_SCREEN);                     
+                DataFlow.mainContainer.loadScreen(DataFlow.MAIN_SCREEN, 
+                    DataFlow.MAIN_SCREEN_FXML);  
+                myController.setScreen(DataFlow.MAIN_SCREEN);      
             }
             else{
                 label.setTextFill(Color.web("#9D1309"));
@@ -69,6 +71,10 @@ public class LoginController implements Initializable, ControlledScreen {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    public void prepare(){
+        
+    }
     
     public void setScreenParent(ScreensController screenParent){ 
         myController = screenParent; 

@@ -38,6 +38,6 @@ public class MainController implements Initializable, ControlledScreen {
     }
     
     public void setScreenParent(ScreensController screenParent){ 
-        myController = screenParent; 
+        myController = screenParent;         
      }     
 }

@@ -10,18 +10,11 @@ package dataflow;
  * @author Johnnie Ho
  */
 public class Account {
-    private boolean loggedIn;
+    
     private String userName;
     
     public Account(){
-        loggedIn = false;
         userName = "";
-    }
-    public void setLoggedIn(boolean test){
-        this.loggedIn = test;
-    }
-    public boolean isLoggedIn(){
-        return loggedIn;
     }
     
     public String getUserName(){

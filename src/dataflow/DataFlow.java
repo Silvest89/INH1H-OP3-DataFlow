@@ -22,17 +22,16 @@ public class DataFlow extends Application {
     public static final String MAIN_SCREEN = "Main"; 
     public static final String MAIN_SCREEN_FXML = "Main.fxml"; 
     public static Stage stage;
+    public static ScreensController mainContainer;
      
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         
-        ScreensController mainContainer = new ScreensController(); 
+        mainContainer = new ScreensController(); 
         mainContainer.loadScreen(DataFlow.LOGIN_SCREEN, 
                             DataFlow.LOGIN_SCREEN_FXML); 
-        mainContainer.setScreen(DataFlow.LOGIN_SCREEN); 
-        mainContainer.loadScreen(DataFlow.MAIN_SCREEN, 
-                            DataFlow.MAIN_SCREEN_FXML);        
+        mainContainer.setScreen(DataFlow.LOGIN_SCREEN);       
         
         
         Group root = new Group(); 
