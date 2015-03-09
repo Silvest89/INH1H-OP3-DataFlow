@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.canvas.*?>
@@ -17,9 +18,10 @@
         <URL value="@main.css" />
     </stylesheets>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="592.0" layoutX="-7.0" stroke="BLACK" strokeType="INSIDE" width="210.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="31.0" layoutX="11.0" layoutY="65.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="151.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="592.0" layoutX="-7.0" opacity="0.17" stroke="BLACK" strokeType="INSIDE" width="210.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f3f4f5" height="42.0" layoutX="-7.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" width="210.0" />
-      <MenuBar layoutX="203.0" layoutY="1.0" prefHeight="42.0" prefWidth="587.0">
+      <MenuBar layoutX="203.0" layoutY="1.0" prefHeight="42.0" prefWidth="395.0">
         <menus>
           <Menu mnemonicParsing="false" text="Home">
             <items>
@@ -27,10 +29,9 @@
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Statistics">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Pie charts" />
-              <MenuItem mnemonicParsing="false" text="Histograms" />
-              <MenuItem mnemonicParsing="false" text="Bar charts" />
+            <items>         
+              <MenuItem mnemonicParsing="false" text="Architecture Statistics" />
+              <MenuItem mnemonicParsing="false" text="Sentiment Statistics" />
               <MenuItem mnemonicParsing="false" text="Geographic statistics" />
             </items>
           </Menu>
@@ -40,17 +41,31 @@
             </items>
           </Menu>
         </menus>
+         <effect>
+            <DropShadow />
+         </effect>
       </MenuBar>
       <Button layoutX="693.0" layoutY="536.0" mnemonicParsing="false" text="Log out" />
-      <Label fx:id="label" layoutY="-6.0" prefHeight="57.0" prefWidth="210.0" text="Dataflow Pro">
+      <Label fx:id="label" layoutX="4.0" layoutY="1.0" prefHeight="42.0" prefWidth="189.0" text="Dataflow Pro">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="31.0" />
          </font></Label>
-      <TableView layoutX="255.0" layoutY="156.0" prefHeight="321.0" prefWidth="456.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
+      <Button layoutX="33.0" layoutY="141.0" mnemonicParsing="false"  prefHeight="31.0" prefWidth="106.0" text="Add user" />
+      <Button layoutX="33.0" layoutY="296.0" mnemonicParsing="false"  text="Remove user" />
+      <PasswordField layoutX="227.0" layoutY="141.0" />
+      <ScrollPane hbarPolicy="NEVER" layoutX="227.0" layoutY="296.0" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" vmax="30.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TableView prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="User" />                
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      <Label layoutX="22.0" layoutY="65.0" prefHeight="31.0" prefWidth="167.0" text="User: test (admin)" />
    </children>
 </AnchorPane>
