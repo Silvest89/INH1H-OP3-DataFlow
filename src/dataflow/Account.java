@@ -15,6 +15,9 @@ public class Account {
     
     private int accessLevel;
     
+    public static final int NORMAL_ACCOUNT = 0;
+    public static final int ADMIN_ACCOUNT = 1;
+    
     public Account(){
         userName = "";
         accessLevel = 0;
