@@ -24,20 +24,19 @@ public class Database {
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
-    public Database(){
+    public Database() {
         // This will load the MySQL driver, each DB has its own driver
-        try{
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             // Setup the connection with the DB
             connect = DriverManager
-          .getConnection("jdbc:mysql://178.62.163.116/dataflow?"
-              + "user=dataflow&password=test12@#");        
-        }
-        catch (Exception e) {
+                    .getConnection("jdbc:mysql://178.62.163.116/dataflow?"
+                            + "user=dataflow&password=test12@#");
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
-    
+
     public void validateLogin(String username, String password) throws Exception {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -79,21 +78,38 @@ public class Database {
 
         }
     }
-    
-    public void putInDatabase(String id, String timeStamp, String location, String text) throws Exception{
+
+    public void putInDatabase(String id, String timeStamp, String location, String text) throws Exception {
         try {
-        preparedStatement = connect
+            preparedStatement = connect
                     .prepareStatement("INSERT INTO Tweets VALUES (?, ?, ?, ?)");
-        preparedStatement.setString(1, id);
-        preparedStatement.setString(2, timeStamp);
-        preparedStatement.setString(3, location);
-        preparedStatement.setString(4, text);
-        preparedStatement.executeUpdate();
+            preparedStatement.setString(1, id);
+            preparedStatement.setString(2, timeStamp);
+            preparedStatement.setString(3, location);
+            preparedStatement.setString(4, text);
+            preparedStatement.executeUpdate();
         } catch (Exception e) {
             throw e;
         } finally {
             close();
-        }       
+        }
     }
-    
+
+    public void addUser(String name, String passWord) throws Exception {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(passWord.getBytes("UTF-8"));
+            byte[] hash = md.digest();
+            preparedStatement = connect
+                    .prepareStatement("INSERT INTO accounts(username,password) VALUES (?, ?)");
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, new BASE64Encoder().encode(hash));
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            close();
+        }
+    }
+
 }

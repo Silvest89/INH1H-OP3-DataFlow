@@ -20,8 +20,7 @@
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="31.0" layoutX="11.0" layoutY="65.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="151.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="592.0" layoutX="-7.0" opacity="0.17" stroke="BLACK" strokeType="INSIDE" width="210.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f3f4f5" height="42.0" layoutX="-7.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" width="210.0" />
-      <MenuBar layoutX="203.0" layoutY="1.0" prefHeight="42.0" prefWidth="395.0">
+      <MenuBar layoutX="203.0" layoutY="1.0" prefHeight="42.0" prefWidth="582.0">
         <menus>
           <Menu mnemonicParsing="false" text="Home">
             <items>
@@ -45,27 +44,27 @@
             <DropShadow />
          </effect>
       </MenuBar>
-      <Button layoutX="693.0" layoutY="536.0" mnemonicParsing="false" text="Log out" />
       <Label fx:id="label" layoutX="4.0" layoutY="1.0" prefHeight="42.0" prefWidth="189.0" text="Dataflow Pro">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="31.0" />
          </font></Label>
-      <Button layoutX="33.0" layoutY="141.0" mnemonicParsing="false"  prefHeight="31.0" prefWidth="106.0" text="Add user" />
-      <Button layoutX="33.0" layoutY="296.0" mnemonicParsing="false"  text="Remove user" />
-      <PasswordField layoutX="227.0" layoutY="141.0" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="227.0" layoutY="296.0" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" vmax="30.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <TableView prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="User" />                
-                    </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
+      <Button fx:id="addUser" layoutX="33.0" layoutY="141.0" mnemonicParsing="false" onAction="#openAddUser" prefHeight="31.0" prefWidth="106.0" text="Add user" />
+      <Button layoutX="33.0" layoutY="296.0" mnemonicParsing="false" text="Remove user" />
       <Label layoutX="22.0" layoutY="65.0" prefHeight="31.0" prefWidth="167.0" text="User: test (admin)" />
+      <TableView fx:id="TweetBox" layoutX="211.0" layoutY="270.0" prefHeight="200.0" prefWidth="395.0">
+         <columns>
+            <TableColumn fx:id="TestCol" prefWidth="75.0" text="Column X" />
+         </columns>
+      </TableView>
+      <Pane fx:id="userPane" layoutX="210.0" layoutY="57.0" prefHeight="200.0" prefWidth="568.0">
+         <children>
+            <Button fx:id="createUser" layoutX="497.0" layoutY="161.0" mnemonicParsing="false" onAction="#createUser" text="Create" />
+            <TextField fx:id="createName" layoutX="210.0" layoutY="48.0" promptText="Username" />
+            <PasswordField fx:id="createPass" layoutX="210.0" layoutY="81.0" promptText="Password" />
+            <PasswordField fx:id="createConfirm" layoutX="210.0" layoutY="114.0" promptText="Confirm password" />
+            <Label fx:id="userCreation" layoutX="207.0" layoutY="14.0" text="User creation Screen" />
+            <Text fx:id="createWarning" layoutX="154.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password is not the same as confirmed password" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
