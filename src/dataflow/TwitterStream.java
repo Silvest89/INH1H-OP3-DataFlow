@@ -49,9 +49,10 @@ public class TwitterStream {
                     if (location.equals(" ") || location.equals("")) {
                         location = "unknown";
                     }
-                    d.putInDatabase(id, timeStamp, location, text);
+                    //d.putInDatabase(id, timeStamp, location, text);
 
                     System.out.println("ID: " + id + ", " + "Time and Date: " + timeStamp + ", " + "Location: " + location + ", " + "Tweet: " + text);
+                    //SSystem.out.println(rawJSON);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -66,7 +67,7 @@ public class TwitterStream {
         FilterQuery fq = new FilterQuery();
 
         //This array contains the keyword(s) which you want to look for
-        String[] keywords = {"#testingTwitter"};
+        String[] keywords = {"#RdamCentraal"};
 
         //This line of code makes sure all incoming tweets are scanned for the given keyword(s)
         fq.track(keywords);
