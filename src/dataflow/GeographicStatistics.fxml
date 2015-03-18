@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="786.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataflow.GeographicStatisticsController">
+    <stylesheets>
+        <URL value="@statistics.css" />
+    </stylesheets>
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="550.0" layoutY="43.0" opacity="0.24" stroke="BLACK" strokeType="INSIDE" width="202.0">
+         <effect>
+            <DropShadow />
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f3f4f5" height="42.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="202.0">
+         <effect>
+            <DropShadow />
+         </effect></Rectangle>
+      <MenuBar layoutX="202.0" layoutY="1.0" prefHeight="42.0" prefWidth="383.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Home">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#goToMain" text="Home" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Statistics">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#goToArchStatistics" text="Architecture Statistics" />
+              <MenuItem mnemonicParsing="false" onAction="#goToSentStatistics" text="Sentiment Statistics" />
+              <MenuItem mnemonicParsing="false" text="Geographic Statistics" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+         <effect>
+            <DropShadow />
+         </effect>
+      </MenuBar>
+      <Button layoutX="710.0" layoutY="553.0" mnemonicParsing="false" text="Log out" />
+      <Label fx:id="label" alignment="CENTER" prefHeight="42.0" prefWidth="202.0" text="Dataflow Pro" textAlignment="CENTER">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="110.0" prefHeight="42.0" prefWidth="156.0" text="Data page 1" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="152.0" prefHeight="42.0" prefWidth="156.0" text="Data page 2" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="194.0" prefHeight="42.0" prefWidth="156.0" text="Data page 3" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="236.0" prefHeight="42.0" prefWidth="156.0" text="Data page 4" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="275.0" prefHeight="42.0" prefWidth="156.0" text="Data page 5" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ScrollPane hbarPolicy="NEVER" layoutX="203.0" layoutY="43.0" opacity="0.0" prefHeight="496.0" prefWidth="581.0" vbarPolicy="ALWAYS">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="532.0" prefWidth="566.0" />
+        </content>
+      </ScrollPane>
+      <Button layoutX="590.0" layoutY="553.0" mnemonicParsing="false" text="Print out page" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="31.0" layoutX="640.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="151.0" />
+      <Label fx:id="showUserName" alignment="CENTER" layoutX="640.0" layoutY="10.0" prefHeight="31.0" prefWidth="151.0" text="User" />
+      <Label fx:id="showPageName" layoutX="210.0" layoutY="45.0" prefHeight="42.0" prefWidth="260.0" text="Page Name">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

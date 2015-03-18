@@ -20,11 +20,11 @@ public class Account {
     
     public Account(){
         userName = "";
-        accessLevel = 0;
+        accessLevel = NORMAL_ACCOUNT;
     }
     
     public String getUserName(){
-       return userName; 
+       return userName;
     }
     
     public int getAccessLevel(){

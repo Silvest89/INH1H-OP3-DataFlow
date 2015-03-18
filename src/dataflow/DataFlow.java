@@ -20,7 +20,16 @@ public class DataFlow extends Application {
     public static final String LOGIN_SCREEN = "Login"; 
     public static final String LOGIN_SCREEN_FXML = "Login.fxml"; 
     public static final String MAIN_SCREEN = "Main"; 
-    public static final String MAIN_SCREEN_FXML = "Main.fxml"; 
+    public static final String MAIN_SCREEN_FXML = "Main.fxml";
+    public static final String STATISTICS_SCREEN = "Statistics";
+    public static final String STATISTICS_SCREEN_FXML = "Statistics.fxml";
+    public static final String GSTATISTICS_SCREEN = "GeographicStatistics";
+    public static final String GSTATISTICS_SCREEN_FXML = "GeographicStatistics.fxml";
+    public static final String SSTATISTICS_SCREEN = "SentimentStatistics";
+    public static final String SSTATISTICS_SCREEN_FXML = "SentimentStatistics.fxml";
+    public static final String ASTATISTICS_SCREEN = "ArchitectureStatistics.fxml";
+    public static final String ASTATISTICS_SCREEN_FXML = "ArchitectureStatistics.fxml";
+                                                    
     public static Stage stage;
     public static ScreensController mainContainer;
      
@@ -30,7 +39,7 @@ public class DataFlow extends Application {
         
         mainContainer = new ScreensController(); 
         mainContainer.loadScreen(DataFlow.LOGIN_SCREEN, 
-                            DataFlow.LOGIN_SCREEN_FXML); 
+                            DataFlow.LOGIN_SCREEN_FXML);
         mainContainer.setScreen(DataFlow.LOGIN_SCREEN);       
         
         
@@ -58,7 +67,12 @@ public class DataFlow extends Application {
     }
     
     public static void setMainWindowSize(){
-        stage.setWidth(800);    
-        stage.setHeight(600);
+        stage.setWidth(820);    
+        stage.setHeight(620);
+    }
+    
+    public static void setLoginWindowSize() {
+        stage.setWidth(320);
+        stage.setHeight(240);
     }
 }

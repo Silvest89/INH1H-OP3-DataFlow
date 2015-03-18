@@ -26,15 +26,14 @@ public class TwitterSearch {
         Twitter twitter = tf.getInstance();
         
         // Here you can specify which keyword you want to search for
-        String search = "RdamCentraal";
+        String search = "#boijmans";
         Query query = new Query(search);
         
         // setCount: the maximum amount of tweets returned
         // setSince: as it suggests, retrieve tweets since the given date
-        query.setCount(100);
-        query.setSince("2011-01-01");
-        
-        
+        query.setCount(10000);
+        query.setSince("2015-03-01");
+                
         // Prints out every tweet returned
         try {
             QueryResult result = twitter.search(query);
@@ -42,6 +41,7 @@ public class TwitterSearch {
             for (Status status : result.getTweets()) {
                 System.out.println("Search term: " + search);
                 System.out.println("User : " + status.getUser().getName());
+                System.out.println("Time stamp: " + status.getCreatedAt()); 
                 System.out.println("Text : " + status.getText());
                 System.out.println("");
             }
@@ -53,3 +53,4 @@ public class TwitterSearch {
     }
 
 }
+

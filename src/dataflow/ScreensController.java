@@ -51,7 +51,9 @@ public class ScreensController  extends StackPane {
             myScreenController.setScreenParent(this);
             myScreenController.prepare();
             addScreen(name, loadScreen);
+            // System.out.println(name + resource);
             return true;
+            
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
@@ -78,8 +80,11 @@ public class ScreensController  extends StackPane {
                                 new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
                                 new KeyFrame(new Duration(800), new KeyValue(opacity, 1.0)));
                         fadeIn.play();
-                        if(name.equals("Main")){                                
+                        if(name.equals("Main") || name.equals("Statistics")){                                
                             DataFlow.setMainWindowSize();
+                        }
+                        if(name.equals("Login")) {
+                            DataFlow.setLoginWindowSize();
                         }
                     }
                 }, new KeyValue(opacity, 0.0)));

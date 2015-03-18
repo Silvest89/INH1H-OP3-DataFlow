@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import sun.misc.BASE64Encoder;
 
 /**
@@ -51,6 +52,7 @@ public class Database {
             if (resultSet.next()) {
                 Account account = new Account();
                 account.setUserName(resultSet.getString("username"));
+                account.setAccessLevel(resultSet.getInt("access_level"));
                 DataFlow.account = account;
             }
 
@@ -79,14 +81,57 @@ public class Database {
         }
     }
 
-    public void putInDatabase(String id, String timeStamp, String location, String text) throws Exception {
+    public void putInDatabase(String id, String timeStamp, String user, String location, String text) throws Exception {
         try {
             preparedStatement = connect
-                    .prepareStatement("INSERT INTO Tweets VALUES (?, ?, ?, ?)");
+                    .prepareStatement("INSERT INTO Tweets VALUES (?, ?, ?, ?, ?)");
             preparedStatement.setString(1, id);
             preparedStatement.setString(2, timeStamp);
-            preparedStatement.setString(3, location);
-            preparedStatement.setString(4, text);
+            preparedStatement.setString(3, user);
+            preparedStatement.setString(4, location);
+            preparedStatement.setString(5, text);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            //close();
+        }
+    }
+    
+    public ArrayList<Tweet> retrieveFromDatabase() throws Exception {
+        ArrayList<Tweet> tweetAL = new ArrayList<>();
+        MainController mc = new MainController();
+        preparedStatement = connect
+                    .prepareStatement("SELECT * FROM Tweets");
+        resultSet = preparedStatement.executeQuery();
+        
+        while(resultSet.next()){
+            Tweet t = new Tweet(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5));
+            tweetAL.add(t);
+        }
+        
+        return tweetAL;
+    }
+
+
+
+    public void addUser(String name, String passWord) throws Exception {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(passWord.getBytes("UTF-8"));
+            byte[] hash = md.digest();
+            preparedStatement = connect
+                    .prepareStatement("SELECT username FROM accounts WHERE username = ?");
+            preparedStatement.setString(1, name);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return;
+            }
+            preparedStatement = connect
+                    .prepareStatement("INSERT INTO accounts(username,password, access_level) VALUES (?, ?, ?)");
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, new BASE64Encoder().encode(hash));
+            preparedStatement.setString(3, "0");
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -95,21 +140,6 @@ public class Database {
         }
     }
 
-    public void addUser(String name, String passWord) throws Exception {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(passWord.getBytes("UTF-8"));
-            byte[] hash = md.digest();
-            preparedStatement = connect
-                    .prepareStatement("INSERT INTO accounts(username,password) VALUES (?, ?)");
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, new BASE64Encoder().encode(hash));
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            close();
-        }
-    }
+    
 
 }
