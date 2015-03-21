@@ -73,7 +73,7 @@ public class TwitterStream {
         FilterQuery fq = new FilterQuery();
 
         //This array contains the keyword(s) which you want to look for
-        String[] keywords = {"#boijmans"};
+        String[] keywords = {"the"};
 
         //This line of code makes sure all incoming tweets are scanned for the given keyword(s)
         fq.track(keywords);
