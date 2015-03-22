@@ -6,7 +6,7 @@
 
 }
 
-#userCreation {
+#userCreation, #userDeletion {
     -fx-font-size: 16px;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-font-weight: bold;
