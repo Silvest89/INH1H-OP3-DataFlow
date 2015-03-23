@@ -92,5 +92,7 @@
             <Text fx:id="createWarning" layoutX="154.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password is not the same as confirmed password" />
          </children>
       </Pane>
+      <TextField fx:id="searchText" layoutX="550.0" layoutY="479.0" promptText="search term" />
+      <Button layoutX="713.0" layoutY="479.0" mnemonicParsing="false" onAction="#searchTweet" text="Search" />
    </children>
 </AnchorPane>

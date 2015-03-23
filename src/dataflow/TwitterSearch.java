@@ -1,5 +1,6 @@
 package dataflow;
 
+import java.util.ArrayList;
 import twitter4j.*;
 import java.util.logging.Logger;
 import twitter4j.conf.ConfigurationBuilder;
@@ -8,10 +9,10 @@ public class TwitterSearch {
     private final Logger logger = Logger.getLogger(TwitterSearch.class.getName());
 
     public static void main(String[] args) {
-        new TwitterSearch().retrieve();
     }
     
-    public void retrieve(){
+    public ArrayList<Tweet> retrieve(String searchTerm){
+        ArrayList<Tweet> tweetAL = new ArrayList<>();
         logger.info("Retrieving Tweets....");
         // Same configuration as the twitterStream
         // Again, do not share these keys and tokens
@@ -26,8 +27,7 @@ public class TwitterSearch {
         Twitter twitter = tf.getInstance();
         
         // Here you can specify which keyword you want to search for
-        String search = "#boijmans";
-        Query query = new Query(search);
+        Query query = new Query(searchTerm);
         
         // setCount: the maximum amount of tweets returned
         // setSince: as it suggests, retrieve tweets since the given date
@@ -37,18 +37,24 @@ public class TwitterSearch {
         // Prints out every tweet returned
         try {
             QueryResult result = twitter.search(query);
-            System.out.println("Count : " + result.getTweets().size());
+            
             for (Status status : result.getTweets()) {
-                System.out.println("Search term: " + search);
-                System.out.println("User : " + status.getUser().getName());
-                System.out.println("Time stamp: " + status.getCreatedAt()); 
-                System.out.println("Text : " + status.getText());
-                System.out.println("");
+                String ID = "" + status.getId();
+                String timeStamp = "" + status.getCreatedAt();
+                String user = "" + status.getUser().getName();
+                String location = "" + status.getGeoLocation();
+                String text = "" + status.getText();
+                
+                Tweet t = new Tweet(ID, timeStamp, user, location, text);
+                tweetAL.add(t);
+                 
             }
         } catch (TwitterException e){
             e.printStackTrace();
         }
+        
         logger.info("done! ");
+        return tweetAL;
         
     }
 
