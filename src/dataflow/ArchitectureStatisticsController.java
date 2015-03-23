@@ -19,11 +19,9 @@ import javafx.scene.control.Label;
  *
  * @author ninc__000
  */
-public class ArchitectureStatisticsController implements Initializable, ControlledScreen {
+public class ArchitectureStatisticsController extends ControlledScreen implements Initializable {
     
     String pageName = "Architecture Statistics";
-    
-    ScreensController myController;
     
     Account account = DataFlow.account;
     
@@ -35,6 +33,7 @@ public class ArchitectureStatisticsController implements Initializable, Controll
     
     @FXML
     private Label showUserName;
+    
     /**
      * Initializes the controller class.
      */
@@ -42,30 +41,22 @@ public class ArchitectureStatisticsController implements Initializable, Controll
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }   
+    
+    @Override
     public void prepare () {
         showUserName.setText("Welcome, " + account.getUserName() + "!");
         showPageName.setText(pageName);
     }
-
-    @Override
-    public void setScreenParent(ScreensController screenParent) {
-        myController = screenParent;
-    }
     
     public void goToMain (ActionEvent event) {
-        DataFlow.mainContainer.loadScreen(DataFlow.MAIN_SCREEN, DataFlow.MAIN_SCREEN_FXML);
-        DataFlow.mainContainer.setScreen(DataFlow.MAIN_SCREEN);
+        DataFlow.setScreen("Main");
     }
 
    public void goToSentStatistics(ActionEvent event) {
-        DataFlow.mainContainer.loadScreen(DataFlow.SSTATISTICS_SCREEN,
-                DataFlow.SSTATISTICS_SCREEN_FXML);
-        myController.setScreen(DataFlow.SSTATISTICS_SCREEN);
+        DataFlow.setScreen("Statistics");
    }
    
    public void goToGeoStatistics(ActionEvent event) {
-       DataFlow.mainContainer.loadScreen(DataFlow.GSTATISTICS_SCREEN,
-               DataFlow.GSTATISTICS_SCREEN_FXML);
-       myController.setScreen(DataFlow.GSTATISTICS_SCREEN);
+       DataFlow.setScreen("GeographicStatistics");
    }
 }

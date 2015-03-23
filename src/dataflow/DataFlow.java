@@ -5,8 +5,10 @@
  */
 package dataflow;
 
+import java.util.HashMap;
+
+import java.util.Map;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -17,44 +19,43 @@ import javafx.stage.Stage;
 public class DataFlow extends Application {
     
     public static Account account = null;
-    public static final String LOGIN_SCREEN = "Login"; 
-    public static final String LOGIN_SCREEN_FXML = "Login.fxml"; 
-    public static final String MAIN_SCREEN = "Main"; 
-    public static final String MAIN_SCREEN_FXML = "Main.fxml";
-    public static final String STATISTICS_SCREEN = "Statistics";
-    public static final String STATISTICS_SCREEN_FXML = "Statistics.fxml";
-    public static final String GSTATISTICS_SCREEN = "GeographicStatistics";
-    public static final String GSTATISTICS_SCREEN_FXML = "GeographicStatistics.fxml";
-    public static final String SSTATISTICS_SCREEN = "SentimentStatistics";
-    public static final String SSTATISTICS_SCREEN_FXML = "SentimentStatistics.fxml";
-    public static final String ASTATISTICS_SCREEN = "ArchitectureStatistics.fxml";
-    public static final String ASTATISTICS_SCREEN_FXML = "ArchitectureStatistics.fxml";
+    public static Map<String, String> screens = new HashMap<String, String>();    
                                                     
     public static Stage stage;
-    public static ScreensController mainContainer;
-     
+    public static ScreensController mainContainer;    
+    
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         
+        screens.put("Login", "Login.fxml");
+        screens.put("Main", "Main.fxml");
+        screens.put("Statistics", "Statistics.fxml");
+        screens.put("GeographicStatistics", "GeographicStatistics.fxml");
+        screens.put("SentimentStatistics", "SentimentStatistics.fxml");
+        screens.put("ArchitectureStatistics", "ArchitectureStatistics.fxml");
+        
+        Weather weather = new Weather();
+        weather.getWeather();
         mainContainer = new ScreensController(); 
-        mainContainer.loadScreen(DataFlow.LOGIN_SCREEN, 
-                            DataFlow.LOGIN_SCREEN_FXML);
-        mainContainer.setScreen(DataFlow.LOGIN_SCREEN);       
+        System.out.println(screens.get("Login"));
+        mainContainer.loadScreen("Login", 
+            screens.get("Login"));
+        mainContainer.setScreen("Login");       
         
-        
-        Group root = new Group(); 
+
+        //Group root = new Group(); 
         //root.getChildren().addAll(mainContainer); 
         Scene scene = new Scene(mainContainer);         
         stage.setScene(scene); 
         //stage.setWidth(320);
         //stage.setHeight(230);
         stage.setResizable(false);
+        stage.setTitle("Data Flow"); 
         stage.show(); 
         //Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
         /*Scene scene = new Scene(root);
-        stage.setTitle("DreamTeam"); 
         stage.setScene(scene);
         stage.show();*/
     }
@@ -75,4 +76,12 @@ public class DataFlow extends Application {
         stage.setWidth(320);
         stage.setHeight(240);
     }
+    
+    public static void setScreen(String screen){
+        if(screens.get(screen) != null){
+            if(mainContainer.getScreen(screen) == null)
+                mainContainer.loadScreen(screen, screens.get(screen));
+            mainContainer.setScreen(screen);
+        }
+    }           
 }

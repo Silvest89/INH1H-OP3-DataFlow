@@ -30,9 +30,7 @@ import javafx.scene.text.Text;
  *
  * @author Johnnie Ho
  */
-public class MainController implements Initializable, ControlledScreen {
-
-    ScreensController myController;
+public class MainController extends ControlledScreen implements Initializable {
 
     final ObservableList<Tweet> data = FXCollections.observableArrayList();
     final ObservableList<String> choices = FXCollections.observableArrayList();
@@ -114,16 +112,13 @@ public class MainController implements Initializable, ControlledScreen {
 
     }
 
+    @Override
     public void prepare() {
         //label.setText(account.getUserName());
         showUserName.setText("Welcome, " + account.getUserName() + "!");
         showPageName.setText("Home page");
         userPane.setVisible(false);
         userDeletePane.setVisible(false);
-    }
-
-    public void setScreenParent(ScreensController screenParent) {
-        myController = screenParent;
     }
 
     @FXML
@@ -215,30 +210,22 @@ public class MainController implements Initializable, ControlledScreen {
 
     @FXML
     private void goToArchStatistics(ActionEvent event) {
-        DataFlow.mainContainer.loadScreen(DataFlow.ASTATISTICS_SCREEN,
-                DataFlow.ASTATISTICS_SCREEN_FXML);
-        myController.setScreen(DataFlow.ASTATISTICS_SCREEN);
+        DataFlow.setScreen("ArchitectureStatistics");
     }
 
     @FXML
     private void goToSentStatistics(ActionEvent event) {
-        DataFlow.mainContainer.loadScreen(DataFlow.SSTATISTICS_SCREEN,
-                DataFlow.SSTATISTICS_SCREEN_FXML);
-        myController.setScreen(DataFlow.SSTATISTICS_SCREEN);
+        DataFlow.setScreen("Statistics");
     }
 
     @FXML
     private void goToGeoStatistics(ActionEvent event) {
-        DataFlow.mainContainer.loadScreen(DataFlow.GSTATISTICS_SCREEN,
-                DataFlow.GSTATISTICS_SCREEN_FXML);
-        myController.setScreen(DataFlow.GSTATISTICS_SCREEN);
+        DataFlow.setScreen("GeographicStatistics");
     }
 
     @FXML
     private void logOut(ActionEvent event) {
-        DataFlow.mainContainer.loadScreen(DataFlow.LOGIN_SCREEN,
-                DataFlow.LOGIN_SCREEN_FXML);
-        myController.setScreen(DataFlow.LOGIN_SCREEN);
+        DataFlow.setScreen("Login");
     }
 
     @FXML
@@ -254,7 +241,5 @@ public class MainController implements Initializable, ControlledScreen {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    
+    }   
 }

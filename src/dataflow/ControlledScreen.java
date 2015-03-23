@@ -9,10 +9,15 @@ package dataflow;
  *
  * @author Johnnie Ho
  */
-public interface ControlledScreen {
+public class ControlledScreen {
 
+    ScreensController myController;
+    
      //This method will allow the injection of the Parent ScreenPane
-     public void setScreenParent(ScreensController screenPage);  
+    public void setScreenParent(ScreensController screenParent) {
+        myController = screenParent;
+    }
      
-     public void prepare();
+    public void prepare(){
+    }
 }

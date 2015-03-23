@@ -22,9 +22,7 @@ import javafx.scene.paint.Color;
  *
  * @author Johnnie Ho
  */
-public class LoginController implements Initializable, ControlledScreen {
-
-    ScreensController myController;
+public class LoginController extends ControlledScreen implements Initializable {
     
     @FXML
     private Label label;
@@ -50,9 +48,7 @@ public class LoginController implements Initializable, ControlledScreen {
             if(DataFlow.account != null){
                 label.setTextFill(Color.web("#00AF33"));
                 label.setText("Logging in.");
-                DataFlow.mainContainer.loadScreen(DataFlow.MAIN_SCREEN, 
-                    DataFlow.MAIN_SCREEN_FXML);  
-                myController.setScreen(DataFlow.MAIN_SCREEN);      
+                DataFlow.setScreen("Main");    
             }
             else{
                 label.setTextFill(Color.web("#9D1309"));
@@ -72,13 +68,4 @@ public class LoginController implements Initializable, ControlledScreen {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    
-    public void prepare(){
-        
-    }
-    
-    public void setScreenParent(ScreensController screenParent){ 
-        myController = screenParent; 
-     } 
-
 }
