@@ -5,6 +5,10 @@
  */
 package dataflow;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import java.util.Map;
@@ -35,10 +39,20 @@ public class DataFlow extends Application {
         screens.put("SentimentStatistics", "SentimentStatistics.fxml");
         screens.put("ArchitectureStatistics", "ArchitectureStatistics.fxml");
         
+        Calendar fromTime = Calendar.getInstance();
+        fromTime.set(2015, 2, 23, 8, 0);
+        Calendar toTime = Calendar.getInstance();
+        toTime.set(2015, 2, 23, 5, 0);
+        Date date = toTime.getTime();
+        SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+        System.out.println(format.format(date));
+        //long unixTime = (long)calendar.getTimeInMillis()/1000L;
+        //Date date =  calendar.getTime();
+        //System.out.println(unixTime);
+        
         Weather weather = new Weather();
         weather.getWeather();
         mainContainer = new ScreensController(); 
-        System.out.println(screens.get("Login"));
         mainContainer.loadScreen("Login", 
             screens.get("Login"));
         mainContainer.setScreen("Login");       

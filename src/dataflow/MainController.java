@@ -5,11 +5,17 @@
  */
 package dataflow;
 
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,8 +28,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  * FXML Controller class
@@ -32,11 +42,14 @@ import javafx.scene.text.Text;
  */
 public class MainController extends ControlledScreen implements Initializable {
 
-    final ObservableList<Tweet> data = FXCollections.observableArrayList();
-    final ObservableList<String> choices = FXCollections.observableArrayList();
+    private final ObservableList<Tweet> data = FXCollections.observableArrayList();
+    private final ObservableList<String> choices = FXCollections.observableArrayList();
 
     Account account = DataFlow.account;
 
+        @FXML
+        private ImageView test;
+        
     @FXML
     private Label label;
 
@@ -114,11 +127,21 @@ public class MainController extends ControlledScreen implements Initializable {
 
     @Override
     public void prepare() {
-        //label.setText(account.getUserName());
-        showUserName.setText("Welcome, " + account.getUserName() + "!");
-        showPageName.setText("Home page");
-        userPane.setVisible(false);
-        userDeletePane.setVisible(false);
+            //label.setText(account.getUserName());
+            showUserName.setText("Welcome, " + account.getUserName() + "!");
+            showPageName.setText("Home page");
+            userPane.setVisible(false);
+            userDeletePane.setVisible(false);
+        try {
+
+            String fullUrlPath = "http://openweathermap.org/img/w/10d.png";
+            URL url = new URL(fullUrlPath);
+            BufferedImage img = ImageIO.read(url);
+            Image image = SwingFXUtils.toFXImage(img, null);
+            test.setImage(image);
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML

@@ -21,7 +21,7 @@ import org.json.JSONObject;
  */
 public class Weather {
     public void getWeather(){
-        String jsonString = callURL("http://api.openweathermap.org/data/2.5/weather?id=2747891&units=metric&lang=nl");
+        String jsonString = callURL("http://api.openweathermap.org/data/2.5/weather?id=2747891&units=metric");
 		System.out.println("\n\njsonString: " + jsonString);
                 
                 // Replace this try catch block for all below subsequent examples
@@ -29,7 +29,7 @@ public class Weather {
 			JSONObject jsonArray = new JSONObject(jsonString);
 			System.out.println("\n\njsonArray: " + jsonArray);
                         //System.out.println(jsonArray.getJSONObject("coord"));
-                        //System.out.println(jsonArray.getJSONArray("weather"));
+                        System.out.println(jsonArray.getJSONArray("weather"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
