@@ -47,8 +47,8 @@ public class DataFlow extends Application {
         //Date date =  calendar.getTime();
         //System.out.println(unixTime);
         
-        //Weather weather = new Weather();
-        //weather.getWeather();
+        Weather.getWeather();       
+
         mainContainer = new ScreensController(); 
         mainContainer.loadScreen("Login", 
             screens.get("Login"));

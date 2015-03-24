@@ -1,5 +1,6 @@
 package dataflow;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.*;
@@ -54,8 +55,10 @@ public class TwitterStream {
                 user = "" + status.getUser().getName();
                 location = "" + status.getGeoLocation();
                 text = "" + status.getText();
-
-                try {
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                d.checkWeather(format.format(timeStamp));
+                    
+                try {                    
                     d.putInDatabase(id, timeStamp, user, location, text);
                 } catch(Exception e){
                     e.printStackTrace();

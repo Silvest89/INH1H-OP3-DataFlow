@@ -58,23 +58,23 @@ public class Weather {
         return clouds;
     }
     
-    public static void getWeather(){
+    public static JSONObject getWeather(){
         String jsonString = callURL("http://api.openweathermap.org/data/2.5/weather?id=2747891&units=metric");
-		System.out.println("\n\njsonString: " + jsonString);
-                
-                // Replace this try catch block for all below subsequent examples
-		try {  
-			JSONObject jsonArray = new JSONObject(jsonString);
-			System.out.println("\n\njsonArray: " + jsonArray);
-                        //System.out.println(jsonArray.getJSONObject("coord"));
-                        System.out.println(jsonArray.getJSONArray("weather"));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+        //System.out.println("\n\njsonString: " + jsonString);
+
+        // Replace this try catch block for all below subsequent examples
+        try {  
+                JSONObject jsonObject = new JSONObject(jsonString);
+                //System.out.println("\n\njsonObject: " + jsonObject);
+                return jsonObject;              
+        } catch (JSONException e) {
+                e.printStackTrace();
+        }
+        return null;
     }
     
     public static String callURL(String myURL) {
-        System.out.println("Requested URL:" + myURL);
+        //System.out.println("Requested URL:" + myURL);
         StringBuilder sb = new StringBuilder();
         URLConnection urlConn = null;
         InputStreamReader in = null;

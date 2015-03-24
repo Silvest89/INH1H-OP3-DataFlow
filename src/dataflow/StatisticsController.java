@@ -151,31 +151,32 @@ public class StatisticsController extends ControlledScreen implements Initializa
         
     }
 
-    private void getWeather(Tweet newValue) {
-        Database db = new Database();
-        Weather weather = db.fetchWeather(newValue.getWeather());        
-        try {
-            
-            String fullUrlPath = "http://openweathermap.org/img/w/" + weather.getIcon1() + ".png";
-            URL url = new URL(fullUrlPath);
-            BufferedImage img = ImageIO.read(url);
-            Image image = SwingFXUtils.toFXImage(img, null);
-            weatherIcon1.setImage(image);
-            if(!weather.getIcon2().equals(""))
-            {
-                fullUrlPath = "http://openweathermap.org/img/w/" + weather.getIcon2() + ".png";
-                url = new URL(fullUrlPath);
-                img = ImageIO.read(url);
-                image = SwingFXUtils.toFXImage(img, null);                
-                weatherIcon2.setImage(image);
-            }
+    private void getWeather(Tweet tweet) {
+        Database db = new Database();        
+        if(tweet.getWeather() > 0){
+            Weather weather = db.fetchWeather(tweet.getWeather());      
+            try {
 
-        } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }           
-        minTemp.setText(weather.getMinTemp() + "°C");
-        maxTemp.setText(weather.getMaxTemp() + "°C");
-        clouds.setText(weather.getClouds() + "%");
-        
+                String fullUrlPath = "http://openweathermap.org/img/w/" + weather.getIcon1() + ".png";
+                URL url = new URL(fullUrlPath);
+                BufferedImage img = ImageIO.read(url);
+                Image image = SwingFXUtils.toFXImage(img, null);
+                weatherIcon1.setImage(image);
+                if(!weather.getIcon2().equals(""))
+                {
+                    fullUrlPath = "http://openweathermap.org/img/w/" + weather.getIcon2() + ".png";
+                    url = new URL(fullUrlPath);
+                    img = ImageIO.read(url);
+                    image = SwingFXUtils.toFXImage(img, null);                
+                    weatherIcon2.setImage(image);
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            }           
+            minTemp.setText(weather.getMinTemp() + "°C");
+            maxTemp.setText(weather.getMaxTemp() + "°C");
+            clouds.setText(weather.getClouds() + "%");
+        }
     }
 }

@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import org.json.JSONObject;
 import sun.misc.BASE64Encoder;
 
 /**
@@ -204,6 +205,36 @@ public class Database {
         } finally {
             close();
         }
+    }
+    
+    public void checkWeather(String timeStamp){
+        try {
+            preparedStatement = connect
+                .prepareStatement("SELECT * from weather where date = ? LIMIT 1");
+            preparedStatement.setString(1, timeStamp);
+            resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                JSONObject jsonWeather = Weather.getWeather();
+                preparedStatement = connect
+                    .prepareStatement("INSERT INTO weather(date, icon1, icon2, clouds, mintemp, maxtemp) VALUES (?, ?, ?, ?, ?, ?)");
+                preparedStatement.setString(1, timeStamp);
+                preparedStatement.setString(2, jsonWeather.getJSONArray("weather").getJSONObject(0).getString("icon"));
+                
+                if(jsonWeather.getJSONArray("weather").length() >= 2)
+                    preparedStatement.setString(3, jsonWeather.getJSONArray("weather").getJSONObject(1).getString("icon"));
+                else
+                    preparedStatement.setString(3, "0");
+                
+                preparedStatement.setString(4, Integer.toString(jsonWeather.getJSONObject("clouds").getInt("all")));
+                preparedStatement.setString(5, Double.toString(jsonWeather.getJSONObject("main").getDouble("temp_min")));
+                preparedStatement.setString(6, Double.toString(jsonWeather.getJSONObject("main").getDouble("temp_max")));
+                preparedStatement.executeUpdate();                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }   
     }
     
     public Weather fetchWeather(int id) {             
