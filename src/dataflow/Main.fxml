@@ -28,17 +28,14 @@
       <MenuBar layoutX="202.0" prefHeight="42.0" prefWidth="383.0">
         <menus>
           <Menu mnemonicParsing="false" text="Home">
-            <items>
+               <items>
               <MenuItem mnemonicParsing="false" text="Home" />
-            </items>
+               </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Statistics">
-            <items>         
-              <MenuItem mnemonicParsing="false" onAction="#goToArchStatistics" text="Architecture Statistics" />
-              <MenuItem mnemonicParsing="false" onAction="#goToSentStatistics" text="Sentiment Statistics" />
-              <MenuItem mnemonicParsing="false" onAction="#goToGeoStatistics" text="Geographic Statistics" />
-            </items>
-          </Menu>
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#goToStatistics" text="Statistics" />
+               </items></Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
@@ -52,15 +49,6 @@
       <Button fx:id="addUser" layoutX="48.0" layoutY="157.0" mnemonicParsing="false" onAction="#openAddUser" prefHeight="31.0" prefWidth="106.0" text="Add user" />
       <Button layoutX="48.0" layoutY="203.0" mnemonicParsing="false" onAction="#openDeleteUser" prefHeight="31.0" prefWidth="106.0" text="Remove user" />
       <Label fx:id="showUserName" alignment="CENTER" layoutX="640.0" layoutY="10.0" prefHeight="31.0" prefWidth="151.0" text="User" textAlignment="CENTER" />
-      <TableView fx:id="TweetBox" layoutX="210.0" layoutY="270.0" prefHeight="200.0" prefWidth="559.0">
-         <columns>
-            <TableColumn fx:id="idCol" prefWidth="113.0" text="ID" />
-            <TableColumn fx:id="timeStampCol" minWidth="4.0" prefWidth="113.0" text="TimeStamp" />
-            <TableColumn fx:id="userCol" minWidth="0.0" prefWidth="105.0" text="User" />
-            <TableColumn fx:id="locationCol" minWidth="5.0" prefWidth="120.0" text="Location" />
-            <TableColumn fx:id="textCol" prefWidth="107.0" text="Text" />
-         </columns>
-      </TableView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f3f4f5" height="42.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="202.0" />
       <Label fx:id="label" alignment="CENTER" prefHeight="42.0" prefWidth="202.0" text="Dataflow Pro" textAlignment="CENTER">
          <font>
@@ -73,7 +61,6 @@
             <Font name="System Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Button layoutX="210.0" layoutY="479.0" mnemonicParsing="false" onAction="#retrieveData" text="Retrieve" />
       <Pane fx:id="userDeletePane" layoutX="206.0" layoutY="57.0" prefHeight="200.0" prefWidth="568.0">
          <children>
             <Label fx:id="userDeletion" layoutX="207.0" layoutY="14.0" text="User deletion Screen" />
@@ -94,5 +81,6 @@
          </children>
       </Pane>
       <ImageView fx:id="test" fitHeight="42.0" fitWidth="81.0" layoutX="340.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true" />
+
    </children>
 </AnchorPane>

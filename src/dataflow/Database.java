@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import sun.misc.BASE64Encoder;
 
 /**
@@ -52,7 +53,7 @@ public class Database {
             if (resultSet.next()) {
                 Account account = new Account();
                 account.setUserName(resultSet.getString("username"));
-                account.setAccessLevel(resultSet.getInt("access_level"));
+                account.setAccessLevel(resultSet.getInt("access_type"));
                 DataFlow.account = account;
             }
 
@@ -81,12 +82,12 @@ public class Database {
         }
     }
 
-    public void putInDatabase(String id, String timeStamp, String user, String location, String text) throws Exception {
+    public void putInDatabase(long id, long timeStamp, String user, String location, String text) throws Exception {
         try {
             preparedStatement = connect
                     .prepareStatement("INSERT INTO Tweets VALUES (?, ?, ?, ?, ?)");
-            preparedStatement.setString(1, id);
-            preparedStatement.setString(2, timeStamp);
+            preparedStatement.setLong(1, id);
+            preparedStatement.setLong(2, timeStamp);
             preparedStatement.setString(3, user);
             preparedStatement.setString(4, location);
             preparedStatement.setString(5, text);
@@ -106,12 +107,12 @@ public class Database {
     public ArrayList<Tweet> retrieveFromDatabase() throws Exception {
         ArrayList<Tweet> tweetAL = new ArrayList<>();
         preparedStatement = connect
-                .prepareStatement("SELECT * FROM Tweets");
+                .prepareStatement("SELECT * FROM data_feed");
         resultSet = preparedStatement.executeQuery();
 
-        while (resultSet.next()) {
-            Tweet t = new Tweet(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5));
-            tweetAL.add(t);
+        while (resultSet.next()) {            
+            Tweet t = new Tweet(resultSet.getInt("id"), new Date(resultSet.getLong("timestamp") * 1000L), resultSet.getString("user"), resultSet.getString("location"), resultSet.getString("message"), resultSet.getInt("weather_id"));
+            tweetAL.add(t);            
         }
 
         return tweetAL;
@@ -203,7 +204,25 @@ public class Database {
         } finally {
             close();
         }
+    }
+    
+    public Weather fetchWeather(int id) {             
+        try {
+            preparedStatement = connect
+                    .prepareStatement("SELECT * from weather where id = ? LIMIT 1");
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Weather weather = new Weather(resultSet.getInt("id"), resultSet.getString("date"), resultSet.getString("icon1"), resultSet.getString("icon2"), resultSet.getString("clouds"), resultSet.getString("mintemp"), resultSet.getString("maxtemp"));   
+                return weather;
+            }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }   
+        return null;
     }
 
 }

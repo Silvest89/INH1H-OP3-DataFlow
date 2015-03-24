@@ -35,9 +35,6 @@ public class DataFlow extends Application {
         screens.put("Login", "Login.fxml");
         screens.put("Main", "Main.fxml");
         screens.put("Statistics", "Statistics.fxml");
-        screens.put("GeographicStatistics", "GeographicStatistics.fxml");
-        screens.put("SentimentStatistics", "SentimentStatistics.fxml");
-        screens.put("ArchitectureStatistics", "ArchitectureStatistics.fxml");
         
         Calendar fromTime = Calendar.getInstance();
         fromTime.set(2015, 2, 23, 8, 0);
@@ -50,8 +47,8 @@ public class DataFlow extends Application {
         //Date date =  calendar.getTime();
         //System.out.println(unixTime);
         
-        Weather weather = new Weather();
-        weather.getWeather();
+        //Weather weather = new Weather();
+        //weather.getWeather();
         mainContainer = new ScreensController(); 
         mainContainer.loadScreen("Login", 
             screens.get("Login"));
@@ -93,6 +90,7 @@ public class DataFlow extends Application {
     
     public static void setScreen(String screen){
         if(screens.get(screen) != null){
+            System.out.println(screens.get(screen));
             if(mainContainer.getScreen(screen) == null)
                 mainContainer.loadScreen(screen, screens.get(screen));
             mainContainer.setScreen(screen);

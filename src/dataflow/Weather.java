@@ -20,7 +20,45 @@ import org.json.JSONObject;
  * @author Johnnie Ho
  */
 public class Weather {
-    public void getWeather(){
+    private int id;
+    private String date;
+    private String icon1;
+    private String icon2;
+    private String clouds;
+    private String minTemp;
+    private String maxTemp;
+        
+    public Weather(int id, String date, String icon1, String icon2, String clouds, String minTemp, String maxTemp){
+        this.id = id;
+        this.date = date;
+        this.icon1 = icon1;
+        this.icon2 = icon2;
+        this.clouds = clouds;
+        this.minTemp = minTemp;
+        this.maxTemp = maxTemp;        
+    }
+    
+    public String getIcon1(){
+        return icon1;
+    }
+    
+    public String getIcon2(){
+        return icon2;
+    }
+    
+    public String getMinTemp(){
+        return minTemp;
+    }
+    
+    public String getMaxTemp(){
+        return maxTemp;
+    }    
+    
+    public String getClouds(){
+        return clouds;
+    }
+    
+    public static void getWeather(){
         String jsonString = callURL("http://api.openweathermap.org/data/2.5/weather?id=2747891&units=metric");
 		System.out.println("\n\njsonString: " + jsonString);
                 
@@ -35,33 +73,33 @@ public class Weather {
 		}
     }
     
-	public static String callURL(String myURL) {
-		System.out.println("Requested URL:" + myURL);
-		StringBuilder sb = new StringBuilder();
-		URLConnection urlConn = null;
-		InputStreamReader in = null;
-		try {
-			URL url = new URL(myURL);
-			urlConn = url.openConnection();
-			if (urlConn != null)
-				urlConn.setReadTimeout(60 * 1000);
-			if (urlConn != null && urlConn.getInputStream() != null) {
-				in = new InputStreamReader(urlConn.getInputStream(),
-						Charset.defaultCharset());
-				BufferedReader bufferedReader = new BufferedReader(in);
-				if (bufferedReader != null) {
-					int cp;
-					while ((cp = bufferedReader.read()) != -1) {
-						sb.append((char) cp);
-					}
-					bufferedReader.close();
-				}
-			}
-		in.close();
-		} catch (Exception e) {
-			throw new RuntimeException("Exception while calling URL:"+ myURL, e);
-		} 
- 
-		return sb.toString();
-	}    
+    public static String callURL(String myURL) {
+        System.out.println("Requested URL:" + myURL);
+        StringBuilder sb = new StringBuilder();
+        URLConnection urlConn = null;
+        InputStreamReader in = null;
+        try {
+                URL url = new URL(myURL);
+                urlConn = url.openConnection();
+                if (urlConn != null)
+                        urlConn.setReadTimeout(60 * 1000);
+                if (urlConn != null && urlConn.getInputStream() != null) {
+                        in = new InputStreamReader(urlConn.getInputStream(),
+                                        Charset.defaultCharset());
+                        BufferedReader bufferedReader = new BufferedReader(in);
+                        if (bufferedReader != null) {
+                                int cp;
+                                while ((cp = bufferedReader.read()) != -1) {
+                                        sb.append((char) cp);
+                                }
+                                bufferedReader.close();
+                        }
+                }
+        in.close();
+        } catch (Exception e) {
+                throw new RuntimeException("Exception while calling URL:"+ myURL, e);
+        } 
+
+        return sb.toString();
+    }    
 }

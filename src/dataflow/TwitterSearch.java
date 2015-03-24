@@ -1,6 +1,7 @@
 package dataflow;
 
 import java.util.ArrayList;
+import java.util.Date;
 import twitter4j.*;
 import java.util.logging.Logger;
 import twitter4j.conf.ConfigurationBuilder;
@@ -39,13 +40,13 @@ public class TwitterSearch {
             QueryResult result = twitter.search(query);
             
             for (Status status : result.getTweets()) {
-                String ID = "" + status.getId();
-                String timeStamp = "" + status.getCreatedAt();
-                String user = "" + status.getUser().getName();
+                long ID = status.getId();
+                long timeStamp = status.getCreatedAt().getTime();
+                String user = status.getUser().getName();
                 String location = "" + status.getGeoLocation();
-                String text = "" + status.getText();
+                String text = status.getText();
                 
-                Tweet t = new Tweet(ID, timeStamp, user, location, text);
+                Tweet t = new Tweet(ID, new Date(timeStamp), user, location, text, 0);
                 tweetAL.add(t);
                  
             }

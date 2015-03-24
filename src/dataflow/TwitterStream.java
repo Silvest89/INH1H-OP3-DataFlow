@@ -1,5 +1,6 @@
 package dataflow;
 
+import java.util.Date;
 import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.*;
 
@@ -7,8 +8,8 @@ public class TwitterStream {
 
     Database d;
     
-    String id;
-    String timeStamp;
+    long id;
+    long timeStamp;
     String user;
     String location;
     String text;
@@ -48,14 +49,14 @@ public class TwitterStream {
             
             @Override
             public void onStatus(Status status) {
-                id = "" + status.getId();
-                timeStamp = "" + status.getCreatedAt();
+                id = status.getId();
+                timeStamp = status.getCreatedAt().getTime();
                 user = "" + status.getUser().getName();
                 location = "" + status.getGeoLocation();
                 text = "" + status.getText();
 
                 try {
-                    //d.putInDatabase(id, timeStamp, user, location, text);
+                    d.putInDatabase(id, timeStamp, user, location, text);
                 } catch(Exception e){
                     e.printStackTrace();
                 }

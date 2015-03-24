@@ -1,22 +1,28 @@
 package dataflow;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Tweet {
     
-    private String id;
+    private long id;
     private String timeStamp;
     private String user;
     private String location;
     private String text;
+    private int weather;
     
-    public Tweet(String id, String timeStamp, String user, String location, String text){
-        this.id = id;
-        this.timeStamp = timeStamp;
+    public Tweet(long id, Date timeStamp, String user, String location, String text, int weather){
+        this.id = id;    
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm z");
+        this.timeStamp = format.format(timeStamp);
         this.user = user;
         this.location = location;
         this.text = text;
+        this.weather = weather;
     }
     
-    public String getId(){
+    public long getId(){
         return id;
     }
     
@@ -34,6 +40,10 @@ public class Tweet {
     
     public String getText(){
         return text;
+    }
+    
+    public int getWeather(){
+        return weather;
     }
 
 }

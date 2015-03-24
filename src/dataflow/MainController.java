@@ -5,35 +5,21 @@
  */
 package dataflow;
 
-
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 /**
  * FXML Controller class
@@ -46,9 +32,6 @@ public class MainController extends ControlledScreen implements Initializable {
     private final ObservableList<String> choices = FXCollections.observableArrayList();
 
     Account account = DataFlow.account;
-
-        @FXML
-        private ImageView test;
         
     @FXML
     private Label label;
@@ -58,9 +41,6 @@ public class MainController extends ControlledScreen implements Initializable {
 
     @FXML
     private Label showPageName;
-
-    @FXML
-    private TableView TweetBox;
 
     @FXML
     private Pane userPane;
@@ -83,16 +63,6 @@ public class MainController extends ControlledScreen implements Initializable {
     @FXML
     private Button addUser;
     @FXML
-    private TableColumn idCol;
-    @FXML
-    private TableColumn timeStampCol;
-    @FXML
-    private TableColumn userCol;
-    @FXML
-    private TableColumn locationCol;
-    @FXML
-    private TableColumn textCol;
-    @FXML
     private Button createUser;
     @FXML
     private Label userCreation;
@@ -114,13 +84,6 @@ public class MainController extends ControlledScreen implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        idCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("id"));
-        timeStampCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("timeStamp"));
-        userCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("user"));
-        locationCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("location"));
-        textCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("text"));
-        
-        TweetBox.setItems(data);
         namesChoice.setItems(choices);
 
     }
@@ -132,16 +95,6 @@ public class MainController extends ControlledScreen implements Initializable {
             showPageName.setText("Home page");
             userPane.setVisible(false);
             userDeletePane.setVisible(false);
-        try {
-
-            String fullUrlPath = "http://openweathermap.org/img/w/10d.png";
-            URL url = new URL(fullUrlPath);
-            BufferedImage img = ImageIO.read(url);
-            Image image = SwingFXUtils.toFXImage(img, null);
-            test.setImage(image);
-        } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     @FXML
@@ -232,37 +185,12 @@ public class MainController extends ControlledScreen implements Initializable {
     }
 
     @FXML
-    private void goToArchStatistics(ActionEvent event) {
-        DataFlow.setScreen("ArchitectureStatistics");
-    }
-
-    @FXML
-    private void goToSentStatistics(ActionEvent event) {
+    private void goToStatistics(ActionEvent event) {
         DataFlow.setScreen("Statistics");
-    }
-
-    @FXML
-    private void goToGeoStatistics(ActionEvent event) {
-        DataFlow.setScreen("GeographicStatistics");
     }
 
     @FXML
     private void logOut(ActionEvent event) {
         DataFlow.setScreen("Login");
-    }
-
-    @FXML
-    private void retrieveData(ActionEvent event) throws Exception {
-        try {
-            Database d = new Database();
-            ArrayList<Tweet> tweetAL = d.retrieveFromDatabase();
-            data.clear();
-            for (Tweet t : tweetAL) {
-                data.add(t);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }   
+    } 
 }
