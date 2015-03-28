@@ -35,6 +35,7 @@ public class DataFlow extends Application {
         screens.put("Login", "Login.fxml");
         screens.put("Main", "Main.fxml");
         screens.put("Statistics", "Statistics.fxml");
+        screens.put("Graphs", "Graphs.fxml");
         
         Calendar fromTime = Calendar.getInstance();
         fromTime.set(2015, 2, 23, 8, 0);

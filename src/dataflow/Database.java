@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import org.json.JSONObject;
@@ -61,7 +62,7 @@ public class Database {
         } catch (Exception e) {
             throw e;
         } finally {
-            close();
+            //close();
         }
     }
 
@@ -83,15 +84,17 @@ public class Database {
         }
     }
 
-    public void putInDatabase(long id, long timeStamp, String user, String location, String text) throws Exception {
+    public void putInDatabase(long id, String text, String user, long timeStamp, String location) throws Exception {
         try {
             preparedStatement = connect
-                    .prepareStatement("INSERT INTO Tweets VALUES (?, ?, ?, ?, ?)");
+                    .prepareStatement("INSERT INTO data_feed(feed_id, message, user, timestamp, location, feed_type, weather_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setLong(1, id);
-            preparedStatement.setLong(2, timeStamp);
+            preparedStatement.setString(2, text);
             preparedStatement.setString(3, user);
-            preparedStatement.setString(4, location);
-            preparedStatement.setString(5, text);
+            preparedStatement.setLong(4, timeStamp);
+            preparedStatement.setString(5, location);
+            preparedStatement.setString(6, "Twitter");
+            preparedStatement.setInt(7, 1);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -101,9 +104,11 @@ public class Database {
     }
 
     /**
-     * This method return an ArrayList of Tweets, used to populate the table in the main screen
+     * This method return an ArrayList of Tweets, used to populate the table in
+     * the main screen
+     *
      * @return ArrayList<Tweet> : ArrayList containing tweets from the database
-     * @throws Exception 
+     * @throws Exception
      */
     public ArrayList<Tweet> retrieveFromDatabase() throws Exception {
         ArrayList<Tweet> tweetAL = new ArrayList<>();
@@ -111,9 +116,9 @@ public class Database {
                 .prepareStatement("SELECT * FROM data_feed");
         resultSet = preparedStatement.executeQuery();
 
-        while (resultSet.next()) {            
-            Tweet t = new Tweet(resultSet.getInt("id"), new Date(resultSet.getLong("timestamp") * 1000L), resultSet.getString("user"), resultSet.getString("location"), resultSet.getString("message"), resultSet.getInt("weather_id"));
-            tweetAL.add(t);            
+        while (resultSet.next()) {
+            Tweet t = new Tweet(resultSet.getLong("feed_id"), new Date(resultSet.getLong("timestamp") * 1000L), resultSet.getString("user"), resultSet.getString("location"), resultSet.getString("message"), resultSet.getInt("weather_id"));
+            tweetAL.add(t);
         }
 
         return tweetAL;
@@ -121,9 +126,10 @@ public class Database {
 
     /**
      * This method adds a new user into the database, iff it does not exist yet
+     *
      * @param name user name of the account added
      * @param passWord password of the account added
-     * @throws Exception 
+     * @throws Exception
      */
     public void addUser(String name, String passWord) throws Exception {
         try {
@@ -146,14 +152,17 @@ public class Database {
         } catch (Exception e) {
             throw e;
         } finally {
-            close();
+            //close();
         }
     }
 
     /**
-     * This method returns an ArrayList of Strings, used to populate the choiceBox in the deletion menu
-     * @return ArrayList<String> ArrayList containing user names from the database 
-     * @throws Exception 
+     * This method returns an ArrayList of Strings, used to populate the
+     * choiceBox in the deletion menu
+     *
+     * @return ArrayList<String> ArrayList containing user names from the
+     * database
+     * @throws Exception
      */
     public ArrayList<String> populateChoiceBox() throws Exception {
         ArrayList<String> choices = new ArrayList<>();
@@ -168,11 +177,13 @@ public class Database {
     }
 
     /**
-     * This method checks if a given user name/password combination is present in the database
+     * This method checks if a given user name/password combination is present
+     * in the database
+     *
      * @param name the user name of the account checked
      * @param passWord the password of the account checked
      * @return boolean based on whether the account is present or not
-     * @throws Exception 
+     * @throws Exception
      */
     public boolean checkAccount(String name, String passWord) throws Exception {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -190,6 +201,7 @@ public class Database {
 
     /**
      * This method removes a given account from the database
+     *
      * @param name user name of the account deleted
      * @param passWord password of the account deleted
      */
@@ -203,56 +215,79 @@ public class Database {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            close();
+            //close();
         }
     }
-    
-    public void checkWeather(String timeStamp){
+
+    public int countTweets(String date) throws Exception {
+        ArrayList<String> results = new ArrayList<>();
+        preparedStatement = connect
+                .prepareStatement("SELECT timestamp FROM data_feed");
+        resultSet = preparedStatement.executeQuery();
+
+        while(resultSet.next()){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YY");
+            results.add(sdf.format(new Date(resultSet.getLong("timeStamp") * 1000L)));
+        }
+        
+        int i = 0;
+        for (String s : results){
+            if(s.equals(date)){
+                i++;
+            }
+        }
+        
+        return i;
+
+    }
+
+    public void checkWeather(String timeStamp) {
         try {
             preparedStatement = connect
-                .prepareStatement("SELECT * from weather where date = ? LIMIT 1");
+                    .prepareStatement("SELECT * from weather where date = ? LIMIT 1");
             preparedStatement.setString(1, timeStamp);
             resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
                 JSONObject jsonWeather = Weather.getWeather();
                 preparedStatement = connect
-                    .prepareStatement("INSERT INTO weather(date, icon1, icon2, clouds, mintemp, maxtemp) VALUES (?, ?, ?, ?, ?, ?)");
+                        .prepareStatement("INSERT INTO weather(date, icon1, icon2, clouds, mintemp, maxtemp) VALUES (?, ?, ?, ?, ?, ?)");
                 preparedStatement.setString(1, timeStamp);
                 preparedStatement.setString(2, jsonWeather.getJSONArray("weather").getJSONObject(0).getString("icon"));
-                
-                if(jsonWeather.getJSONArray("weather").length() >= 2)
+
+                if (jsonWeather.getJSONArray("weather").length() >= 2) {
                     preparedStatement.setString(3, jsonWeather.getJSONArray("weather").getJSONObject(1).getString("icon"));
-                else
+                } else {
                     preparedStatement.setString(3, "0");
-                
+                }
+
                 preparedStatement.setString(4, Integer.toString(jsonWeather.getJSONObject("clouds").getInt("all")));
                 preparedStatement.setString(5, Double.toString(jsonWeather.getJSONObject("main").getDouble("temp_min")));
                 preparedStatement.setString(6, Double.toString(jsonWeather.getJSONObject("main").getDouble("temp_max")));
-                preparedStatement.executeUpdate();                
+                preparedStatement.executeUpdate();
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            close();
-        }   
+            //close();
+        }
     }
-    
-    public Weather fetchWeather(int id) {             
+
+    public Weather fetchWeather(int id) {
         try {
             preparedStatement = connect
                     .prepareStatement("SELECT * from weather where id = ? LIMIT 1");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                Weather weather = new Weather(resultSet.getInt("id"), resultSet.getString("date"), resultSet.getString("icon1"), resultSet.getString("icon2"), resultSet.getString("clouds"), resultSet.getString("mintemp"), resultSet.getString("maxtemp"));   
+                Weather weather = new Weather(resultSet.getInt("id"), resultSet.getString("date"), resultSet.getString("icon1"), resultSet.getString("icon2"), resultSet.getString("clouds"), resultSet.getString("mintemp"), resultSet.getString("maxtemp"));
                 return weather;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            close();
-        }   
+            //close();
+        }
         return null;
     }
 

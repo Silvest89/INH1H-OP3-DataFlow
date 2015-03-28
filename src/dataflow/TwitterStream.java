@@ -56,10 +56,10 @@ public class TwitterStream {
                 location = "" + status.getGeoLocation();
                 text = "" + status.getText();
                 SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                d.checkWeather(format.format(timeStamp));
+                //d.checkWeather(format.format(timeStamp));
                     
                 try {                    
-                    d.putInDatabase(id, timeStamp, user, location, text);
+                    d.putInDatabase(id, text, user, timeStamp, location);
                 } catch(Exception e){
                     e.printStackTrace();
                 }
