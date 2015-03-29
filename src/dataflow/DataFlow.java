@@ -48,7 +48,7 @@ public class DataFlow extends Application {
         //Date date =  calendar.getTime();
         //System.out.println(unixTime);
         
-        Weather.getWeather();       
+        InstagramFeed.getInstagramFeed();       
 
         mainContainer = new ScreensController(); 
         mainContainer.loadScreen("Login", 

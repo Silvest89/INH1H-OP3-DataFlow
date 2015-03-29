@@ -2,8 +2,10 @@ package dataflow;
 
 import com.restfb.*;
 import com.restfb.FacebookClient.AccessToken;
+import com.restfb.types.NamedFacebookType;
 import com.restfb.types.Post;
 import static java.lang.System.currentTimeMillis;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +24,17 @@ public class FacebookApplication {
         //And prints it to the screen
         for (List<Post> connectionPage : messages){
             for(Post p : connectionPage){
-                System.out.println(p.getId() + ", " + ((long)(p.getCreatedTime().getTime() / 1000L)) + ", " + p.getFrom().getName() + ", " + p.getMessage());
+                System.out.println(p.getMessage());
+                Connection<NamedFacebookType> messages2 = facebookClient.fetchConnection(p.getId() + "/likes", NamedFacebookType.class);
+                int count = 0;
+                for(List<NamedFacebookType> test : messages2){
+                    for(NamedFacebookType p2 : test){
+                        System.out.println(p2.getName());
+                        count += 1;
+                    }
+                }
+                System.out.println(count);
+                //System.out.println(p.getId() + ", " + ((long)(p.getCreatedTime().getTime() / 1000L)) + ", " + p.getFrom().getName() + ", " + p.getMessage());
             }
         }
     }

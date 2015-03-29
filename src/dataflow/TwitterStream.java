@@ -9,7 +9,7 @@ public class TwitterStream {
 
     Database d;
     
-    long id;
+    String id;
     long timeStamp;
     String user;
     String location;
@@ -50,14 +50,14 @@ public class TwitterStream {
             
             @Override
             public void onStatus(Status status) {
-                id = status.getId();
+                id = Long.toString(status.getId());
                 timeStamp = status.getCreatedAt().getTime();
                 user = "" + status.getUser().getName();
                 location = "" + status.getGeoLocation();
                 text = "" + status.getText();
                     
                 try {                    
-                    d.putInDatabase(id, text, user, timeStamp, location);
+                    d.putInDatabase("Twitter", id, text, user, timeStamp, location);
                 } catch(Exception e){
                     e.printStackTrace();
                 }

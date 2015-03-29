@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -84,26 +85,20 @@ public class Database {
         }
     }
 
-    public void putInDatabase(long id, String text, String user, long timeStamp, String location) throws Exception {
+    public void putInDatabase(String feedType, String feedId, String text, String user, long timeStamp, String location) throws Exception {
         try {
             preparedStatement = connect
-                    .prepareStatement("INSERT INTO data_feed(feed_id, message, user, timestamp, location, feed_type, weather_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            preparedStatement.setLong(1, id);
+                    .prepareStatement("INSERT INTO data_feed(feed_id, message, user, timestamp, location, feed_type) VALUES (?, ?, ?, ?, ?, ?)");
+            preparedStatement.setString(1, feedId);
             preparedStatement.setString(2, text);
             preparedStatement.setString(3, user);
             preparedStatement.setLong(4, timeStamp);
             preparedStatement.setString(5, location);
-            preparedStatement.setString(6, "Twitter");
-            preparedStatement.setInt(7, 1);
+            preparedStatement.setString(6, feedType);
             preparedStatement.executeUpdate();
             
-            ResultSet rs = preparedStatement.getGeneratedKeys();
-            if(rs.next())
-            {
-                int lastInsertId = rs.getInt(1);
-            }
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
         } finally {
             //close();
         }
@@ -295,8 +290,49 @@ public class Database {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //close();
+            close();
         }
+        return null;
+    }
+    
+    public void insertInstagramId(String minId) throws SQLException{
+        try{
+            preparedStatement = connect
+                .prepareStatement("INSERT INTO feed_instagram(id, min_id) VALUES (1, ?)");
+            preparedStatement.setString(1, minId);
+            preparedStatement.executeUpdate();        
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }     
+    }
+    
+    public void updateInstagramId(String minId, String nextMinId) throws SQLException{
+        try{
+            preparedStatement = connect
+                .prepareStatement("UPDATE feed_instagram SET min_id = ? WHERE min_id = ?");
+            preparedStatement.setString(1, nextMinId);
+            preparedStatement.setString(2, minId);
+            preparedStatement.executeUpdate();        
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }             
+    }    
+    
+    public String getRecentInstagramId(){
+        try {
+            preparedStatement = connect
+                    .prepareStatement("SELECT * from feed_instagram LIMIT 1");
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("min_id");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         return null;
     }
 
