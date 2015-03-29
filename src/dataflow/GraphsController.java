@@ -48,6 +48,8 @@ public class GraphsController extends ControlledScreen implements Initializable 
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YY");
             
+            SimpleDateFormat sdfReverse = new SimpleDateFormat("YYYY-MM-dd");
+            
             String today = sdf.format(new Date(System.currentTimeMillis()));
             String todayMin1 = sdf.format(new Date(System.currentTimeMillis() - (1 * 86400000)));
             String todayMin2 = sdf.format(new Date(System.currentTimeMillis() - (2 * 86400000)));
@@ -55,6 +57,14 @@ public class GraphsController extends ControlledScreen implements Initializable 
             String todayMin4 = sdf.format(new Date(System.currentTimeMillis() - (4 * 86400000)));
             String todayMin5 = sdf.format(new Date(System.currentTimeMillis() - (5 * 86400000)));
             String todayMin6 = sdf.format(new Date(System.currentTimeMillis() - (6 * 86400000)));
+            
+            String todayReverse = sdfReverse.format(new Date(System.currentTimeMillis()));
+            String todayMin1Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (1 * 86400000)));
+            String todayMin2Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (2 * 86400000)));
+            String todayMin3Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (3 * 86400000)));
+            String todayMin4Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (4 * 86400000)));
+            String todayMin5Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (5 * 86400000)));
+            String todayMin6Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (6 * 86400000)));
 
             XYChart.Series bcSeries1 = new XYChart.Series();
             bcSeries1.getData().add(new XYChart.Data(todayMin6, d.countTweets(todayMin6)));
@@ -63,18 +73,18 @@ public class GraphsController extends ControlledScreen implements Initializable 
             bcSeries1.getData().add(new XYChart.Data(todayMin3, d.countTweets(todayMin3)));
             bcSeries1.getData().add(new XYChart.Data(todayMin2, d.countTweets(todayMin2)));
             bcSeries1.getData().add(new XYChart.Data(todayMin1, d.countTweets(todayMin1)));
-            bcSeries1.getData().add(new XYChart.Data(today, d.countTweets(today)));
 
             bcTweets.getData().add(bcSeries1);
 
             XYChart.Series lcSeries = new XYChart.Series();
-            lcSeries.getData().add(new XYChart.Data("22 Mar", 8.2));
-            lcSeries.getData().add(new XYChart.Data("23 Mar", 9.3));
-            lcSeries.getData().add(new XYChart.Data("24 Mar", 15.1));
-            lcSeries.getData().add(new XYChart.Data("25 Mar", 8.4));
-            lcSeries.getData().add(new XYChart.Data("26 Mar", 9.6));
-            lcSeries.getData().add(new XYChart.Data("27 Mar", 10.0));
-
+            lcSeries.setName("Min. temp");
+            lcSeries.getData().add(new XYChart.Data(todayMin6, d.fetchWeather(todayMin6Reverse)));
+            lcSeries.getData().add(new XYChart.Data(todayMin5, d.fetchWeather(todayMin5Reverse)));
+            lcSeries.getData().add(new XYChart.Data(todayMin4, d.fetchWeather(todayMin4Reverse)));
+            lcSeries.getData().add(new XYChart.Data(todayMin3, d.fetchWeather(todayMin3Reverse)));
+            lcSeries.getData().add(new XYChart.Data(todayMin2, d.fetchWeather(todayMin2Reverse)));
+            lcSeries.getData().add(new XYChart.Data(todayMin1, d.fetchWeather(todayMin1Reverse)));
+            
             lcWeather.getData().addAll(lcSeries);
         } catch (Exception e) {
             e.printStackTrace();
