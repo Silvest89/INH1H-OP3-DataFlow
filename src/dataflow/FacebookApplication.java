@@ -16,13 +16,13 @@ public class FacebookApplication {
     }
     public void fetch(){
         //Fetches the feed on the boijmans museum page
-        Connection<Post> messages = facebookClient.fetchConnection("boijmans/feed", Post.class, Parameter.with("until", "1427068800"), Parameter.with("since", "1424649600"));
+        Connection<Post> messages = facebookClient.fetchConnection("boijmans/feed", Post.class, Parameter.with("since", "1424649600"), Parameter.with("until", "1427068800"), Parameter.with("date_format", "U"));
        
         //Loops through all posts and gets the useful information
         //And prints it to the screen
         for (List<Post> connectionPage : messages){
             for(Post p : connectionPage){
-                System.out.println(p.getId() + ", " + p.getCreatedTime() + ", " + p.getFrom().getName() + ", " + p.getMessage());
+                System.out.println(p.getId() + ", " + ((long)(p.getCreatedTime().getTime() / 1000L)) + ", " + p.getFrom().getName() + ", " + p.getMessage());
             }
         }
     }

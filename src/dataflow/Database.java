@@ -225,6 +225,27 @@ public class Database {
         }
     }
     
+    public int countTweets(String date) throws Exception {
+        ArrayList<String> results = new ArrayList<>();
+        preparedStatement = connect
+                .prepareStatement("SELECT timestamp FROM data_feed");
+        resultSet = preparedStatement.executeQuery();
+
+        while(resultSet.next()){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YY");
+            results.add(sdf.format(new Date(resultSet.getLong("timeStamp") * 1000L)));
+        }
+        
+        int i = 0;
+        for (String s : results){
+            if(s.equals(date)){
+                i++;
+            }
+        }
+        
+        return i;
+    }
+
     public void checkWeather(String timeStamp, JSONObject jsonWeather){
         try {
             preparedStatement = connect
