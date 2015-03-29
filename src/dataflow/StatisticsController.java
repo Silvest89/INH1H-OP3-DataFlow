@@ -26,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javax.imageio.ImageIO;
 
@@ -81,6 +82,10 @@ public class StatisticsController extends ControlledScreen implements Initializa
     
     @FXML
     private Text clouds;    
+    @FXML
+    private Region weatherRegion;
+    @FXML
+    private Label showPageName1;
     
     /**
      * Initializes the controller class.
@@ -169,5 +174,10 @@ public class StatisticsController extends ControlledScreen implements Initializa
             maxTemp.setText(weather.getMaxTemp() + "°C");
             clouds.setText(weather.getClouds() + "%");
         }
+    }
+
+    @FXML
+    public void goToGraphs(ActionEvent event) {
+        DataFlow.setScreen("Graphs");
     }
 }
