@@ -65,7 +65,7 @@ public class Database {
         }
     }
 
-    private void close() {
+    public void close() {
         try {
             if (resultSet != null) {
                 resultSet.close();
@@ -86,13 +86,19 @@ public class Database {
     public void putInDatabase(long id, long timeStamp, String user, String location, String text) throws Exception {
         try {
             preparedStatement = connect
-                    .prepareStatement("INSERT INTO Tweets VALUES (?, ?, ?, ?, ?)");
+                    .prepareStatement("INSERT INTO Tweets VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setLong(1, id);
             preparedStatement.setLong(2, timeStamp);
             preparedStatement.setString(3, user);
             preparedStatement.setString(4, location);
             preparedStatement.setString(5, text);
             preparedStatement.executeUpdate();
+            
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if(rs.next())
+            {
+                int lastInsertId = rs.getInt(1);
+            }
         } catch (Exception e) {
             throw e;
         } finally {
@@ -112,7 +118,7 @@ public class Database {
         resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {            
-            Tweet t = new Tweet(resultSet.getInt("id"), new Date(resultSet.getLong("timestamp") * 1000L), resultSet.getString("user"), resultSet.getString("location"), resultSet.getString("message"), resultSet.getInt("weather_id"));
+            Tweet t = new Tweet(resultSet.getInt("id"), new Date(resultSet.getLong("timestamp")), resultSet.getString("user"), resultSet.getString("location"), resultSet.getString("message"), resultSet.getInt("weather_id"));
             tweetAL.add(t);            
         }
 
@@ -207,33 +213,38 @@ public class Database {
         }
     }
     
-    public void checkWeather(String timeStamp){
+    public void checkWeather(String timeStamp, JSONObject jsonWeather){
         try {
             preparedStatement = connect
                 .prepareStatement("SELECT * from weather where date = ? LIMIT 1");
             preparedStatement.setString(1, timeStamp);
             resultSet = preparedStatement.executeQuery();
-            if (!resultSet.next()) {
-                JSONObject jsonWeather = Weather.getWeather();
+            if (!resultSet.next()) {                
+                JSONObject weather = jsonWeather.getJSONArray("weather").getJSONObject(0);
+                String date = weather.getString("date");
+                String mintemp = weather.getString("mintempC");
+                String maxtemp = weather.getString("maxtempC");
+                JSONObject weather2 = weather.getJSONArray("hourly").getJSONObject(0);
+                String cloudCover = weather2.getString("cloudcover");
+                String weatherDesc = weather2.getJSONArray("weatherDesc").getJSONObject(0).getString("value");
+                String weatherIcon = weather2.getJSONArray("weatherIconUrl").getJSONObject(0).getString("value");
+                
                 preparedStatement = connect
-                    .prepareStatement("INSERT INTO weather(date, icon1, icon2, clouds, mintemp, maxtemp) VALUES (?, ?, ?, ?, ?, ?)");
-                preparedStatement.setString(1, timeStamp);
-                preparedStatement.setString(2, jsonWeather.getJSONArray("weather").getJSONObject(0).getString("icon"));
+                    .prepareStatement("INSERT INTO weather(date, icon, clouds, mintemp, maxtemp, description) VALUES (?, ?, ?, ?, ?, ?)");
+                preparedStatement.setString(1, date);
+                preparedStatement.setString(2, weatherIcon);
                 
-                if(jsonWeather.getJSONArray("weather").length() >= 2)
-                    preparedStatement.setString(3, jsonWeather.getJSONArray("weather").getJSONObject(1).getString("icon"));
-                else
-                    preparedStatement.setString(3, "0");
-                
-                preparedStatement.setString(4, Integer.toString(jsonWeather.getJSONObject("clouds").getInt("all")));
-                preparedStatement.setString(5, Double.toString(jsonWeather.getJSONObject("main").getDouble("temp_min")));
-                preparedStatement.setString(6, Double.toString(jsonWeather.getJSONObject("main").getDouble("temp_max")));
-                preparedStatement.executeUpdate();                
+                preparedStatement.setString(3, cloudCover);
+                preparedStatement.setString(4, mintemp);
+                preparedStatement.setString(5, maxtemp);
+                preparedStatement.setString(6, weatherDesc);
+                preparedStatement.executeUpdate();
+               
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            close();
+            //close();
         }   
     }
     

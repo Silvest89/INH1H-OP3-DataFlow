@@ -157,20 +157,11 @@ public class StatisticsController extends ControlledScreen implements Initializa
             Weather weather = db.fetchWeather(tweet.getWeather());      
             try {
 
-                String fullUrlPath = "http://openweathermap.org/img/w/" + weather.getIcon1() + ".png";
+                String fullUrlPath = weather.getIcon();
                 URL url = new URL(fullUrlPath);
                 BufferedImage img = ImageIO.read(url);
                 Image image = SwingFXUtils.toFXImage(img, null);
                 weatherIcon1.setImage(image);
-                if(!weather.getIcon2().equals(""))
-                {
-                    fullUrlPath = "http://openweathermap.org/img/w/" + weather.getIcon2() + ".png";
-                    url = new URL(fullUrlPath);
-                    img = ImageIO.read(url);
-                    image = SwingFXUtils.toFXImage(img, null);                
-                    weatherIcon2.setImage(image);
-                }
-
             } catch (IOException ex) {
                 Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
             }           

@@ -55,8 +55,6 @@ public class TwitterStream {
                 user = "" + status.getUser().getName();
                 location = "" + status.getGeoLocation();
                 text = "" + status.getText();
-                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                d.checkWeather(format.format(timeStamp));
                     
                 try {                    
                     d.putInDatabase(id, timeStamp, user, location, text);
@@ -84,6 +82,7 @@ public class TwitterStream {
 
         twitterStream.addListener(listener);
         twitterStream.filter(fq);
+        d.close();
     }
 
 }

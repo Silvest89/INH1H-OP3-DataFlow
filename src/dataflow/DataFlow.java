@@ -42,7 +42,7 @@ public class DataFlow extends Application {
         toTime.set(2015, 2, 23, 5, 0);
         Date date = toTime.getTime();
         SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
-        System.out.println(format.format(date));
+        //System.out.println(format.format(date));
         //long unixTime = (long)calendar.getTimeInMillis()/1000L;
         //Date date =  calendar.getTime();
         //System.out.println(unixTime);
