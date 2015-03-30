@@ -81,13 +81,8 @@ public class ScreensController  extends StackPane {
                         Timeline fadeIn = new Timeline(
                                 new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
                                 new KeyFrame(new Duration(300), new KeyValue(opacity, 1.0)));
-                        fadeIn.play();
-                        if(name.equals("Main") || name.equals("Statistics")){                                
-                            DataFlow.setMainWindowSize();
-                        }
-                        if(name.equals("Login")) {
-                            DataFlow.setLoginWindowSize();
-                        }
+                        fadeIn.play();                               
+                        DataFlow.setMainWindowSize();
                     }
                 }, new KeyValue(opacity, 0.0)));
                 fade.play();

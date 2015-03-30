@@ -11,23 +11,15 @@ import dataflow.dialog.UserCreateDialogController;
 import dataflow.dialog.UserDeleteDialogController;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -48,9 +40,18 @@ public class MainController extends ControlledScreen implements Initializable {
 
     @FXML
     private Label showPageName;
+    
+    @FXML
+    private Label showAccessLevel;
 
     @FXML
     private Button logOutButton;
+    
+    @FXML
+    private Button addUser;
+    
+    @FXML 
+    private Button deleteUser;
 
 
     /**
@@ -58,13 +59,33 @@ public class MainController extends ControlledScreen implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if(DataFlow.account.getAccessLevel() < Account.SUPERVISOR){
+            addUser.setDisable(true);
+            deleteUser.setDisable(true);
+        }
+        else if(DataFlow.account.getAccessLevel() == Account.SUPERVISOR){
+            deleteUser.setDisable(true);
+        }
+        
+        
     }
 
     @Override
     public void prepare() {
-            //label.setText(account.getUserName());
             showUserName.setText("Welcome, " + account.getUserName() + "!");
-            showPageName.setText("Home page");
+            String access = "";
+            switch(DataFlow.account.getAccessLevel()){
+                case Account.NORMAL:
+                    access = "Normal Account";
+                    break;
+                case Account.SUPERVISOR:
+                    access = "Supervisor Account";
+                    break;
+                case Account.ADMIN:
+                    access = "Admin Account";
+                    break;                 
+            }                
+            showAccessLevel.setText(access);
     }
 
     @FXML
@@ -78,6 +99,7 @@ public class MainController extends ControlledScreen implements Initializable {
         // Create the dialog Stage.
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Create User");
+        dialogStage.setResizable(false);
         dialogStage.initModality(Modality.WINDOW_MODAL);
         dialogStage.initOwner(DataFlow.stage);
         Scene scene = new Scene(page);
@@ -110,6 +132,7 @@ public class MainController extends ControlledScreen implements Initializable {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Delete User");
+            dialogStage.setResizable(false);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(DataFlow.stage);
             Scene scene = new Scene(page);

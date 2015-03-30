@@ -6,8 +6,10 @@
 
 }
 
-#userCreation, #userDeletion {
-    -fx-font-size: 16px;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+#showUserName{
     -fx-font-weight: bold;
 }
+#showAccessLevel{
+    -fx-text-fill: green;
+}
+

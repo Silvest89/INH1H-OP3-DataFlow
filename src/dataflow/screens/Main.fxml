@@ -14,18 +14,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="786.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataflow.screens.MainController">
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataflow.screens.MainController">
     <stylesheets>
         <URL value="@main.css" />
     </stylesheets>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="550.0" layoutY="43.0" opacity="0.24" stroke="BLACK" strokeType="INSIDE" width="202.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="257.0" layoutY="43.0" opacity="0.24" stroke="BLACK" strokeType="INSIDE" width="202.0">
          <effect>
             <DropShadow />
          </effect>
       </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="31.0" layoutX="640.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="151.0" />
-      <MenuBar layoutX="202.0" prefHeight="42.0" prefWidth="383.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" layoutX="430.0" layoutY="57.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="151.0" />
+      <MenuBar layoutX="202.0" prefHeight="42.0" prefWidth="398.0">
         <menus>
           <Menu mnemonicParsing="false" text="Home">
                <items>
@@ -46,22 +46,17 @@
             <DropShadow />
          </effect>
       </MenuBar>
-      <Button fx:id="addUser" layoutX="48.0" layoutY="157.0" mnemonicParsing="false" onAction="#openAddUser" prefHeight="31.0" prefWidth="106.0" text="Add user" />
-      <Button layoutX="48.0" layoutY="203.0" mnemonicParsing="false" onAction="#openDeleteUser" prefHeight="31.0" prefWidth="106.0" text="Remove user" />
-      <Label fx:id="showUserName" alignment="CENTER" layoutX="640.0" layoutY="10.0" prefHeight="31.0" prefWidth="151.0" text="User" textAlignment="CENTER" />
+      <Button fx:id="addUser" layoutX="49.0" layoutY="56.0" mnemonicParsing="false" onAction="#openAddUser" prefHeight="31.0" prefWidth="106.0" text="Add user" />
+      <Button fx:id="deleteUser" layoutX="49.0" layoutY="94.0" mnemonicParsing="false" onAction="#openDeleteUser" prefHeight="31.0" prefWidth="106.0" text="Remove user" />
+      <Label fx:id="showUserName" alignment="CENTER" layoutX="430.0" layoutY="57.0" prefHeight="31.0" prefWidth="151.0" text="User" textAlignment="CENTER" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f3f4f5" height="42.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="202.0" />
       <Label fx:id="label" alignment="CENTER" prefHeight="42.0" prefWidth="202.0" text="Dataflow Pro" textAlignment="CENTER">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="31.0" />
          </font>
       </Label>
-      <Button fx:id="logOutButton" layoutX="73.0" layoutY="272.0" mnemonicParsing="false" onAction="#logOut" text="Log out" />
-      <Label fx:id="showPageName" layoutX="210.0" layoutY="45.0" prefHeight="42.0" prefWidth="260.0" text="Page name">
-         <font>
-            <Font name="System Bold Italic" size="20.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="test" fitHeight="42.0" fitWidth="81.0" layoutX="340.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="logOutButton" layoutX="74.0" layoutY="253.0" mnemonicParsing="false" onAction="#logOut" text="Log out" />
+      <Label fx:id="showAccessLevel" alignment="CENTER" layoutX="430.0" layoutY="85.0" prefHeight="31.0" prefWidth="151.0" text="Accesslevel" textAlignment="CENTER" />
 
    </children>
 </AnchorPane>

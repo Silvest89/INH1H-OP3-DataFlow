@@ -5,8 +5,7 @@
  */
 package dataflow.dialog;
 
-import dataflow.Account;
-import dataflow.Database;
+import dataflow.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -51,10 +50,12 @@ public class UserCreateDialogController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO        
+        // TODO                
         accessChoiceBox.getItems().add("User");
-        accessChoiceBox.getItems().add("Supervisor");
-        accessChoiceBox.getItems().add("Admin");
+        if(DataFlow.account.getAccessLevel() == Account.ADMIN){
+            accessChoiceBox.getItems().add("Supervisor");        
+            accessChoiceBox.getItems().add("Admin");
+        }
         accessChoiceBox.setValue("User");
     }    
     

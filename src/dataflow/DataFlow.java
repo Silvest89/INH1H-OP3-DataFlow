@@ -78,20 +78,15 @@ public class DataFlow extends Application {
     }
     
     public static void setMainWindowSize(){
-        stage.setWidth(820);    
-        stage.setHeight(620);
-    }
-    
-    public static void setLoginWindowSize() {
-        stage.setWidth(320);
-        stage.setHeight(240);
+        stage.sizeToScene();
     }
     
     public static void setScreen(String screen){
         if(screens.get(screen) != null){
             if(mainContainer.getScreen(screen) == null)
                 mainContainer.loadScreen(screen, screens.get(screen));
-            mainContainer.setScreen(screen);            
+            mainContainer.setScreen(screen);      
+            stage.setTitle(screen + " Page");
         }
     }           
 }
