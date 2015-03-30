@@ -87,6 +87,13 @@ public class Database {
 
     public void putInDatabase(String feedType, String feedId, String text, String user, long timeStamp, String location) throws Exception {
         try {
+            SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+            String date = sdf.format(new Date(timeStamp * 1000L));
+            
+            preparedStatement = connect.prepareStatement("SELECT id FROM weather WHERE date = ?");
+            preparedStatement.setString(1, date);
+            resultSet = preparedStatement.executeQuery();
+            
             preparedStatement = connect
                     .prepareStatement("INSERT INTO data_feed(feed_id, message, user, timestamp, location, feed_type) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, feedId);
@@ -334,6 +341,23 @@ public class Database {
         }
         
         return null;
+    public double fetchWeather(String date) {
+        try {
+            preparedStatement = connect
+                    .prepareStatement("SELECT * from weather where date = ? LIMIT 1");
+            preparedStatement.setString(1, date);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                double temp = Double.parseDouble(resultSet.getString("maxtemp"));
+                return temp;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //close();
+        }
+        return 0;
     }
 
 }
