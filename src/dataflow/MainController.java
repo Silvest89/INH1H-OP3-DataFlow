@@ -5,6 +5,9 @@
  */
 package dataflow;
 
+import dataflow.dialog.UserCreateDialogController;
+import dataflow.dialog.UserDeleteDialogController;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -12,14 +15,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -27,9 +35,6 @@ import javafx.scene.text.Text;
  * @author Johnnie Ho
  */
 public class MainController extends ControlledScreen implements Initializable {
-
-    private final ObservableList<Tweet> data = FXCollections.observableArrayList();
-    private final ObservableList<String> choices = FXCollections.observableArrayList();
 
     Account account = DataFlow.account;
         
@@ -43,49 +48,14 @@ public class MainController extends ControlledScreen implements Initializable {
     private Label showPageName;
 
     @FXML
-    private Pane userPane;
-
-    @FXML
-    private TextField createName;
-
-    @FXML
-    private TextField createPass;
-
-    @FXML
-    private TextField createConfirm;
-
-    @FXML
-    private Text createWarning;
-
-    private boolean userCreateOpened = false;
-    private boolean userDeleteOpened = false;
-
-    @FXML
-    private Button addUser;
-    @FXML
-    private Button createUser;
-    @FXML
-    private Label userCreation;
-    @FXML
     private Button logOutButton;
-    @FXML
-    private Pane userDeletePane;
-    @FXML
-    private Label userDeletion;
-    @FXML
-    private Text deleteWarning;
-    @FXML
-    private ChoiceBox namesChoice;
-    @FXML
-    private PasswordField deletePassword;
+
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        namesChoice.setItems(choices);
-
     }
 
     @Override
@@ -93,95 +63,70 @@ public class MainController extends ControlledScreen implements Initializable {
             //label.setText(account.getUserName());
             showUserName.setText("Welcome, " + account.getUserName() + "!");
             showPageName.setText("Home page");
-            userPane.setVisible(false);
-            userDeletePane.setVisible(false);
     }
 
     @FXML
-    public void openAddUser(ActionEvent event) {
+    public boolean openAddUser(ActionEvent event) {
+        try{
+        // Load the fxml file and create a new stage for the popup dialog.
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainController.class.getResource("dialog/UserCreateDialog.fxml"));
+        AnchorPane page = (AnchorPane) loader.load();
 
-        if (!userCreateOpened && !userDeleteOpened) {
-            userCreateOpened = true;
-            userPane.setVisible(true);
-            createWarning.setVisible(false);
-        } else {
-            userCreateOpened = false;
-            userPane.setVisible(false);
-            createWarning.setVisible(true);
-            createName.clear();
-            createPass.clear();
-            createConfirm.clear();
-        }
-    }
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Create User");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(DataFlow.stage);
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
 
-    @FXML
-    public void openDeleteUser(ActionEvent event) {
-        if (!userDeleteOpened && !userCreateOpened) {
-            userDeleteOpened = true;
-            userDeletePane.setVisible(true);
-            deleteWarning.setVisible(false);
-            try {
-                choices.remove(0, choices.size());
-                Database d = new Database();
-                ArrayList<String> choicesAL = d.populateChoiceBox();
-                for(String s : choicesAL){
-                    choices.add(s);
-                }
-            
-            } catch (Exception e){
-            
-            }
-            
-        } else {
-            userDeleteOpened = false;
-            userDeletePane.setVisible(false);
-            deleteWarning.setVisible(true);
-            namesChoice.setValue(null);
-            deletePassword.clear();
-        }
-    }
-
-    @FXML
-    public void createUser(ActionEvent event) throws Exception {
-        String name = createName.getText();
-        String pass = createPass.getText();
-        String confirm = createConfirm.getText();
-        try {
-            if (pass.equals(confirm)) {
-                Database d = new Database();
-                d.addUser(name, pass);
-                userPane.setVisible(false);
-                userCreateOpened = false;
-            } else {
-                createWarning.setVisible(true);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @FXML
-    public void deleteUser(ActionEvent event) {
-        String name = "" + namesChoice.getValue();
-        String passWord = deletePassword.getText();
+        // Set the person into the controller.
+        UserCreateDialogController controller = loader.getController();
+        controller.setDialogStage(dialogStage);
         
-        try {
-            Database d = new Database();
-            if(d.checkAccount(name, passWord)){
-                d.removeUser(name, passWord);
-                userDeletePane.setVisible(false);  
-                userDeleteOpened = false;
-            }
-            
-            else {
-                deleteWarning.setVisible(true);
-            }
-            
-            
-        } catch (Exception e){
+
+        // Show the dialog and wait until the user closes it
+        dialogStage.showAndWait();
+
+        return controller.isOkClicked();            
+        }
+        catch (IOException e) {
             e.printStackTrace();
-        }    
+        }        
+        return false;
+    }
+
+    @FXML
+    public boolean openDeleteUser(ActionEvent event) {
+        try{
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainController.class.getResource("dialog/UserDeleteDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Delete User");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(DataFlow.stage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            UserDeleteDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();            
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }        
+        return false;        
     }
 
     @FXML
@@ -191,6 +136,7 @@ public class MainController extends ControlledScreen implements Initializable {
 
     @FXML
     private void logOut(ActionEvent event) {
+        DataFlow.account = null;
         DataFlow.setScreen("Login");
     } 
 }

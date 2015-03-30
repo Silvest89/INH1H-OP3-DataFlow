@@ -55,31 +55,12 @@
             <Font name="Berlin Sans FB Demi Bold" size="31.0" />
          </font>
       </Label>
-      <Button fx:id="logOutButton" layoutX="710.0" layoutY="553.0" mnemonicParsing="false" onAction="#logOut" text="Log out" />
+      <Button fx:id="logOutButton" layoutX="73.0" layoutY="272.0" mnemonicParsing="false" onAction="#logOut" text="Log out" />
       <Label fx:id="showPageName" layoutX="210.0" layoutY="45.0" prefHeight="42.0" prefWidth="260.0" text="Page name">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Pane fx:id="userDeletePane" layoutX="206.0" layoutY="57.0" prefHeight="200.0" prefWidth="568.0">
-         <children>
-            <Label fx:id="userDeletion" layoutX="207.0" layoutY="14.0" text="User deletion Screen" />
-            <PasswordField fx:id="deletePassword" layoutX="210.0" layoutY="82.0" promptText="password" />
-            <Text fx:id="deleteWarning" layoutX="180.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User/password combination not known" />
-            <Button layoutX="495.0" layoutY="160.0" mnemonicParsing="false" onAction="#deleteUser" text="Delete" />
-            <ChoiceBox fx:id="namesChoice" layoutX="209.0" layoutY="45.0" prefWidth="150.0" />
-         </children>
-      </Pane>
-      <Pane fx:id="userPane" layoutX="206.0" layoutY="57.0" prefHeight="200.0" prefWidth="568.0" visible="false">
-         <children>
-            <Button fx:id="createUser" layoutX="497.0" layoutY="161.0" mnemonicParsing="false" onAction="#createUser" text="Create" />
-            <TextField fx:id="createName" layoutX="210.0" layoutY="48.0" promptText="Username" />
-            <PasswordField fx:id="createPass" layoutX="210.0" layoutY="81.0" promptText="Password" />
-            <PasswordField fx:id="createConfirm" layoutX="210.0" layoutY="114.0" promptText="Confirm password" />
-            <Label fx:id="userCreation" layoutX="206.0" layoutY="14.0" text="User creation Screen" />
-            <Text fx:id="createWarning" layoutX="154.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password is not the same as confirmed password" />
-         </children>
-      </Pane>
       <ImageView fx:id="test" fitHeight="42.0" fitWidth="81.0" layoutX="340.0" layoutY="511.0" pickOnBounds="true" preserveRatio="true" />
 
    </children>

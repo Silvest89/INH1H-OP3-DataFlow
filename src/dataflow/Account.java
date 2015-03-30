@@ -15,12 +15,13 @@ public class Account {
     
     private int accessLevel;
     
-    public static final int NORMAL_ACCOUNT = 0;
-    public static final int ADMIN_ACCOUNT = 1;
+    public static final int NORMAL = 1;
+    public static final int SUPERVISOR = 2;
+    public static final int ADMIN = 3;
     
     public Account(){
         userName = "";
-        accessLevel = NORMAL_ACCOUNT;
+        accessLevel = NORMAL;
     }
     
     public String getUserName(){

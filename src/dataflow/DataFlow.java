@@ -47,8 +47,6 @@ public class DataFlow extends Application {
         //long unixTime = (long)calendar.getTimeInMillis()/1000L;
         //Date date =  calendar.getTime();
         //System.out.println(unixTime);
-        
-        InstagramFeed.getInstagramFeed();       
 
         mainContainer = new ScreensController(); 
         mainContainer.loadScreen("Login", 
@@ -91,7 +89,6 @@ public class DataFlow extends Application {
     
     public static void setScreen(String screen){
         if(screens.get(screen) != null){
-            System.out.println(screens.get(screen));
             if(mainContainer.getScreen(screen) == null)
                 mainContainer.loadScreen(screen, screens.get(screen));
             mainContainer.setScreen(screen);

@@ -139,29 +139,33 @@ public class Database {
      * @param passWord password of the account added
      * @throws Exception
      */
-    public void addUser(String name, String passWord) throws Exception {
+    public boolean addUser(String username, String password, String firstName, String lastName, String email, int accessLevel) throws Exception {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(passWord.getBytes("UTF-8"));
+            md.update(password.getBytes("UTF-8"));
             byte[] hash = md.digest();
             preparedStatement = connect
                     .prepareStatement("SELECT username FROM accounts WHERE username = ?");
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return;
+                return false;
             }
             preparedStatement = connect
-                    .prepareStatement("INSERT INTO accounts(username,password, access_level) VALUES (?, ?, ?)");
-            preparedStatement.setString(1, name);
+                    .prepareStatement("INSERT INTO accounts(username, password, firstname, lastname, email, access_level) VALUES (?, ?, ?, ?, ?, ?)");
+            preparedStatement.setString(1, username);
             preparedStatement.setString(2, new BASE64Encoder().encode(hash));
-            preparedStatement.setString(3, "0");
+            preparedStatement.setString(3, firstName);
+            preparedStatement.setString(4, lastName);
+            preparedStatement.setString(5, email);
+            preparedStatement.setInt(6, accessLevel);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             throw e;
         } finally {
-            //close();
+            close();
         }
+        return true;
     }
 
     /**
@@ -193,13 +197,13 @@ public class Database {
      * @return boolean based on whether the account is present or not
      * @throws Exception
      */
-    public boolean checkAccount(String name, String passWord) throws Exception {
+    public boolean checkAccount(String passWord) throws Exception {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(passWord.getBytes("UTF-8"));
         byte[] hash = md.digest();
         preparedStatement = connect
-                .prepareStatement("SELECT username FROM accounts WHERE username = ? AND password = ?");
-        preparedStatement.setString(1, name);
+                .prepareStatement("SELECT username FROM accounts WHERE username = ? AND password = ? AND access_level=3");
+        preparedStatement.setString(1, DataFlow.account.getUserName());
         preparedStatement.setString(2, new BASE64Encoder().encode(hash));
         resultSet = preparedStatement.executeQuery();
 
@@ -230,7 +234,7 @@ public class Database {
     public int countTweets(String date) throws Exception {
         ArrayList<String> results = new ArrayList<>();
         preparedStatement = connect
-                .prepareStatement("SELECT timestamp FROM data_feed");
+                .prepareStatement("SELECT timestamp FROM data_feed WHERE feed_type = 'Twitter'");
         resultSet = preparedStatement.executeQuery();
 
         while(resultSet.next()){
@@ -341,6 +345,8 @@ public class Database {
         }
         
         return null;
+    }
+    
     public double fetchWeather(String date) {
         try {
             preparedStatement = connect

@@ -12,13 +12,17 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.chart.Axis;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -49,7 +53,6 @@ public class GraphsController extends ControlledScreen implements Initializable 
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YY");
             
             SimpleDateFormat sdfReverse = new SimpleDateFormat("YYYY-MM-dd");
-            
             String today = sdf.format(new Date(System.currentTimeMillis()));
             String todayMin1 = sdf.format(new Date(System.currentTimeMillis() - (1 * 86400000)));
             String todayMin2 = sdf.format(new Date(System.currentTimeMillis() - (2 * 86400000)));
@@ -91,6 +94,7 @@ public class GraphsController extends ControlledScreen implements Initializable 
         }
     }
 
+  
     @FXML
     private void goToMain(ActionEvent event) {
         DataFlow.setScreen("Main");

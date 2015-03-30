@@ -73,12 +73,12 @@
           <NumberAxis label="Tweets" side="LEFT" />
         </yAxis>
       </BarChart>
-      <LineChart fx:id="lcWeather" layoutX="221.0" layoutY="343.0" prefHeight="195.0" prefWidth="548.0" title="Weather">
+      <LineChart fx:id="lcWeather" layoutX="221.0" layoutY="307.0" prefHeight="260.0" prefWidth="548.0" title="Weather">
         <xAxis>
           <CategoryAxis label="Day" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis label="Temperature" side="LEFT" />
+          <NumberAxis label="Temperature" prefHeight="138.0" prefWidth="43.0" side="LEFT" upperBound="30.0" />
         </yAxis>
       </LineChart>
    </children>
