@@ -5,11 +5,10 @@
  */
 package dataflow.screens;
 
-import dataflow.DataFlow;
 import dataflow.Database;
-import dataflow.screens.ControlledScreen;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -18,14 +17,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.chart.Axis;
+import javafx.scene.Cursor;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 
 /**
  * FXML Controller class
@@ -45,6 +43,8 @@ public class GraphsController extends ControlledScreen implements Initializable 
     @FXML
     private LineChart<String, Number> lcWeather;
 
+    ArrayList<String> days = new ArrayList<>();
+
     /**
      * Initializes the controller class.
      */
@@ -54,23 +54,29 @@ public class GraphsController extends ControlledScreen implements Initializable 
             Database d = new Database();
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YY");
-            
+
             SimpleDateFormat sdfReverse = new SimpleDateFormat("YYYY-MM-dd");
-            String today = sdf.format(new Date(System.currentTimeMillis()));
+
             String todayMin1 = sdf.format(new Date(System.currentTimeMillis() - (1 * 86400000)));
             String todayMin2 = sdf.format(new Date(System.currentTimeMillis() - (2 * 86400000)));
             String todayMin3 = sdf.format(new Date(System.currentTimeMillis() - (3 * 86400000)));
             String todayMin4 = sdf.format(new Date(System.currentTimeMillis() - (4 * 86400000)));
             String todayMin5 = sdf.format(new Date(System.currentTimeMillis() - (5 * 86400000)));
             String todayMin6 = sdf.format(new Date(System.currentTimeMillis() - (6 * 86400000)));
-            
-            String todayReverse = sdfReverse.format(new Date(System.currentTimeMillis()));
+
             String todayMin1Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (1 * 86400000)));
             String todayMin2Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (2 * 86400000)));
             String todayMin3Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (3 * 86400000)));
             String todayMin4Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (4 * 86400000)));
             String todayMin5Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (5 * 86400000)));
             String todayMin6Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (6 * 86400000)));
+            
+            days.add(todayMin6);
+            days.add(todayMin5);
+            days.add(todayMin4);
+            days.add(todayMin3);
+            days.add(todayMin2);
+            days.add(todayMin1);
 
             XYChart.Series bcSeries1 = new XYChart.Series();
             bcSeries1.getData().add(new XYChart.Data(todayMin6, d.countTweets(todayMin6)));
@@ -81,31 +87,71 @@ public class GraphsController extends ControlledScreen implements Initializable 
             bcSeries1.getData().add(new XYChart.Data(todayMin1, d.countTweets(todayMin1)));
 
             bcTweets.getData().add(bcSeries1);
-
-            XYChart.Series lcSeries = new XYChart.Series();
-            lcSeries.setName("Min. temp");
-            lcSeries.getData().add(new XYChart.Data(todayMin6, d.fetchWeather(todayMin6Reverse)));
-            lcSeries.getData().add(new XYChart.Data(todayMin5, d.fetchWeather(todayMin5Reverse)));
-            lcSeries.getData().add(new XYChart.Data(todayMin4, d.fetchWeather(todayMin4Reverse)));
-            lcSeries.getData().add(new XYChart.Data(todayMin3, d.fetchWeather(todayMin3Reverse)));
-            lcSeries.getData().add(new XYChart.Data(todayMin2, d.fetchWeather(todayMin2Reverse)));
-            lcSeries.getData().add(new XYChart.Data(todayMin1, d.fetchWeather(todayMin1Reverse)));
             
+            XYChart.Series lcSeries = new XYChart.Series();
+            lcSeries.getData().addAll(FXCollections.observableList(plot(
+                    d.fetchWeather(todayMin6Reverse), 
+                    d.fetchWeather(todayMin5Reverse), 
+                    d.fetchWeather(todayMin4Reverse), 
+                    d.fetchWeather(todayMin3Reverse), 
+                    d.fetchWeather(todayMin2Reverse), 
+                    d.fetchWeather(todayMin1Reverse)
+            )));
+
             lcWeather.getData().addAll(lcSeries);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-  
-    @FXML
-    private void goToMain(ActionEvent event) {
-        DataFlow.setScreen("Main");
+    public ObservableList<XYChart.Data<String, Number>> plot(double... y) {
+        final ObservableList<XYChart.Data<String, Number>> dataset = FXCollections.observableArrayList();
+        int i = 0;
+
+        while (i < y.length) {
+            final XYChart.Data<String, Number> data = new XYChart.Data<>(days.get(i), y[i]);
+            data.setNode(
+                    new HoveredNode(y[i]));
+
+
+            dataset.add(data);
+            i++;
+        }
+
+        return dataset;
+    }
+}
+
+class HoveredNode extends StackPane {
+
+    HoveredNode(double value) {
+        setPrefSize(10, 10);
+
+        final Label label = createDataLabel(value);
+
+        setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                getChildren().setAll(label);
+                setCursor(Cursor.NONE);
+                toFront();
+            }
+        });
+        setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                getChildren().clear();
+                setCursor(Cursor.CROSSHAIR);
+            }
+        });
     }
 
-    @FXML
-    private void goToStatistics(ActionEvent event) {
-        DataFlow.setScreen("Statistics");
-    }
+    private Label createDataLabel(double value) {
+        final Label label = new Label(value + "");
+        label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
+        label.setStyle("-fx-font-size: 12");
 
+        label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+        return label;
+    }
 }

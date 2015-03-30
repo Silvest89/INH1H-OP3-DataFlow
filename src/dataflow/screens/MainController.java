@@ -72,7 +72,7 @@ public class MainController extends ControlledScreen implements Initializable {
         try{
         // Load the fxml file and create a new stage for the popup dialog.
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainController.class.getResource("dialog/UserCreateDialog.fxml"));
+        loader.setLocation(MainController.class.getResource("/dataflow/dialog/UserCreateDialog.fxml"));
         AnchorPane page = (AnchorPane) loader.load();
 
         // Create the dialog Stage.
@@ -104,7 +104,7 @@ public class MainController extends ControlledScreen implements Initializable {
         try{
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainController.class.getResource("dialog/UserDeleteDialog.fxml"));
+            loader.setLocation(MainController.class.getResource("/dataflow/dialog/UserDeleteDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
             // Create the dialog Stage.

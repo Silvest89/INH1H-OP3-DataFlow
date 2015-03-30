@@ -27,6 +27,11 @@ public class ControlledScreen {
     }
     
     @FXML
+    private void goToMain(ActionEvent event) {
+        DataFlow.setScreen("Main");
+    }
+    
+    @FXML
     private void goToStatistics(ActionEvent event) {
         DataFlow.setScreen("Statistics");
     }

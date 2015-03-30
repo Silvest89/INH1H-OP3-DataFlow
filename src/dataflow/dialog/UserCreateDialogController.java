@@ -6,8 +6,6 @@
 package dataflow.dialog;
 
 import dataflow.Account;
-import dataflow.Account;
-import dataflow.Database;
 import dataflow.Database;
 import java.net.URL;
 import java.util.ResourceBundle;

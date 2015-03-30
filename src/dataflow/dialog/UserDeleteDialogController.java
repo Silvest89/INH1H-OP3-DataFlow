@@ -10,12 +10,15 @@ import dataflow.DataFlow;
 import dataflow.Database;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
@@ -68,16 +71,43 @@ public class UserDeleteDialogController implements Initializable {
             okClicked = true;
             Database db = new Database();
             if(db.checkAccount(passwordField.getText())){
-                db.removeUser(deleteUserCb.getValue().toString(), passwordField.getText());
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Confirm deletion");
+                alert.setContentText("Are you sure you want to delete " + deleteUserCb.getValue().toString() + "?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    db.removeUser(deleteUserCb.getValue().toString(), passwordField.getText());
+                } else {
+                    // ... user chose CANCEL or closed the dialog
+                }      
+                dialogStage.close();
             }
-            dialogStage.close();
+            else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.initOwner(dialogStage);
+                alert.setTitle("Error");
+                alert.setHeaderText("An error occurred, please try again.");
+                alert.setContentText("Your password seems to be invalid.");
+
+                alert.showAndWait();                
+            }
+            
         }
     }
     
     private boolean isInputValid() {
-        String errorMessage = "";
-        if(deleteUserCb.getValue().toString().equals(DataFlow.account.getUserName())) 
+        String errorMessage = "";     
+        
+        if(deleteUserCb.getValue() == null)
+            errorMessage += "You need to select a user to delete!\n"; 
+        
+        if(deleteUserCb.getValue() != null && deleteUserCb.getValue().toString().equals(DataFlow.account.getUserName())) 
             errorMessage += "You cannot delete yourself!\n"; 
+        
+        if(passwordField.getText() == null || passwordField.getLength() == 0 || !passwordField.getText().matches("^[a-zA-Z0-9_]*$"))
+            errorMessage += "No valid password!\n";      
         
         if(errorMessage.length() == 0)
             return true;

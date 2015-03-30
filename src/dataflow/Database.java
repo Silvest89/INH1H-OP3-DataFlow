@@ -56,7 +56,7 @@ public class Database {
             if (resultSet.next()) {
                 Account account = new Account();
                 account.setUserName(resultSet.getString("username"));
-                account.setAccessLevel(resultSet.getInt("access_type"));
+                account.setAccessLevel(resultSet.getInt("access_level"));
                 DataFlow.account = account;
             }
 
@@ -197,18 +197,21 @@ public class Database {
      * @return boolean based on whether the account is present or not
      * @throws Exception
      */
-    public boolean checkAccount(String passWord) throws Exception {
+    public boolean checkAccount(String password) throws Exception {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(passWord.getBytes("UTF-8"));
+        md.update(password.getBytes("UTF-8"));
         byte[] hash = md.digest();
-        preparedStatement = connect
-                .prepareStatement("SELECT username FROM accounts WHERE username = ? AND password = ? AND access_level=3");
-        preparedStatement.setString(1, DataFlow.account.getUserName());
-        preparedStatement.setString(2, new BASE64Encoder().encode(hash));
-        resultSet = preparedStatement.executeQuery();
+        try{
+            preparedStatement = connect
+                    .prepareStatement("SELECT username FROM accounts WHERE username = ? AND password = ? AND access_level=3");
+            preparedStatement.setString(1, DataFlow.account.getUserName());
+            preparedStatement.setString(2, new BASE64Encoder().encode(hash));
+            resultSet = preparedStatement.executeQuery();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return resultSet.next();
-
     }
 
     /**
