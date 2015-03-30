@@ -80,12 +80,19 @@ public class DataFlow extends Application {
     public static void setMainWindowSize(){
         stage.sizeToScene();
     }
-    
+
     public static void setScreen(String screen){
-        if(screens.get(screen) != null){
+        if(screens.get(screen) != null){            
+            //iterating over keys only
+            for (String key : screens.keySet()) {
+                mainContainer.unloadScreen(key);
+            }   
+            
             if(mainContainer.getScreen(screen) == null)
                 mainContainer.loadScreen(screen, screens.get(screen));
+
             mainContainer.setScreen(screen);      
+            
             stage.setTitle(screen + " Page");
         }
     }           

@@ -97,7 +97,7 @@ public class ScreensController  extends StackPane {
             }
             return true;
         } else {
-            System.out.println("screen hasn't been loaded!!! \n");
+            System.out.println("screen hasn't been loaded!\n");
             return false;
         }
 
@@ -121,7 +121,7 @@ public class ScreensController  extends StackPane {
     //This method will remove the screen with the given name from the collection of screens
     public boolean unloadScreen(String name) {
         if (screens.remove(name) == null) {
-            System.out.println("Screen didn't exist");
+            //System.out.println("Screen didn't exist");
             return false;
         } else {
             return true;

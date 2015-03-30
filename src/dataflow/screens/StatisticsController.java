@@ -143,6 +143,8 @@ public class StatisticsController extends ControlledScreen implements Initializa
 
     @FXML
     private void searchTweet(ActionEvent event) {
+        if(searchText.getText() == null || searchText.getText().length() == 0)
+            return;
         try {
             TwitterSearch ts = new TwitterSearch();
             ArrayList<Tweet> tweetAL = ts.retrieve(searchText.getText());
