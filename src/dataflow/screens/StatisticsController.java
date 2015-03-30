@@ -1,4 +1,4 @@
-package dataflow;
+package dataflow.screens;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -6,6 +6,14 @@ package dataflow;
  * and open the template in the editor.
  */
 
+import dataflow.Account;
+import dataflow.DataFlow;
+import dataflow.Database;
+import dataflow.Tweet;
+import dataflow.TwitterSearch;
+import dataflow.Weather;
+import dataflow.screens.ControlledScreen;
+import dataflow.screens.MainController;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;

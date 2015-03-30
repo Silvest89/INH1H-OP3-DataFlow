@@ -32,10 +32,10 @@ public class DataFlow extends Application {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         
-        screens.put("Login", "Login.fxml");
-        screens.put("Main", "Main.fxml");
-        screens.put("Statistics", "Statistics.fxml");
-        screens.put("Graphs", "Graphs.fxml");
+        screens.put("Login", "screens/Login.fxml");
+        screens.put("Main", "screens/Main.fxml");
+        screens.put("Statistics", "screens/Statistics.fxml");
+        screens.put("Graphs", "screens/Graphs.fxml");
         
         Calendar fromTime = Calendar.getInstance();
         fromTime.set(2015, 2, 23, 8, 0);
@@ -91,7 +91,7 @@ public class DataFlow extends Application {
         if(screens.get(screen) != null){
             if(mainContainer.getScreen(screen) == null)
                 mainContainer.loadScreen(screen, screens.get(screen));
-            mainContainer.setScreen(screen);
+            mainContainer.setScreen(screen);            
         }
     }           
 }

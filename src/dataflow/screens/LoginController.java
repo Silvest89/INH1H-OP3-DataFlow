@@ -3,7 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dataflow;
+package dataflow.screens;
+
+import dataflow.DataFlow;
+import dataflow.Database;
+import dataflow.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,6 +52,7 @@ public class LoginController extends ControlledScreen implements Initializable {
             if(DataFlow.account != null){
                 label.setTextFill(Color.web("#00AF33"));
                 label.setText("Logging in.");
+                DataFlow.mainContainer.unloadScreen("Login");
                 DataFlow.setScreen("Main");    
             }
             else{
@@ -68,4 +73,10 @@ public class LoginController extends ControlledScreen implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    @Override
+    public void prepare(){
+        username.clear();
+        password.clear();
+    }
 }

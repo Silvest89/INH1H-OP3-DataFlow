@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dataflow;
+package dataflow.screens;
 
+import dataflow.Account;
+import dataflow.DataFlow;
 import dataflow.dialog.UserCreateDialogController;
 import dataflow.dialog.UserDeleteDialogController;
 import java.io.IOException;
@@ -128,15 +130,4 @@ public class MainController extends ControlledScreen implements Initializable {
         }        
         return false;        
     }
-
-    @FXML
-    private void goToStatistics(ActionEvent event) {
-        DataFlow.setScreen("Statistics");
-    }
-
-    @FXML
-    private void logOut(ActionEvent event) {
-        DataFlow.account = null;
-        DataFlow.setScreen("Login");
-    } 
 }

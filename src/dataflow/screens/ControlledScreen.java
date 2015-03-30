@@ -3,7 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dataflow;
+package dataflow.screens;
+
+import dataflow.ScreensController;
+import dataflow.*;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 
 /**
  *
@@ -20,4 +25,15 @@ public class ControlledScreen {
      
     public void prepare(){
     }
+    
+    @FXML
+    private void goToStatistics(ActionEvent event) {
+        DataFlow.setScreen("Statistics");
+    }
+    
+    @FXML
+    private void logOut(ActionEvent event) {
+        DataFlow.account = null;
+        DataFlow.setScreen("Login");
+    } 
 }
