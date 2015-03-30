@@ -11,12 +11,11 @@
     <stylesheets>
         <URL value="@usercreatedialog.css" />
     </stylesheets>
-   <children>
-      <Button layoutX="198.0" layoutY="226.0" mnemonicParsing="false" onAction="#handleOk" text="Create" />
-      <PasswordField fx:id="passwordField" layoutX="100.0" layoutY="45.0" />
+   <children>       
       <Label layoutX="15.0" layoutY="15.0" prefHeight="17.0" prefWidth="72.0" text="Username" />
       <TextField fx:id="userNameField" layoutX="100.0" layoutY="10.0" />
       <Label layoutX="15.0" layoutY="50.0" prefHeight="17.0" prefWidth="72.0" text="Password" />
+      <PasswordField fx:id="passwordField" layoutX="100.0" layoutY="45.0" />
       <TextField fx:id="firstNameField" layoutX="100.0" layoutY="80.0" />
       <Label layoutX="15.0" layoutY="85.0" prefHeight="17.0" prefWidth="72.0" text="Firstname" />
       <TextField fx:id="lastNameField" layoutX="100.0" layoutY="115.0" />
@@ -25,5 +24,6 @@
       <Label layoutX="15.0" layoutY="155.0" prefHeight="17.0" prefWidth="72.0" text="Email" />
       <ChoiceBox fx:id="accessChoiceBox" layoutX="100.0" layoutY="189.0" prefWidth="150.0" />
       <Label layoutX="15.0" layoutY="193.0" prefHeight="17.0" prefWidth="72.0" text="Access" />
+      <Button layoutX="198.0" layoutY="226.0" mnemonicParsing="false" onAction="#handleOk" text="Create" />    
    </children>
 </AnchorPane>

@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.text.WordUtils;
 
 /**
  * FXML Controller class
@@ -72,7 +73,7 @@ public class MainController extends ControlledScreen implements Initializable {
 
     @Override
     public void prepare() {
-            showUserName.setText("Welcome, " + account.getUserName() + "!");
+            showUserName.setText("Welcome, " + WordUtils.capitalizeFully(account.getFirstName()) + " " + WordUtils.capitalizeFully(account.getLastName()) + "!");
             String access = "";
             switch(DataFlow.account.getAccessLevel()){
                 case Account.NORMAL:

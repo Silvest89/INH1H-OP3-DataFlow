@@ -56,7 +56,10 @@ public class Database {
             if (resultSet.next()) {
                 Account account = new Account();
                 account.setUserName(resultSet.getString("username"));
-                account.setAccessLevel(resultSet.getInt("access_level"));
+                account.setFirstName(resultSet.getString("first_name"));
+                account.setLastName(resultSet.getString("last_name"));
+                account.setEmail(resultSet.getString("email"));
+                account.setAccessLevel(resultSet.getInt("access_level"));                
                 DataFlow.account = account;
             }
 
@@ -135,11 +138,11 @@ public class Database {
     /**
      * This method adds a new user into the database, iff it does not exist yet
      *
-     * @param name user name of the account added
-     * @param passWord password of the account added
-     * @throws Exception
+     * @param username user name of the account added
+     * @param password password of the account added
      */
-    public boolean addUser(String username, String password, String firstName, String lastName, String email, int accessLevel) throws Exception {
+    public boolean addUser(String username, String password, String firstName, String lastName, String email, int accessLevel){
+        System.out.println("test2");
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(password.getBytes("UTF-8"));
@@ -149,10 +152,12 @@ public class Database {
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                System.out.println("test3");
                 return false;
             }
+            System.out.println("test4");
             preparedStatement = connect
-                    .prepareStatement("INSERT INTO accounts(username, password, firstname, lastname, email, access_level) VALUES (?, ?, ?, ?, ?, ?)");
+                    .prepareStatement("INSERT INTO accounts(username, password, first_name, last_name, email, access_level) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, new BASE64Encoder().encode(hash));
             preparedStatement.setString(3, firstName);
@@ -161,7 +166,7 @@ public class Database {
             preparedStatement.setInt(6, accessLevel);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
         } finally {
             close();
         }

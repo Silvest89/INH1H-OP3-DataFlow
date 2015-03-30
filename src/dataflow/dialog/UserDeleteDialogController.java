@@ -8,6 +8,7 @@ package dataflow.dialog;
 import dataflow.Account;
 import dataflow.DataFlow;
 import dataflow.Database;
+import dataflow.Utility;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -71,16 +72,12 @@ public class UserDeleteDialogController implements Initializable {
             okClicked = true;
             Database db = new Database();
             if(db.checkAccount(passwordField.getText())){
-                Alert alert = new Alert(AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Dialog");
-                alert.setHeaderText("Confirm deletion");
-                alert.setContentText("Are you sure you want to delete " + deleteUserCb.getValue().toString() + "?");
+                Optional<ButtonType> result = Utility.confirmationWindow(dialogStage, "Confirmation Dialog", "Confirm deletion", "Are you sure you want to delete " + deleteUserCb.getValue().toString() + "?");
 
-                Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
                     db.removeUser(deleteUserCb.getValue().toString(), passwordField.getText());
                 } else {
-                    // ... user chose CANCEL or closed the dialog
+                    Utility.alertWindow(dialogStage, AlertType.INFORMATION, "Success.", null, "The account has been successfully deleted.");
                 }      
                 dialogStage.close();
             }

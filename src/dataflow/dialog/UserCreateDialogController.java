@@ -80,48 +80,38 @@ public class UserCreateDialogController implements Initializable {
                     accessLevel = Account.ADMIN;
                     break;                                                            
             }
+            System.out.println("test");
             if(!db.addUser(userNameField.getText(), passwordField.getText(), firstNameField.getText(), lastNameField.getText(), emailField.getText(), accessLevel)){
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.initOwner(dialogStage);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error occurred during account creation.");
-                alert.setContentText("This username may already be in use.");
-
-                alert.showAndWait();                
+                Utility.alertWindow(dialogStage, AlertType.ERROR, "Error", "An error occurred during account creation.", "This username may already be in use.");       
             }
+            else{
+                Utility.alertWindow(dialogStage, AlertType.INFORMATION, "Success.", null, "The account has been successfully created.");
+            }               
             dialogStage.close();
         }
     }
     
     private boolean isInputValid() {
         String errorMessage = "";
-        if(firstNameField.getText() == null || firstNameField.getLength() == 0 || !firstNameField.getText().matches("[a-zA-Z]+\\.?"))
+        if(firstNameField.getText() == null || firstNameField.getLength() == 0 || !firstNameField.getText().matches("[a-zA-Z ]*"))
             errorMessage += "No valid first name!\n"; 
                 
-        if(lastNameField.getText() == null || lastNameField.getLength() == 0 || !lastNameField.getText().matches("[a-zA-Z]+\\.?"))
+        if(lastNameField.getText() == null || lastNameField.getLength() == 0 || !lastNameField.getText().matches("[a-zA-Z ]*"))
             errorMessage += "No valid last name!\n";     
                 
-        if(emailField.getText() == null || emailField.getLength() == 0)
+        if(emailField.getText() == null || emailField.getLength() == 0 || !Utility.EmailValidator(emailField.getText()))
             errorMessage += "No valid email!\n";     
         
         if(userNameField.getText() == null || userNameField.getLength() == 0 || !userNameField.getText().matches("^[a-zA-Z0-9_]*$"))
             errorMessage += "No valid username!\n";     
         
         if(passwordField.getText() == null || passwordField.getLength() == 0 || !passwordField.getText().matches("^[a-zA-Z0-9_]*$"))
-            errorMessage += "No valid password!\n";                     
+            errorMessage += "No valid password!\n";             
         
         if(errorMessage.length() == 0)
             return true;
         else{
-            // Show the error message.
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.initOwner(dialogStage);
-            alert.setTitle("Invalid Fields");
-            alert.setHeaderText("Please correct invalid fields");
-            alert.setContentText(errorMessage);
-
-            alert.showAndWait();
-
+            Utility.alertWindow(dialogStage, AlertType.ERROR, "Invalid Fields", "Please correct the invalid fields.", errorMessage);
             return false;
         }
     }    
