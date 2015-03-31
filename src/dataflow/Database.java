@@ -69,6 +69,13 @@ public class Database {
             //close();
         }
     }
+    
+    public void updateAccountDetails(String firstName, String lastName, String email, String password){
+        if(!Utility.passwordValidation(password))
+            return;
+        
+        
+    }
 
     public void close() {
         try {

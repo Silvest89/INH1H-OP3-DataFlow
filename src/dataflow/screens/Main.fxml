@@ -19,12 +19,12 @@
         <URL value="@main.css" />
     </stylesheets>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="257.0" layoutY="43.0" opacity="0.24" stroke="BLACK" strokeType="INSIDE" width="202.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="283.0" layoutY="43.0" opacity="0.24" stroke="BLACK" strokeType="INSIDE" width="202.0">
          <effect>
             <DropShadow />
          </effect>
       </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" layoutX="430.0" layoutY="57.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="151.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" layoutX="290.0" layoutY="42.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="222.0" />
       <MenuBar layoutX="202.0" prefHeight="42.0" prefWidth="398.0">
         <menus>
           <Menu mnemonicParsing="false" text="Home">
@@ -48,7 +48,7 @@
       </MenuBar>
       <Button fx:id="addUser" layoutX="49.0" layoutY="56.0" mnemonicParsing="false" onAction="#openAddUser" prefHeight="31.0" prefWidth="106.0" text="Add user" />
       <Button fx:id="deleteUser" layoutX="49.0" layoutY="94.0" mnemonicParsing="false" onAction="#openDeleteUser" prefHeight="31.0" prefWidth="106.0" text="Remove user" />
-      <Label fx:id="showUserName" alignment="CENTER" layoutX="430.0" layoutY="57.0" prefHeight="31.0" prefWidth="151.0" text="User" textAlignment="CENTER" />
+      <Label fx:id="showUserName" alignment="CENTER" layoutX="294.0" layoutY="41.0" prefHeight="31.0" prefWidth="214.0" text="User" textAlignment="CENTER" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f3f4f5" height="42.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="202.0" />
       <Label fx:id="label" alignment="CENTER" prefHeight="42.0" prefWidth="202.0" text="Dataflow Pro" textAlignment="CENTER">
          <font>
@@ -56,7 +56,33 @@
          </font>
       </Label>
       <Button fx:id="logOutButton" layoutX="74.0" layoutY="253.0" mnemonicParsing="false" onAction="#logOut" text="Log out" />
-      <Label fx:id="showAccessLevel" alignment="CENTER" layoutX="430.0" layoutY="85.0" prefHeight="31.0" prefWidth="151.0" text="Accesslevel" textAlignment="CENTER" />
+      <Label fx:id="showAccessLevel" alignment="CENTER" layoutX="325.0" layoutY="72.0" prefHeight="31.0" prefWidth="151.0" text="Accesslevel" textAlignment="CENTER" />
+      <TabPane fx:id="mainTabPane" layoutX="207.0" layoutY="110.0" prefHeight="204.0" prefWidth="385.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="mainTab1" text="Personal Details">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="177.0" prefWidth="385.0">
+                     <children>
+                        <Label layoutX="25.0" layoutY="14.0" text="First Name" />
+                        <Label layoutX="26.0" layoutY="43.0" text="Last Name" />
+                        <Label layoutX="25.0" layoutY="71.0" text="Email" />
+                        <ToggleButton fx:id="pEditButton" layoutX="25.0" layoutY="136.0" mnemonicParsing="false" onAction="#actionEditButton" text="Edit" />
+                        <Button fx:id="pConfirmButton" layoutX="217.0" layoutY="136.0" mnemonicParsing="false" onAction="#actionConfirmEdit" text="Confirm" />
+                        <TextField fx:id="pFirstName" layoutX="127.0" layoutY="12.0" />
+                        <TextField fx:id="pLastName" layoutX="127.0" layoutY="41.0" />
+                        <TextField fx:id="pEmail" layoutX="127.0" layoutY="69.0" />
+                        <Label layoutX="25.0" layoutY="105.0" text="Password" />
+                        <PasswordField fx:id="pPassword" layoutX="127.0" layoutY="103.0" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="mainTab2" text="Admin">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="247.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
 
    </children>
 </AnchorPane>

@@ -29,7 +29,7 @@ import javafx.stage.Stage;
  *
  * @author Johnnie Ho
  */
-public class UserDeleteDialogController implements Initializable {
+public class UserDeleteDialogController extends Dialog implements Initializable {
 
     @FXML
     private ChoiceBox deleteUserCb;
@@ -38,9 +38,6 @@ public class UserDeleteDialogController implements Initializable {
     private PasswordField passwordField;
     
     private final ObservableList<String> choices = FXCollections.observableArrayList();
-    
-    private Stage dialogStage;
-    private boolean okClicked = false;
     
     /**
      * Initializes the controller class.
@@ -58,12 +55,6 @@ public class UserDeleteDialogController implements Initializable {
         }catch(Exception e){
             e.printStackTrace();
         }
-    }    
-    public void setDialogStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
-    }    
-    public boolean isOkClicked() {
-        return okClicked;
     }    
     
     @FXML

@@ -7,21 +7,38 @@ package dataflow.screens;
 
 import dataflow.Account;
 import dataflow.DataFlow;
+import dataflow.Database;
+import dataflow.Utility;
 import dataflow.dialog.UserCreateDialogController;
 import dataflow.dialog.UserDeleteDialogController;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import org.apache.commons.lang3.text.WordUtils;
 
 /**
@@ -53,21 +70,56 @@ public class MainController extends ControlledScreen implements Initializable {
     
     @FXML 
     private Button deleteUser;
+    
+    @FXML
+    private TabPane mainTabPane;
+    
+    @FXML
+    private Tab mainTab1;
+    
+    @FXML
+    private Tab mainTab2;
+    
+    @FXML
+    private TextField pFirstName;
+    
+    @FXML
+    private TextField pLastName;
+    
+    @FXML
+    private TextField pEmail;
+    
+    @FXML
+    private PasswordField pPassword;
 
+    @FXML
+    private ToggleButton pEditButton;
+    
+    @FXML
+    private Button pConfirmButton;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        setPersonalPageDisabled(true);
+        
         if(DataFlow.account.getAccessLevel() < Account.SUPERVISOR){
             addUser.setDisable(true);
             deleteUser.setDisable(true);
+            mainTab2.setDisable(true);
         }
         else if(DataFlow.account.getAccessLevel() == Account.SUPERVISOR){
             deleteUser.setDisable(true);
         }
         
+        pFirstName.setText(DataFlow.account.getFirstName());
+        pLastName.setText(DataFlow.account.getLastName());
+        if(DataFlow.account.getEmail() != null)
+            pEmail.setText(DataFlow.account.getEmail());
+        else
+            pEmail.setText("-No Email Found-");
         
     }
 
@@ -153,5 +205,98 @@ public class MainController extends ControlledScreen implements Initializable {
             e.printStackTrace();
         }        
         return false;        
+    }
+    
+    @FXML
+    public void actionEditButton(ActionEvent event){        
+        if(pEditButton.isSelected())
+            setPersonalPageDisabled(false);
+        else
+            setPersonalPageDisabled(true);
+    }
+    
+    public void setPersonalPageDisabled(boolean state){        
+        pConfirmButton.setDisable(state);
+        pFirstName.setDisable(state);
+        pLastName.setDisable(state);
+        pEmail.setDisable(state);
+        pPassword.setDisable(state);
+    }
+    
+    @FXML
+    public boolean actionConfirmEdit(ActionEvent event){   
+        boolean error = false;
+        if(!Utility.nameValidation(pFirstName.getText()))
+            error = true;
+        
+        if(!Utility.nameValidation(pLastName.getText()))
+            error = true;        
+        
+        if(!Utility.EmailValidator(pEmail.getText()))
+            error = true;               
+        
+        if(error)
+            Utility.alertWindow(null, Alert.AlertType.ERROR, "Invalid Fields", "Please correct the invalid fields.", "Please recheck your fields.");
+        // Create the custom dialog.
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Confirm Password");
+        dialog.setHeaderText("Please confirm your password.");
+
+        // Set the icon (must be included in the project).
+        //dialog.setGraphic(new ImageView(this.getClass().getResource("login.png").toString()));
+
+        // Set the button types.
+        ButtonType loginButtonType = new ButtonType("Confirm", ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+
+        // Create the username and password labels and fields.
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        PasswordField password = new PasswordField();
+        password.setPromptText("Password");
+
+        grid.add(new Label("Password:"), 0, 0);
+        grid.add(password, 1, 0);
+
+
+        // Enable/Disable login button depending on whether a username was entered.
+        Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
+        loginButton.setDisable(true);
+
+        // Do some validation (using the Java 8 lambda syntax).
+        password.textProperty().addListener((observable, oldValue, newValue) -> {
+            loginButton.setDisable(newValue.trim().isEmpty());
+        });
+
+        dialog.getDialogPane().setContent(grid);
+
+        // Request focus on the username field by default.
+        Platform.runLater(() -> password.requestFocus());
+
+        // Convert the result to a username-password-pair when the login button is clicked.
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == loginButtonType) {
+                return password.getText();
+            }
+            return null;
+        });
+
+        Optional<String> result = dialog.showAndWait();
+
+        result.ifPresent(usernamePassword -> {
+            try{
+                Database db = new Database();
+                if(db.checkAccount(usernamePassword)){                        
+                    db.updateAccountDetails(pFirstName.getText(), pLastName.getText(), pEmail.getText(), pPassword.getText());                    
+                }
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        });         
+        return true;
     }
 }

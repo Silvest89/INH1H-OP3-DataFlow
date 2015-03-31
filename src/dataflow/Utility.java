@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  * @author Johnnie Ho
  */
 public class Utility {
-    
+   
     public static void alertWindow(Stage stage, AlertType alertType, String title, String header, String content){
         Alert alert = new Alert(alertType);
         alert.initOwner(stage);
@@ -48,4 +48,18 @@ public class Utility {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }    
+    
+    public static boolean nameValidation(String name){
+        if(name == null || name.length() == 0 || !name.matches("[a-zA-Z ]*"))
+            return false;
+        
+        return true;
+    }
+    
+    public static boolean passwordValidation(String password){
+        if(password == null || password.length() == 0 || !password.matches("^[a-zA-Z0-9_]*$"))
+            return false;   
+        
+        return true;
+    }
 }

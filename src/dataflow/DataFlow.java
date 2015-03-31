@@ -47,7 +47,6 @@ public class DataFlow extends Application {
         //long unixTime = (long)calendar.getTimeInMillis()/1000L;
         //Date date =  calendar.getTime();
         //System.out.println(unixTime);
-
         mainContainer = new ScreensController(); 
         mainContainer.loadScreen("Login", 
             screens.get("Login"));

@@ -22,7 +22,7 @@ import javafx.stage.Stage;
  *
  * @author Johnnie Ho
  */
-public class UserCreateDialogController implements Initializable {
+public class UserCreateDialogController extends Dialog implements Initializable {
 
     @FXML
     private TextField userNameField;
@@ -41,10 +41,7 @@ public class UserCreateDialogController implements Initializable {
     
     @FXML
     private ChoiceBox accessChoiceBox;
-    
-    
-    private Stage dialogStage;
-    private boolean okClicked = false;
+       
     /**
      * Initializes the controller class.
      */
@@ -57,14 +54,7 @@ public class UserCreateDialogController implements Initializable {
             accessChoiceBox.getItems().add("Admin");
         }
         accessChoiceBox.setValue("User");
-    }    
-    
-    public void setDialogStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
-    }    
-    public boolean isOkClicked() {
-        return okClicked;
-    }
+    }        
     
     @FXML
     private void handleOk() throws Exception {
