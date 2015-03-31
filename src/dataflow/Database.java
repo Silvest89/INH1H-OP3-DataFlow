@@ -135,7 +135,7 @@ public class Database {
         resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
-            Tweet t = new Tweet(resultSet.getLong("feed_id"), new Date(resultSet.getLong("timestamp") * 1000L), resultSet.getString("user"), resultSet.getString("location"), resultSet.getString("message"), resultSet.getInt("weather_id"));
+            Tweet t = new Tweet(resultSet.getLong("id"), resultSet.getLong("timestamp"), resultSet.getString("user"), resultSet.getString("location"), resultSet.getString("message"));
             tweetAL.add(t);
         }
 
@@ -302,14 +302,15 @@ public class Database {
         }   
     }
 
-    public Weather fetchWeather(int id) {
-        try {
+    public Weather fetchWeather(long timeStamp) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {            
             preparedStatement = connect
-                    .prepareStatement("SELECT * from weather where id = ? LIMIT 1");
-            preparedStatement.setInt(1, id);
+                    .prepareStatement("SELECT * from weather where date = ? LIMIT 1");
+            preparedStatement.setString(1, format.format(timeStamp * 1000L));
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                Weather weather = new Weather(resultSet.getInt("id"), resultSet.getString("date"), resultSet.getString("icon1"), resultSet.getString("icon2"), resultSet.getString("clouds"), resultSet.getString("mintemp"), resultSet.getString("maxtemp"));
+                Weather weather = new Weather(resultSet.getInt("id"), resultSet.getString("date"), resultSet.getString("icon"), resultSet.getString("clouds"), resultSet.getString("mintemp"), resultSet.getString("maxtemp"), resultSet.getString("description"));
                 return weather;
             }
 
@@ -362,7 +363,7 @@ public class Database {
         return null;
     }
     
-    public double fetchWeather(String date) {
+    public double fetchWeatherByDouble(String date) {
         try {
             preparedStatement = connect
                     .prepareStatement("SELECT * from weather where date = ? LIMIT 1");

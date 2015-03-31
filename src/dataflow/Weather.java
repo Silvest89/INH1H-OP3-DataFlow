@@ -31,7 +31,7 @@ public class Weather {
     private String maxTemp;
     private String description;
         
-    public Weather(int id, String date, String icon1, String clouds, String minTemp, String maxTemp, String description){
+    public Weather(int id, String date, String icon, String clouds, String minTemp, String maxTemp, String description){
         this.id = id;
         this.date = date;
         this.icon = icon;

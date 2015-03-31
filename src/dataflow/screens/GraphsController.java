@@ -90,12 +90,12 @@ public class GraphsController extends ControlledScreen implements Initializable 
             
             XYChart.Series lcSeries = new XYChart.Series();
             lcSeries.getData().addAll(FXCollections.observableList(plot(
-                    d.fetchWeather(todayMin6Reverse), 
-                    d.fetchWeather(todayMin5Reverse), 
-                    d.fetchWeather(todayMin4Reverse), 
-                    d.fetchWeather(todayMin3Reverse), 
-                    d.fetchWeather(todayMin2Reverse), 
-                    d.fetchWeather(todayMin1Reverse)
+                    d.fetchWeatherByDouble(todayMin6Reverse), 
+                    d.fetchWeatherByDouble(todayMin5Reverse), 
+                    d.fetchWeatherByDouble(todayMin4Reverse), 
+                    d.fetchWeatherByDouble(todayMin3Reverse), 
+                    d.fetchWeatherByDouble(todayMin2Reverse), 
+                    d.fetchWeatherByDouble(todayMin1Reverse)
             )));
 
             lcWeather.getData().addAll(lcSeries);

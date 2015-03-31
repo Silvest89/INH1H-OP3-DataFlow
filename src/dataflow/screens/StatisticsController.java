@@ -80,7 +80,7 @@ public class StatisticsController extends ControlledScreen implements Initializa
     private ImageView weatherIcon1;
     
     @FXML
-    private ImageView weatherIcon2;    
+    private Text weatherDescription;    
     
     @FXML
     private Text minTemp;
@@ -101,7 +101,7 @@ public class StatisticsController extends ControlledScreen implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         idCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("id"));
-        timeStampCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("timeStamp"));
+        timeStampCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("timeString"));
         userCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("user"));
         locationCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("location"));
         textCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("text"));
@@ -168,22 +168,28 @@ public class StatisticsController extends ControlledScreen implements Initializa
 
     private void getWeather(Tweet tweet) {
         Database db = new Database();        
-        if(tweet.getWeather() > 0){
-            Weather weather = db.fetchWeather(tweet.getWeather());      
-            try {
-
-                String fullUrlPath = weather.getIcon();
-                URL url = new URL(fullUrlPath);
-                BufferedImage img = ImageIO.read(url);
-                Image image = SwingFXUtils.toFXImage(img, null);
-                weatherIcon1.setImage(image);
-            } catch (IOException ex) {
-                Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-            }           
-            minTemp.setText(weather.getMinTemp() + "°C");
-            maxTemp.setText(weather.getMaxTemp() + "°C");
-            clouds.setText(weather.getClouds() + "%");
+        Weather weather = db.fetchWeather(tweet.getTimeStamp()); 
+        if(weather == null){
+            minTemp.setText("");
+            maxTemp.setText("");
+            clouds.setText("");
+            weatherDescription.setText("No weather data found.");            
+            return;
         }
+        try {
+
+            String fullUrlPath = weather.getIcon();
+            URL url = new URL(fullUrlPath);
+            BufferedImage img = ImageIO.read(url);
+            Image image = SwingFXUtils.toFXImage(img, null);
+            weatherIcon1.setImage(image);
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }           
+        minTemp.setText(weather.getMinTemp() + "°C");
+        maxTemp.setText(weather.getMaxTemp() + "°C");
+        clouds.setText(weather.getClouds() + "%");
+        weatherDescription.setText(weather.getDescription());
     }
 
     @FXML

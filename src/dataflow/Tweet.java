@@ -6,28 +6,32 @@ import java.util.Date;
 public class Tweet {
     
     private long id;
-    private String timeStamp;
+    private long timeStamp;
     private String user;
     private String location;
     private String text;
-    private int weather;
+    private String timeString;
     
-    public Tweet(long id, Date timeStamp, String user, String location, String text, int weather){
+    public Tweet(long id, long timeStamp, String user, String location, String text){
         this.id = id;    
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm z");
-        this.timeStamp = format.format(timeStamp);
+        this.timeString = format.format(timeStamp * 1000L);
+        this.timeStamp = timeStamp;
         this.user = user;
         this.location = location;
         this.text = text;
-        this.weather = weather;
     }
     
     public long getId(){
         return id;
     }
     
-    public String getTimeStamp(){
+    public long getTimeStamp(){
         return timeStamp;
+    }
+    
+    public String getTimeString(){
+        return timeString;
     }
     
     public String getUser(){
@@ -41,10 +45,5 @@ public class Tweet {
     public String getText(){
         return text;
     }
-    
-    public int getWeather(){
-        return weather;
-    }
-
 }
 

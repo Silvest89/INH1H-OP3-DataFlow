@@ -78,8 +78,7 @@
       <Button layoutX="210.0" layoutY="330.0" mnemonicParsing="false" onAction="#retrieveData" text="Retrieve" />
       <Button layoutX="717.0" layoutY="330.0" mnemonicParsing="false" onAction="#searchTweet" text="Search" />
       <TextField fx:id="searchText" layoutX="554.0" layoutY="330.0" promptText="search term" />
-      <ImageView fx:id="weatherIcon1" fitHeight="50.0" fitWidth="50.0" layoutX="215.0" layoutY="430.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="weatherIcon2" fitHeight="50.0" fitWidth="50.0" layoutX="269.0" layoutY="430.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="weatherIcon1" fitHeight="50.0" fitWidth="50.0" layoutX="244.0" layoutY="430.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="showPageName1" layoutX="231.0" layoutY="388.0" prefHeight="42.0" prefWidth="260.0" text="Weather Data">
          <font>
             <Font name="System Bold Italic" size="20.0" />
@@ -92,5 +91,7 @@
       <Text fx:id="maxTemp" layoutX="562.0" layoutY="468.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Text fx:id="clouds" layoutX="562.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Button layoutX="68.0" layoutY="164.0" mnemonicParsing="false" onAction="#goToGraphs" text="Graphs" />
+      <Label layoutX="244.0" layoutY="489.0" text="Description" />
+      <Text fx:id="weatherDescription" layoutX="240.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
    </children>
 </AnchorPane>

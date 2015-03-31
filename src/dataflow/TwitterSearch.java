@@ -46,7 +46,7 @@ public class TwitterSearch {
                 String location = "" + status.getGeoLocation();
                 String text = status.getText();
                 
-                Tweet t = new Tweet(ID, new Date(timeStamp), user, location, text, 0);
+                Tweet t = new Tweet(ID, timeStamp, user, location, text);
                 tweetAL.add(t);
                  
             }
