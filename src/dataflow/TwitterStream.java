@@ -19,7 +19,19 @@ public class TwitterStream {
         TwitterStream ts = new TwitterStream();
         ts.tweetStream();
     }
-
+     //this method filters the incoming twitterstream and gives the comments a value of negative, positive or neutral
+    
+   public String commentChecker(String text){
+           if(text.matches(".*(mooi|goed|leuk|fantastisch|prachtig).*")) //you can change the words in here to change what the filter thinks is positive
+           {return "comment is positief";}
+            
+            
+            else if(text.matches(".*(lelijk|stom|saai|kut|verschrikkelijk).*")) //you can change the words in here to change what the filer thinks is negative
+                    {return "comment is negatief";}
+            
+            else return "comment is neutraal"; //if the comment is not positve or negative the method will automatically assign it the neutral value
+            }  
+            
     /**
      * This method regulates the retrieval of tweets containing a certain (set
      * of) keyword(s)
@@ -61,8 +73,9 @@ public class TwitterStream {
                 } catch(Exception e){
                     e.printStackTrace();
                 }
-                
+                commentChecker(text);
                 System.out.println(id + ", " + timeStamp + ", " + user + ", " + location + ", " + text);
+                System.out.println(commentChecker(text));
             }
 
             @Override
