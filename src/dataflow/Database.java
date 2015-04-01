@@ -28,7 +28,9 @@ public class Database {
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
-
+    public ArrayList<String> positiveCommentList = new ArrayList<String>(); 
+    public ArrayList<String> negativeCommentList = new ArrayList<String>(); // manier om te printen in andere class = system.out.println(new Database.positiveCommentList.size());
+    public ArrayList<String> neutralCommentList = new ArrayList<String>(); 
     /**
      *
      */
@@ -166,10 +168,35 @@ public class Database {
         while (resultSet.next()) {
             Tweet t = new Tweet(resultSet.getLong("id"), resultSet.getLong("timestamp"), resultSet.getString("user"), resultSet.getString("location"), resultSet.getString("message"));
             tweetAL.add(t);
+            commentChecker(resultSet.getString("message")); 
         }
-
+        System.out.println(positiveCommentList.size());
+        System.out.println(negativeCommentList.size());
+        System.out.println(neutralCommentList.size());
         return tweetAL;
     }
+    
+    //this method filters the incoming twitterstream and gives the comments a value of negative, positive or neutral
+
+   public String commentChecker(String text){
+           if(text.matches(".*(mooi|goed|leuk|fantastisch|prachtig|#boijmans|het).*")) //you can change the words in here to change what the filter thinks is positive
+           {
+               positiveCommentList.add(text);
+               return "comment is positive";
+           }
+            
+            
+           else if(text.matches(".*(lelijk|stom|saai|kut|verschrikkelijk).*")) //you can change the words in here to change what the filer thinks is negative
+           {
+               negativeCommentList.add(text);
+               return "comment is negative";
+           }
+           else
+           {
+               neutralCommentList.add(text);
+               return "comment is neutral";
+           } //if the comment is not positve or negative the method will automatically assign it the neutral value
+   }
 
     /**
      * This method adds a new user into the database, iff it does not exist yet
