@@ -197,7 +197,6 @@ public class Database {
                return "comment is neutral";
            } //if the comment is not positve or negative the method will automatically assign it the neutral value
    }
-
     /**
      * This method adds a new user into the database, iff it does not exist yet
      *
