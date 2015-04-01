@@ -4,7 +4,6 @@ import com.restfb.*;
 import com.restfb.FacebookClient.AccessToken;
 import com.restfb.types.NamedFacebookType;
 import com.restfb.types.Post;
-import static java.lang.System.currentTimeMillis;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +15,7 @@ public class FacebookApplication {
     public FacebookApplication(String accessToken){
         facebookClient = new DefaultFacebookClient(accessToken);
     }
+    
     public void fetch(){
         //Fetches the feed on the boijmans museum page
         Connection<Post> messages = facebookClient.fetchConnection("boijmans/feed", Post.class, Parameter.with("since", "1424649600"), Parameter.with("until", "1427068800"), Parameter.with("date_format", "U"));

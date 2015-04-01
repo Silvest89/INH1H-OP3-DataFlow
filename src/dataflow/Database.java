@@ -29,6 +29,9 @@ public class Database {
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
+    /**
+     *
+     */
     public Database() {
         // This will load the MySQL driver, each DB has its own driver
         try {
@@ -42,6 +45,12 @@ public class Database {
         }
     }
 
+    /**
+     *
+     * @param username
+     * @param password
+     * @throws Exception
+     */
     public void validateLogin(String username, String password) throws Exception {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -70,6 +79,13 @@ public class Database {
         }
     }
     
+    /**
+     *
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param password
+     */
     public void updateAccountDetails(String firstName, String lastName, String email, String password){
         if(!Utility.passwordValidation(password))
             return;
@@ -77,6 +93,9 @@ public class Database {
         
     }
 
+    /**
+     *
+     */
     public void close() {
         try {
             if (resultSet != null) {
@@ -95,6 +114,16 @@ public class Database {
         }
     }
 
+    /**
+     *
+     * @param feedType
+     * @param feedId
+     * @param text
+     * @param user
+     * @param timeStamp
+     * @param location
+     * @throws Exception
+     */
     public void putInDatabase(String feedType, String feedId, String text, String user, long timeStamp, String location) throws Exception {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
@@ -147,6 +176,11 @@ public class Database {
      *
      * @param username user name of the account added
      * @param password password of the account added
+     * @param firstName
+     * @param email
+     * @param lastName
+     * @param accessLevel
+     * @return 
      */
     public boolean addUser(String username, String password, String firstName, String lastName, String email, int accessLevel){
         System.out.println("test2");
@@ -204,8 +238,7 @@ public class Database {
      * This method checks if a given user name/password combination is present
      * in the database
      *
-     * @param name the user name of the account checked
-     * @param passWord the password of the account checked
+     * @param password
      * @return boolean based on whether the account is present or not
      * @throws Exception
      */
@@ -246,6 +279,12 @@ public class Database {
         }
     }
     
+    /**
+     *
+     * @param date
+     * @return
+     * @throws Exception
+     */
     public int countTweets(String date) throws Exception {
         ArrayList<String> results = new ArrayList<>();
         preparedStatement = connect
@@ -267,6 +306,11 @@ public class Database {
         return i;
     }
 
+    /**
+     *
+     * @param timeStamp
+     * @param jsonWeather
+     */
     public void checkWeather(String timeStamp, JSONObject jsonWeather){
         try {
             preparedStatement = connect
@@ -302,6 +346,11 @@ public class Database {
         }   
     }
 
+    /**
+     *
+     * @param timeStamp
+     * @return
+     */
     public Weather fetchWeather(long timeStamp) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {            
@@ -322,6 +371,11 @@ public class Database {
         return null;
     }
     
+    /**
+     *
+     * @param minId
+     * @throws SQLException
+     */
     public void insertInstagramId(String minId) throws SQLException{
         try{
             preparedStatement = connect
@@ -334,6 +388,12 @@ public class Database {
         }     
     }
     
+    /**
+     *
+     * @param minId
+     * @param nextMinId
+     * @throws SQLException
+     */
     public void updateInstagramId(String minId, String nextMinId) throws SQLException{
         try{
             preparedStatement = connect
@@ -347,6 +407,10 @@ public class Database {
         }             
     }    
     
+    /**
+     *
+     * @return
+     */
     public String getRecentInstagramId(){
         try {
             preparedStatement = connect
@@ -363,6 +427,11 @@ public class Database {
         return null;
     }
     
+    /**
+     *
+     * @param date
+     * @return
+     */
     public double fetchWeatherByDouble(String date) {
         try {
             preparedStatement = connect

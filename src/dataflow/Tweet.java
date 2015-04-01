@@ -14,7 +14,7 @@ public class Tweet {
     
     public Tweet(long id, long timeStamp, String user, String location, String text){
         this.id = id;    
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm z");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         this.timeString = format.format(timeStamp * 1000L);
         this.timeStamp = timeStamp;
         this.user = user;

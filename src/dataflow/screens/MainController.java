@@ -235,8 +235,10 @@ public class MainController extends ControlledScreen implements Initializable {
         if(!Utility.EmailValidator(pEmail.getText()))
             error = true;               
         
-        if(error)
-            Utility.alertWindow(null, Alert.AlertType.ERROR, "Invalid Fields", "Please correct the invalid fields.", "Please recheck your fields.");
+        if(error){
+            Utility.alertWindow(DataFlow.stage, Alert.AlertType.ERROR, "Invalid Fields", "Please correct the invalid fields.", "Please recheck your fields.");
+            return false;
+        }
         // Create the custom dialog.
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Confirm Password");
@@ -290,7 +292,8 @@ public class MainController extends ControlledScreen implements Initializable {
             try{
                 Database db = new Database();
                 if(db.checkAccount(usernamePassword)){                        
-                    db.updateAccountDetails(pFirstName.getText(), pLastName.getText(), pEmail.getText(), pPassword.getText());                    
+                    db.updateAccountDetails(pFirstName.getText(), pLastName.getText(), pEmail.getText(), pPassword.getText()); 
+                    return;
                 }
             }
             catch(Exception e){

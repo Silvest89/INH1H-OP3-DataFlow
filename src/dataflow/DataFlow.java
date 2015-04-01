@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 public class DataFlow extends Application {
     
     public static Account account = null;
-    public static Map<String, String> screens = new HashMap<String, String>();    
+    public static HashMap<String, String> screens = new HashMap<>();    
                                                     
     public static Stage stage;
     public static ScreensController mainContainer;    
