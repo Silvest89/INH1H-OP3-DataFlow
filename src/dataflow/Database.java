@@ -15,6 +15,10 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart.Data;
 import org.json.JSONObject;
 import sun.misc.BASE64Encoder;
 
@@ -249,7 +253,7 @@ public class Database {
     public int countTweets(String date) throws Exception {
         ArrayList<String> results = new ArrayList<>();
         preparedStatement = connect
-                .prepareStatement("SELECT timestamp FROM data_feed WHERE feed_type = 'Twitter'");
+                .prepareStatement("SELECT timestamp FROM data_feed");
         resultSet = preparedStatement.executeQuery();
 
         while(resultSet.next()){
@@ -265,6 +269,38 @@ public class Database {
         }
         
         return i;
+    }
+    
+    public ObservableList<PieChart.Data> getMediaDistribution() throws Exception {
+        final ObservableList<PieChart.Data> counts = FXCollections.observableArrayList();
+        preparedStatement = connect.
+                prepareStatement("SELECT COUNT(*) from data_feed WHERE feed_type = ?");
+        preparedStatement.setString(1, "twitter");
+        resultSet = preparedStatement.executeQuery();
+        
+        if(resultSet.next()){
+            counts.add(new PieChart.Data("Twitter", resultSet.getInt(1)));
+        }
+        
+        preparedStatement = connect.
+                prepareStatement("SELECT COUNT(*) from data_feed WHERE feed_type = ?");
+        preparedStatement.setString(1, "facebook");
+        resultSet = preparedStatement.executeQuery();
+        
+        if(resultSet.next()){
+            counts.add(new PieChart.Data("Facebook", resultSet.getInt(1)));
+        }
+        
+        preparedStatement = connect.
+                prepareStatement("SELECT COUNT(*) from data_feed WHERE feed_type = ?");
+        preparedStatement.setString(1, "instagram");
+        resultSet = preparedStatement.executeQuery();
+        
+        if(resultSet.next()){
+            counts.add(new PieChart.Data("Instagram", resultSet.getInt(1)));
+        }
+        
+        return counts;
     }
 
     public void checkWeather(String timeStamp, JSONObject jsonWeather){

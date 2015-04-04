@@ -65,7 +65,7 @@
             <Font name="System Bold Italic" size="20.0" />
          </font>
       </Label>
-      <BarChart fx:id="bcTweets" layoutX="204.0" layoutY="79.0" prefHeight="231.0" prefWidth="578.0" title="Tweets per day">
+      <BarChart fx:id="bcTweets" layoutX="204.0" layoutY="79.0" prefHeight="231.0" prefWidth="572.0" title="Messages per day">
         <xAxis>
           <CategoryAxis label="Day" side="BOTTOM" />
         </xAxis>
@@ -73,7 +73,7 @@
           <NumberAxis label="Tweets" side="LEFT" />
         </yAxis>
       </BarChart>
-      <LineChart fx:id="lcWeather" layoutX="221.0" layoutY="307.0" prefHeight="260.0" prefWidth="548.0" title="Weather">
+      <LineChart fx:id="lcWeather" layoutX="221.0" layoutY="307.0" prefHeight="260.0" prefWidth="312.0" title="Weather">
         <xAxis>
           <CategoryAxis label="Day" side="BOTTOM" />
         </xAxis>
@@ -81,5 +81,6 @@
           <NumberAxis label="Temperature" prefHeight="138.0" prefWidth="43.0" side="LEFT" upperBound="30.0" />
         </yAxis>
       </LineChart>
+      <PieChart fx:id="pcDistr" layoutX="553.0" layoutY="330.0" prefHeight="181.0" prefWidth="120.0" title="Media Distrubution" />
    </children>
 </AnchorPane>
