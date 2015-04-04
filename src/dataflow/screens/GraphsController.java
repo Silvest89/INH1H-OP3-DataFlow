@@ -6,11 +6,15 @@
 package dataflow.screens;
 
 import dataflow.MySQLDb;
+import dataflow.feed.Feed;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +29,30 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import static javax.management.remote.JMXConnectorFactory.connect;
+import dataflow.feed.Feed;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import dataflow.feed.FacebookFeed;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
+import org.json.JSONObject;
+
+import javax.sql.DataSource;
+import sun.misc.BASE64Encoder;
 
 /**
  * FXML Controller class
@@ -32,9 +60,13 @@ import javafx.scene.layout.StackPane;
  * @author Jesse
  */
 
-
 public class GraphsController extends ControlledScreen implements Initializable {
-
+    
+    public ArrayList<String> positiveCommentList2 = new ArrayList<String>();
+    public ArrayList<String> negativeCommentList2 = new ArrayList<String>();
+    public ArrayList<String> neutralCommentList2 = new ArrayList<String>();
+    
+   
     @FXML
     private Label label;
     @FXML
@@ -112,9 +144,9 @@ public class GraphsController extends ControlledScreen implements Initializable 
             
             ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
-                new PieChart.Data("Positive", d.positiveCommentList.size()),
-                new PieChart.Data("Negative", d.negativeCommentList.size()),
-                new PieChart.Data("Neutral",  d.neutralCommentList.size()));
+                new PieChart.Data("Positive", d.positiveCommentList2.size()),
+                new PieChart.Data("Negative", d.negativeCommentList2.size()),
+                new PieChart.Data("Neutral",  d.neutralCommentList2.size()));
             pnnTweets.setData(pieChartData);
             
         } catch (Exception e) {
@@ -124,6 +156,33 @@ public class GraphsController extends ControlledScreen implements Initializable 
               
     }
 
+    
+     //this method filters the incoming twitterstream and gives the comments a value of negative, positive or neutral
+
+   public String commentChecker(String text){
+           if(text.matches(".*(mooi|goed|leuk|fantastisch|prachtig|#boijmans|het).*")) //you can change the words in here to change what the filter thinks is positive
+           {
+               positiveCommentList2.add(text);
+               return "comment is positive";
+           }
+            
+            
+           else if(text.matches(".*(lelijk|stom|saai|kut|verschrikkelijk).*")) //you can change the words in here to change what the filer thinks is negative
+           {
+               negativeCommentList2.add(text);
+               return "comment is negative";
+           }
+           else
+           {
+               neutralCommentList2.add(text);
+               return "comment is neutral";
+           } //if the comment is not positve or negative the method will automatically assign it the neutral value
+   }
+    
+    
+    
+    
+    
     public ObservableList<XYChart.Data<String, Number>> plot(double... y) {
         final ObservableList<XYChart.Data<String, Number>> dataset = FXCollections.observableArrayList();
         int i = 0;

@@ -29,21 +29,26 @@ import sun.misc.BASE64Encoder;
  *
  * @author Johnnie Ho
  */
+
+   
+
 public class MySQLDb implements DatabaseInterface {
 
     private Connection connect = null;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
-    public ObservableList<String> positiveCommentList = FXCollections.observableArrayList();
-    public ObservableList<String> negativeCommentList = FXCollections.observableArrayList();
-    public ObservableList<String> neutralCommentList = FXCollections.observableArrayList();
-    //public ArrayList<String> positiveCommentList2 = new ArrayList<String>();
-    //public ArrayList<String> negativeCommentList2 = new ArrayList<String>();
-    //public ArrayList<String> neutralCommentList2 = new ArrayList<String>();
+   // public ObservableList<String> positiveCommentList = FXCollections.observableArrayList();
+   // public ObservableList<String> negativeCommentList = FXCollections.observableArrayList();
+   // public ObservableList<String> neutralCommentList = FXCollections.observableArrayList();
+    public static ArrayList<String> positiveCommentList2 = new ArrayList<String>();
+    public static ArrayList<String> negativeCommentList2 = new ArrayList<String>();
+    public static ArrayList<String> neutralCommentList2 = new ArrayList<String>();
     
     
     private static MysqlDataSource mysql = null;
+    
+ 
         
     /**
      *
@@ -313,19 +318,19 @@ public class MySQLDb implements DatabaseInterface {
    public String commentChecker(String text){
            if(text.matches(".*(mooi|goed|leuk|fantastisch|prachtig|#boijmans|het).*")) //you can change the words in here to change what the filter thinks is positive
            {
-               positiveCommentList.add(text);
+               positiveCommentList2.add(text);
                return "comment is positive";
            }
             
             
            else if(text.matches(".*(lelijk|stom|saai|kut|verschrikkelijk).*")) //you can change the words in here to change what the filer thinks is negative
            {
-               negativeCommentList.add(text);
+               negativeCommentList2.add(text);
                return "comment is negative";
            }
            else
            {
-               neutralCommentList.add(text);
+               neutralCommentList2.add(text);
                return "comment is neutral";
            } //if the comment is not positve or negative the method will automatically assign it the neutral value
    }
