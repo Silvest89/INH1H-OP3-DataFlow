@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dataflow;
 
 import dataflow.feed.Feed;
@@ -21,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
 import org.json.JSONObject;
 
 import javax.sql.DataSource;
@@ -535,6 +534,38 @@ public class MySQLDb implements DatabaseInterface {
         return null;
     }        
 
+    public ObservableList<PieChart.Data> getMediaDistribution() throws Exception {
+        final ObservableList<PieChart.Data> counts = FXCollections.observableArrayList();
+        preparedStatement = connect.
+                prepareStatement("SELECT COUNT(*) from data_feed WHERE feed_type = ?");
+        preparedStatement.setString(1, "Twitter");
+        resultSet = preparedStatement.executeQuery();
+        
+        if(resultSet.next()){
+            counts.add(new PieChart.Data("Twitter", resultSet.getInt(1)));
+        }
+        
+        preparedStatement = connect.
+                prepareStatement("SELECT COUNT(*) from data_feed WHERE feed_type = ?");
+        preparedStatement.setString(1, "Facebook");
+        resultSet = preparedStatement.executeQuery();
+        
+        if(resultSet.next()){
+            counts.add(new PieChart.Data("Facebook", resultSet.getInt(1)));
+        }
+        
+        preparedStatement = connect.
+                prepareStatement("SELECT COUNT(*) from data_feed WHERE feed_type = ?");
+        preparedStatement.setString(1, "Instagram");
+        resultSet = preparedStatement.executeQuery();
+        
+        if(resultSet.next()){
+            counts.add(new PieChart.Data("Instagram", resultSet.getInt(1)));
+        }
+        
+        return counts;
+    }
+    
     /**
      *
      */

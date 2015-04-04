@@ -13,12 +13,14 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -41,8 +43,11 @@ public class GraphsController extends ControlledScreen implements Initializable 
     private BarChart<String, Number> bcTweets;
     @FXML
     private LineChart<String, Number> lcWeather;
+    @FXML
+    private PieChart pcDistr;
 
     ArrayList<String> days = new ArrayList<>();
+    
 
     /**
      * Initializes the controller class.
@@ -98,6 +103,9 @@ public class GraphsController extends ControlledScreen implements Initializable 
             )));
 
             lcWeather.getData().addAll(lcSeries);
+            
+            pcDistr.getData().addAll(d.getMediaDistribution());
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,6 +126,10 @@ public class GraphsController extends ControlledScreen implements Initializable 
         }
 
         return dataset;
+    }
+
+    @FXML
+    private void goToMain(ActionEvent event) {
     }
 }
 
