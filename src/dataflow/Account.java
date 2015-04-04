@@ -26,8 +26,7 @@ public class Account {
         firstName = "";
         lastName = "";
         email = "";
-        accessLevel = NORMAL;
-        
+        accessLevel = NORMAL;  
     }
     
     public String getUserName(){
