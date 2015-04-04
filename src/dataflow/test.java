@@ -5,17 +5,17 @@
  */
 package dataflow;
 
+import dataflow.screens.GraphsController;
+
 /**
  *
  * @author Anton
  */
 public class test {
       public static void main(String[] args) {
-          
-      
-    System.out.println("neu" +  MySQLDb.neutralCommentList2.size());
-    System.out.println("posi" + MySQLDb.positiveCommentList2.size());
-    System.out.println("nega" + MySQLDb.negativeCommentList2.size());
+    System.out.println("neu" +  GraphsController.neutralCommentList.size());
+    System.out.println("posi" + GraphsController.positiveCommentList.size());
+    System.out.println("nega" + GraphsController.negativeCommentList.size());
     
 }
 }

@@ -62,9 +62,12 @@ import sun.misc.BASE64Encoder;
 
 public class GraphsController extends ControlledScreen implements Initializable {
     
-    public ArrayList<String> positiveCommentList2 = new ArrayList<String>();
-    public ArrayList<String> negativeCommentList2 = new ArrayList<String>();
-    public ArrayList<String> neutralCommentList2 = new ArrayList<String>();
+    public static ObservableList<String> positiveCommentList;
+    public static ObservableList<String> negativeCommentList;
+    public static ObservableList<String> neutralCommentList;
+    public static ArrayList<String> positiveCommentList2 = new ArrayList<String>();
+    public static ArrayList<String> negativeCommentList2 = new ArrayList<String>();
+    public static ArrayList<String> neutralCommentList2 = new ArrayList<String>();
     
    
     @FXML
@@ -144,9 +147,9 @@ public class GraphsController extends ControlledScreen implements Initializable 
             
             ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
-                new PieChart.Data("Positive", d.positiveCommentList2.size()),
-                new PieChart.Data("Negative", d.negativeCommentList2.size()),
-                new PieChart.Data("Neutral",  d.neutralCommentList2.size()));
+                new PieChart.Data("Positive", positiveCommentList.size()),
+                new PieChart.Data("Negative", negativeCommentList.size()),
+                new PieChart.Data("Neutral",  neutralCommentList.size()));
             pnnTweets.setData(pieChartData);
             
         } catch (Exception e) {
@@ -159,25 +162,7 @@ public class GraphsController extends ControlledScreen implements Initializable 
     
      //this method filters the incoming twitterstream and gives the comments a value of negative, positive or neutral
 
-   public String commentChecker(String text){
-           if(text.matches(".*(mooi|goed|leuk|fantastisch|prachtig|#boijmans|het).*")) //you can change the words in here to change what the filter thinks is positive
-           {
-               positiveCommentList2.add(text);
-               return "comment is positive";
-           }
-            
-            
-           else if(text.matches(".*(lelijk|stom|saai|kut|verschrikkelijk).*")) //you can change the words in here to change what the filer thinks is negative
-           {
-               negativeCommentList2.add(text);
-               return "comment is negative";
-           }
-           else
-           {
-               neutralCommentList2.add(text);
-               return "comment is neutral";
-           } //if the comment is not positve or negative the method will automatically assign it the neutral value
-   }
+   
     
     
     
