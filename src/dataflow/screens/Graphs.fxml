@@ -15,12 +15,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="786.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataflow.screens.GraphsController">
+<AnchorPane id="AnchorPane" prefHeight="781.0" prefWidth="803.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataflow.screens.GraphsController">
     <stylesheets>
         <URL value="@statistics.css" />
     </stylesheets>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="550.0" layoutY="43.0" opacity="0.24" stroke="BLACK" strokeType="INSIDE" width="202.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="739.0" layoutY="43.0" opacity="0.24" stroke="BLACK" strokeType="INSIDE" width="202.0">
          <effect>
             <DropShadow />
          </effect>
@@ -81,6 +81,7 @@
           <NumberAxis label="Temperature" prefHeight="138.0" prefWidth="43.0" side="LEFT" upperBound="30.0" />
         </yAxis>
       </LineChart>
-      <PieChart fx:id="pcDistr" layoutX="553.0" layoutY="330.0" prefHeight="181.0" prefWidth="120.0" title="Media Distrubution" />
+      <PieChart fx:id="pcDistr" layoutX="563.0" layoutY="336.0" prefHeight="181.0" prefWidth="120.0" title="Media Distrubution" />
+      <PieChart fx:id="pnnTweets" layoutX="518.0" layoutY="546.0" prefHeight="222.0" prefWidth="271.0" title="Sentiment Tweets" />
    </children>
 </AnchorPane>

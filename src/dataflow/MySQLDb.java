@@ -35,7 +35,14 @@ public class MySQLDb implements DatabaseInterface {
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
-
+    public ObservableList<String> positiveCommentList = FXCollections.observableArrayList();
+    public ObservableList<String> negativeCommentList = FXCollections.observableArrayList();
+    public ObservableList<String> neutralCommentList = FXCollections.observableArrayList();
+    //public ArrayList<String> positiveCommentList2 = new ArrayList<String>();
+    //public ArrayList<String> negativeCommentList2 = new ArrayList<String>();
+    //public ArrayList<String> neutralCommentList2 = new ArrayList<String>();
+    
+    
     private static MysqlDataSource mysql = null;
         
     /**
@@ -290,7 +297,8 @@ public class MySQLDb implements DatabaseInterface {
             
             while (resultSet.next()) {
                 Feed t = new Feed(resultSet.getLong("id"), resultSet.getLong("timestamp"), resultSet.getString("user"), resultSet.getString("location"), resultSet.getString("message"), resultSet.getString("feed_type"));
-                tweetAL.add(t);
+                commentChecker(resultSet.getString("message"));
+                tweetAL.add(t);             
             }
             
             return tweetAL;
@@ -300,6 +308,27 @@ public class MySQLDb implements DatabaseInterface {
         return null;
     }
     
+     //this method filters the incoming twitterstream and gives the comments a value of negative, positive or neutral
+
+   public String commentChecker(String text){
+           if(text.matches(".*(mooi|goed|leuk|fantastisch|prachtig|#boijmans|het).*")) //you can change the words in here to change what the filter thinks is positive
+           {
+               positiveCommentList.add(text);
+               return "comment is positive";
+           }
+            
+            
+           else if(text.matches(".*(lelijk|stom|saai|kut|verschrikkelijk).*")) //you can change the words in here to change what the filer thinks is negative
+           {
+               negativeCommentList.add(text);
+               return "comment is negative";
+           }
+           else
+           {
+               neutralCommentList.add(text);
+               return "comment is neutral";
+           } //if the comment is not positve or negative the method will automatically assign it the neutral value
+   }
     /**
      *
      * @param fbFeed

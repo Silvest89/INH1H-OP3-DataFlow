@@ -31,6 +31,8 @@ import javafx.scene.layout.StackPane;
  *
  * @author Jesse
  */
+
+
 public class GraphsController extends ControlledScreen implements Initializable {
 
     @FXML
@@ -45,6 +47,8 @@ public class GraphsController extends ControlledScreen implements Initializable 
     private LineChart<String, Number> lcWeather;
     @FXML
     private PieChart pcDistr;
+    @FXML
+    private PieChart pnnTweets;
 
     ArrayList<String> days = new ArrayList<>();
     
@@ -106,9 +110,18 @@ public class GraphsController extends ControlledScreen implements Initializable 
             
             pcDistr.getData().addAll(d.getMediaDistribution());
             
+            ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+                new PieChart.Data("Positive", d.positiveCommentList.size()),
+                new PieChart.Data("Negative", d.negativeCommentList.size()),
+                new PieChart.Data("Neutral",  d.neutralCommentList.size()));
+            pnnTweets.setData(pieChartData);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+              
     }
 
     public ObservableList<XYChart.Data<String, Number>> plot(double... y) {
