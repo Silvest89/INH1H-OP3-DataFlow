@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dataflow.dialog;
+package dataflow.screens.dialog;
 
+import dataflow.screens.dialog.Dialog;
 import dataflow.Account;
 import dataflow.DataFlow;
-import dataflow.Database;
+import dataflow.MySQLDb;
 import dataflow.Utility;
 import java.net.URL;
 import java.util.ArrayList;
@@ -47,8 +48,8 @@ public class UserDeleteDialogController extends Dialog implements Initializable 
         // TODO
         deleteUserCb.setItems(choices);
         try{
-            Database d = new Database();
-            ArrayList<String> choicesAL = d.populateChoiceBox();
+            MySQLDb db = new MySQLDb();
+            ArrayList<String> choicesAL = db.getAccountList();
             for(String s : choicesAL){
                 choices.add(s);
             }        
@@ -61,12 +62,12 @@ public class UserDeleteDialogController extends Dialog implements Initializable 
     private void handleOk() throws Exception {
         if (isInputValid()) {
             okClicked = true;
-            Database db = new Database();
-            if(db.checkAccount(passwordField.getText())){
+            MySQLDb db = new MySQLDb();
+            if(db.checkAccount(passwordField.getText(), Account.ADMIN)){
                 Optional<ButtonType> result = Utility.confirmationWindow(dialogStage, "Confirmation Dialog", "Confirm deletion", "Are you sure you want to delete " + deleteUserCb.getValue().toString() + "?");
 
                 if (result.get() == ButtonType.OK){
-                    db.removeUser(deleteUserCb.getValue().toString(), passwordField.getText());
+                    db.deleteUser(deleteUserCb.getValue().toString());
                 } else {
                     Utility.alertWindow(dialogStage, AlertType.INFORMATION, "Success.", null, "The account has been successfully deleted.");
                 }      

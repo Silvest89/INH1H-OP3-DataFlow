@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dataflow.dialog;
+package dataflow.screens.dialog;
 
+import dataflow.screens.dialog.Dialog;
 import dataflow.*;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -60,7 +61,7 @@ public class UserCreateDialogController extends Dialog implements Initializable 
     private void handleOk() throws Exception {
         if (isInputValid()) {
             okClicked = true;
-            Database db = new Database();
+            MySQLDb db = new MySQLDb();
             int accessLevel = Account.NORMAL;
             switch(accessChoiceBox.getValue().toString()){
                 case "Supervisor":
@@ -71,7 +72,7 @@ public class UserCreateDialogController extends Dialog implements Initializable 
                     break;                                                            
             }
             System.out.println("test");
-            if(!db.addUser(userNameField.getText(), passwordField.getText(), firstNameField.getText(), lastNameField.getText(), emailField.getText(), accessLevel)){
+            if(!db.createUser(userNameField.getText(), passwordField.getText(), firstNameField.getText(), lastNameField.getText(), emailField.getText(), accessLevel)){
                 Utility.alertWindow(dialogStage, AlertType.ERROR, "Error", "An error occurred during account creation.", "This username may already be in use.");       
             }
             else{

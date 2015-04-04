@@ -8,9 +8,9 @@ package dataflow.screens;
 
 import dataflow.Account;
 import dataflow.DataFlow;
-import dataflow.Database;
-import dataflow.Tweet;
-import dataflow.TwitterSearch;
+import dataflow.MySQLDb;
+import dataflow.feed.Feed;
+import dataflow.feed.api.TwitterAPI;
 import dataflow.Weather;
 import dataflow.screens.ControlledScreen;
 import dataflow.screens.MainController;
@@ -50,8 +50,8 @@ public class StatisticsController extends ControlledScreen implements Initializa
     
     Account account = DataFlow.account;
     
-    final ObservableList<Tweet> data = FXCollections.observableArrayList();
-    final ObservableList<Tweet> searchResult = FXCollections.observableArrayList();
+    final ObservableList<Feed> data = FXCollections.observableArrayList();
+    final ObservableList<Feed> searchResult = FXCollections.observableArrayList();
     
     @FXML
     private Label label;
@@ -62,17 +62,17 @@ public class StatisticsController extends ControlledScreen implements Initializa
     @FXML
     private Label showUserName;
     @FXML
-    private TableView<Tweet> tweetBox;
+    private TableView<Feed> tweetBox;
     @FXML
-    private TableColumn<Tweet, String> idCol;
+    private TableColumn<Feed, String> idCol;
     @FXML
-    private TableColumn<Tweet, String> timeStampCol;
+    private TableColumn<Feed, String> timeStampCol;
     @FXML
-    private TableColumn<Tweet, String> userCol;
+    private TableColumn<Feed, String> userCol;
     @FXML
-    private TableColumn<Tweet, String> locationCol;
+    private TableColumn<Feed, String> locationCol;
     @FXML
-    private TableColumn<Tweet, String> textCol;
+    private TableColumn<Feed, String> textCol;
     @FXML
     private TextField searchText;
     
@@ -100,11 +100,11 @@ public class StatisticsController extends ControlledScreen implements Initializa
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        idCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("id"));
-        timeStampCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("timeString"));
-        userCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("user"));
-        locationCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("location"));
-        textCol.setCellValueFactory(new PropertyValueFactory<Tweet, String>("text"));
+        idCol.setCellValueFactory(new PropertyValueFactory<Feed, String>("id"));
+        timeStampCol.setCellValueFactory(new PropertyValueFactory<Feed, String>("timeString"));
+        userCol.setCellValueFactory(new PropertyValueFactory<Feed, String>("user"));
+        locationCol.setCellValueFactory(new PropertyValueFactory<Feed, String>("location"));
+        textCol.setCellValueFactory(new PropertyValueFactory<Feed, String>("text"));
         
         // Listen for selection changes and show the person details when changed.
         tweetBox.getSelectionModel().selectedItemProperty().addListener(
@@ -125,11 +125,11 @@ public class StatisticsController extends ControlledScreen implements Initializa
     @FXML
     private void retrieveData(ActionEvent event) throws Exception {
         try {
-            Database d = new Database();
-            ArrayList<Tweet> tweetAL = d.retrieveFromDatabase();
+            MySQLDb d = new MySQLDb();
+            ArrayList<Feed> tweetAL = d.retrieveFeeds();
             data.clear();
             searchResult.clear();
-            for (Tweet t : tweetAL) {
+            for (Feed t : tweetAL) {
                 data.add(t);
             }
 
@@ -143,7 +143,7 @@ public class StatisticsController extends ControlledScreen implements Initializa
 
     @FXML
     private void searchTweet(ActionEvent event) {
-        if(searchText.getText() == null || searchText.getText().length() == 0)
+       /* if(searchText.getText() == null || searchText.getText().length() == 0)
             return;
         try {
             TwitterSearch ts = new TwitterSearch();
@@ -158,7 +158,7 @@ public class StatisticsController extends ControlledScreen implements Initializa
             e.printStackTrace();
         }
         
-        tweetBox.setItems(searchResult);
+        tweetBox.setItems(searchResult);*/
     }
     
     @FXML
@@ -166,9 +166,9 @@ public class StatisticsController extends ControlledScreen implements Initializa
         
     }
 
-    private void getWeather(Tweet tweet) {
-        Database db = new Database();        
-        Weather weather = db.fetchWeather(tweet.getTimeStamp()); 
+    private void getWeather(Feed tweet) {
+        MySQLDb db = new MySQLDb();        
+        Weather weather = db.fetchWeatherByDate(tweet.getTimeStamp()); 
         if(weather == null){
             minTemp.setText("");
             maxTemp.setText("");

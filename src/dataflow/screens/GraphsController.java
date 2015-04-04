@@ -5,7 +5,7 @@
  */
 package dataflow.screens;
 
-import dataflow.Database;
+import dataflow.MySQLDb;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -51,18 +50,18 @@ public class GraphsController extends ControlledScreen implements Initializable 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            Database d = new Database();
+            MySQLDb d = new MySQLDb();
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YY");
 
             SimpleDateFormat sdfReverse = new SimpleDateFormat("YYYY-MM-dd");
 
-            String todayMin1 = sdf.format(new Date(System.currentTimeMillis() - (1 * 86400000)));
-            String todayMin2 = sdf.format(new Date(System.currentTimeMillis() - (2 * 86400000)));
-            String todayMin3 = sdf.format(new Date(System.currentTimeMillis() - (3 * 86400000)));
-            String todayMin4 = sdf.format(new Date(System.currentTimeMillis() - (4 * 86400000)));
-            String todayMin5 = sdf.format(new Date(System.currentTimeMillis() - (5 * 86400000)));
-            String todayMin6 = sdf.format(new Date(System.currentTimeMillis() - (6 * 86400000)));
+            Date todayMin1 = new Date(System.currentTimeMillis() - (1 * 86400000));
+            Date todayMin2 = new Date(System.currentTimeMillis() - (2 * 86400000));
+            Date todayMin3 = new Date(System.currentTimeMillis() - (3 * 86400000));
+            Date todayMin4 = new Date(System.currentTimeMillis() - (4 * 86400000));
+            Date todayMin5 = new Date(System.currentTimeMillis() - (5 * 86400000));
+            Date todayMin6 = new Date(System.currentTimeMillis() - (6 * 86400000));
 
             String todayMin1Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (1 * 86400000)));
             String todayMin2Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (2 * 86400000)));
@@ -71,31 +70,31 @@ public class GraphsController extends ControlledScreen implements Initializable 
             String todayMin5Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (5 * 86400000)));
             String todayMin6Reverse = sdfReverse.format(new Date(System.currentTimeMillis() - (6 * 86400000)));
             
-            days.add(todayMin6);
-            days.add(todayMin5);
-            days.add(todayMin4);
-            days.add(todayMin3);
-            days.add(todayMin2);
-            days.add(todayMin1);
+            days.add(sdf.format(todayMin6));
+            days.add(sdf.format(todayMin5));
+            days.add(sdf.format(todayMin4));
+            days.add(sdf.format(todayMin3));
+            days.add(sdf.format(todayMin2));
+            days.add(sdf.format(todayMin1));
 
             XYChart.Series bcSeries1 = new XYChart.Series();
-            bcSeries1.getData().add(new XYChart.Data(todayMin6, d.countTweets(todayMin6)));
-            bcSeries1.getData().add(new XYChart.Data(todayMin5, d.countTweets(todayMin5)));
-            bcSeries1.getData().add(new XYChart.Data(todayMin4, d.countTweets(todayMin4)));
-            bcSeries1.getData().add(new XYChart.Data(todayMin3, d.countTweets(todayMin3)));
-            bcSeries1.getData().add(new XYChart.Data(todayMin2, d.countTweets(todayMin2)));
-            bcSeries1.getData().add(new XYChart.Data(todayMin1, d.countTweets(todayMin1)));
+            bcSeries1.getData().add(new XYChart.Data(sdf.format(todayMin6), d.getFeedsPerDay("Twitter", todayMin6)));
+            bcSeries1.getData().add(new XYChart.Data(sdf.format(todayMin5), d.getFeedsPerDay("Twitter", todayMin5)));
+            bcSeries1.getData().add(new XYChart.Data(sdf.format(todayMin4), d.getFeedsPerDay("Twitter", todayMin4)));
+            bcSeries1.getData().add(new XYChart.Data(sdf.format(todayMin3), d.getFeedsPerDay("Twitter", todayMin3)));
+            bcSeries1.getData().add(new XYChart.Data(sdf.format(todayMin2), d.getFeedsPerDay("Twitter", todayMin2)));
+            bcSeries1.getData().add(new XYChart.Data(sdf.format(todayMin1), d.getFeedsPerDay("Twitter", todayMin1)));
 
             bcTweets.getData().add(bcSeries1);
             
             XYChart.Series lcSeries = new XYChart.Series();
             lcSeries.getData().addAll(FXCollections.observableList(plot(
-                    d.fetchWeatherByDouble(todayMin6Reverse), 
-                    d.fetchWeatherByDouble(todayMin5Reverse), 
-                    d.fetchWeatherByDouble(todayMin4Reverse), 
-                    d.fetchWeatherByDouble(todayMin3Reverse), 
-                    d.fetchWeatherByDouble(todayMin2Reverse), 
-                    d.fetchWeatherByDouble(todayMin1Reverse)
+                    d.fetchWeatherTemperatureByDate(todayMin6Reverse), 
+                    d.fetchWeatherTemperatureByDate(todayMin5Reverse), 
+                    d.fetchWeatherTemperatureByDate(todayMin4Reverse), 
+                    d.fetchWeatherTemperatureByDate(todayMin3Reverse), 
+                    d.fetchWeatherTemperatureByDate(todayMin2Reverse), 
+                    d.fetchWeatherTemperatureByDate(todayMin1Reverse)
             )));
 
             lcWeather.getData().addAll(lcSeries);

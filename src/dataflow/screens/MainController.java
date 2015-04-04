@@ -7,10 +7,10 @@ package dataflow.screens;
 
 import dataflow.Account;
 import dataflow.DataFlow;
-import dataflow.Database;
+import dataflow.MySQLDb;
 import dataflow.Utility;
-import dataflow.dialog.UserCreateDialogController;
-import dataflow.dialog.UserDeleteDialogController;
+import dataflow.screens.dialog.UserCreateDialogController;
+import dataflow.screens.dialog.UserDeleteDialogController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -146,7 +146,7 @@ public class MainController extends ControlledScreen implements Initializable {
         try{
         // Load the fxml file and create a new stage for the popup dialog.
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainController.class.getResource("/dataflow/dialog/UserCreateDialog.fxml"));
+        loader.setLocation(MainController.class.getResource("/dataflow/screens/dialog/UserCreateDialog.fxml"));
         AnchorPane page = (AnchorPane) loader.load();
 
         // Create the dialog Stage.
@@ -179,7 +179,7 @@ public class MainController extends ControlledScreen implements Initializable {
         try{
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainController.class.getResource("/dataflow/dialog/UserDeleteDialog.fxml"));
+            loader.setLocation(MainController.class.getResource("/dataflow/screens/dialog/UserDeleteDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
             // Create the dialog Stage.
@@ -235,8 +235,10 @@ public class MainController extends ControlledScreen implements Initializable {
         if(!Utility.EmailValidator(pEmail.getText()))
             error = true;               
         
-        if(error)
+        if(error){
             Utility.alertWindow(null, Alert.AlertType.ERROR, "Invalid Fields", "Please correct the invalid fields.", "Please recheck your fields.");
+            return false;
+        }
         // Create the custom dialog.
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Confirm Password");
@@ -288,8 +290,8 @@ public class MainController extends ControlledScreen implements Initializable {
 
         result.ifPresent(usernamePassword -> {
             try{
-                Database db = new Database();
-                if(db.checkAccount(usernamePassword)){                        
+                MySQLDb db = new MySQLDb();
+                if(db.checkAccount(usernamePassword, Account.NORMAL)){                        
                     db.updateAccountDetails(pFirstName.getText(), pLastName.getText(), pEmail.getText(), pPassword.getText());                    
                 }
             }

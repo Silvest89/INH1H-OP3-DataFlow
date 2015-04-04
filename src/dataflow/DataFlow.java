@@ -5,6 +5,7 @@
  */
 package dataflow;
 
+import dataflow.feed.api.FacebookAPI;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Calendar;
@@ -32,41 +33,24 @@ public class DataFlow extends Application {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         
+        Config.readConfig();
+        MySQLDb.getDataSource();   
+
         screens.put("Login", "screens/Login.fxml");
         screens.put("Main", "screens/Main.fxml");
         screens.put("Statistics", "screens/Statistics.fxml");
         screens.put("Graphs", "screens/Graphs.fxml");
         
-        Calendar fromTime = Calendar.getInstance();
-        fromTime.set(2015, 2, 23, 8, 0);
-        Calendar toTime = Calendar.getInstance();
-        toTime.set(2015, 2, 23, 5, 0);
-        Date date = toTime.getTime();
-        SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
-        //System.out.println(format.format(date));
-        //long unixTime = (long)calendar.getTimeInMillis()/1000L;
-        //Date date =  calendar.getTime();
-        //System.out.println(unixTime);
         mainContainer = new ScreensController(); 
         mainContainer.loadScreen("Login", 
             screens.get("Login"));
         mainContainer.setScreen("Login");       
         
-
-        //Group root = new Group(); 
-        //root.getChildren().addAll(mainContainer); 
         Scene scene = new Scene(mainContainer);         
         stage.setScene(scene); 
-        //stage.setWidth(320);
-        //stage.setHeight(230);
         stage.setResizable(false);
         stage.setTitle("Data Flow"); 
         stage.show(); 
-        //Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
-        /*Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();*/
     }
 
     /**

@@ -6,8 +6,6 @@ import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.*;
 
 public class TwitterStream {
-
-    Database d;
     
     String id;
     long timeStamp;
@@ -35,7 +33,7 @@ public class TwitterStream {
      * of) keyword(s)
      */
     public void tweetStream() {
-        d = new Database();
+        MySQLDb db = new MySQLDb();
         // Sets the configuration of the streaming application
         // A twitter application is required if you want to use the api.
         // IMPORTANT NOTE: do not share the keys and tokens as other people can/will use our application
@@ -67,7 +65,7 @@ public class TwitterStream {
                 text = "" + status.getText();
                     
                 try {                    
-                    d.putInDatabase("Twitter", id, text, user, timeStamp, location);
+                    db.insertFeed("Twitter", id, text, user, timeStamp, location);
                 } catch(Exception e){
                     e.printStackTrace();
                 }
@@ -93,7 +91,7 @@ public class TwitterStream {
 
         twitterStream.addListener(listener);
         twitterStream.filter(fq);
-        d.close();
+        db.close();
     }
 
 }

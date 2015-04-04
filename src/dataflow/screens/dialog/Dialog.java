@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dataflow.dialog;
+package dataflow.screens.dialog;
 
 import javafx.stage.Stage;
 

@@ -6,7 +6,7 @@
 package dataflow.screens;
 
 import dataflow.DataFlow;
-import dataflow.Database;
+import dataflow.MySQLDb;
 import dataflow.*;
 
 import java.net.URL;
@@ -40,7 +40,7 @@ public class LoginController extends ControlledScreen implements Initializable {
     @FXML
     private void login(ActionEvent event) {
         
-        Database mySQL = new Database();  
+        MySQLDb mySQL = new MySQLDb();  
         if(username.getLength() <= 0 || password.getLength() <= 0){
             label.setTextFill(Color.web("#9D1309"));
             label.setText("Username and/or password cannot be empty.");

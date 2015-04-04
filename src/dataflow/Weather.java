@@ -72,9 +72,9 @@ public class Weather {
             String date = format.format(weatherDate);
             String jsonString = callURL("https://api.worldweatheronline.com/free/v2/past-weather.ashx?q=Rotterdam&format=json&tp=24&key=c6aee37b80d801b44279ac16374db&date=" + date);    
             try {  
-                Database db = new Database();
+                MySQLDb db = new MySQLDb();
                 JSONObject jsonObject = new JSONObject(jsonString).getJSONObject("data");
-                db.checkWeather(date, jsonObject);           
+                db.insertWeather(date, jsonObject);           
             } catch (JSONException e) {
                 e.printStackTrace();
             }
