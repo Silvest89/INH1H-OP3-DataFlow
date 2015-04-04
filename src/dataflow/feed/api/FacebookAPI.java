@@ -61,7 +61,7 @@ public class FacebookAPI{
                         }
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw e;
                 }
             }
 
@@ -70,13 +70,6 @@ public class FacebookAPI{
     
     public FacebookAPI(){
                 AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken("954169427935318", "4f7915b1abc5973dcbc9301a86bc33b5");
-        String token=accessToken.getAccessToken();
-        System.out.println(token);
-        FacebookAPI fb = new FacebookAPI(token);
-        fb.fetch();
-    }
-    public static void main(String[] args){
-        AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken("954169427935318", "4f7915b1abc5973dcbc9301a86bc33b5");
         String token=accessToken.getAccessToken();
         System.out.println(token);
         FacebookAPI fb = new FacebookAPI(token);

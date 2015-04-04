@@ -10,10 +10,7 @@ import dataflow.Account;
 import dataflow.DataFlow;
 import dataflow.MySQLDb;
 import dataflow.feed.Feed;
-import dataflow.feed.api.TwitterAPI;
 import dataflow.Weather;
-import dataflow.screens.ControlledScreen;
-import dataflow.screens.MainController;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -47,8 +44,6 @@ import javax.imageio.ImageIO;
 public class StatisticsController extends ControlledScreen implements Initializable {
     
     String pageName = "Statistics";
-    
-    Account account = DataFlow.account;
     
     final ObservableList<Feed> data = FXCollections.observableArrayList();
     final ObservableList<Feed> searchResult = FXCollections.observableArrayList();
@@ -113,7 +108,7 @@ public class StatisticsController extends ControlledScreen implements Initializa
     
     @Override
     public void prepare () {
-        showUserName.setText("Welcome, " + account.getUserName() + "!");
+        showUserName.setText("Welcome, " + Account.getUserName() + "!");
         showPageName.setText(pageName); 
     }
     

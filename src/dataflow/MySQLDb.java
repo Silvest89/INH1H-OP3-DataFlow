@@ -55,8 +55,6 @@ public class MySQLDb implements DatabaseInterface {
      * @return
      */
     public static DataSource getDataSource() {      
-        //fis = new FileInputStream("src\\db.properties");
-        //props.load(fis);
         mysql = new MysqlDataSource();
         mysql.setURL(Config.getDatabase());
         mysql.setUser(Config.getDbuser());
@@ -84,13 +82,11 @@ public class MySQLDb implements DatabaseInterface {
             preparedStatement.setString(2, new BASE64Encoder().encode(hash));
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                Account account = new Account();
-                account.setUserName(resultSet.getString("username"));
-                account.setFirstName(resultSet.getString("first_name"));
-                account.setLastName(resultSet.getString("last_name"));
-                account.setEmail(resultSet.getString("email"));
-                account.setAccessLevel(resultSet.getInt("access_level"));                
-                DataFlow.account = account;
+                Account.setUserName(resultSet.getString("username"));
+                Account.setFirstName(resultSet.getString("first_name"));
+                Account.setLastName(resultSet.getString("last_name"));
+                Account.setEmail(resultSet.getString("email"));
+                Account.setAccessLevel(resultSet.getInt("access_level"));                
                 return true;
             }
 
@@ -120,7 +116,7 @@ public class MySQLDb implements DatabaseInterface {
         try{
             preparedStatement = connect
                     .prepareStatement("SELECT username FROM accounts WHERE username = ? AND password = ? AND access_level >= ?");
-            preparedStatement.setString(1, DataFlow.account.getUserName());
+            preparedStatement.setString(1, Account.getUserName());
             preparedStatement.setString(2, new BASE64Encoder().encode(hash));
             preparedStatement.setInt(2, accessLevel);
             resultSet = preparedStatement.executeQuery();

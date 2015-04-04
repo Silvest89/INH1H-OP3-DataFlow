@@ -5,9 +5,7 @@
  */
 package dataflow.screens.dialog;
 
-import dataflow.screens.dialog.Dialog;
 import dataflow.Account;
-import dataflow.DataFlow;
 import dataflow.MySQLDb;
 import dataflow.Utility;
 import java.net.URL;
@@ -23,7 +21,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -92,7 +89,7 @@ public class UserDeleteDialogController extends Dialog implements Initializable 
         if(deleteUserCb.getValue() == null)
             errorMessage += "You need to select a user to delete!\n"; 
         
-        if(deleteUserCb.getValue() != null && deleteUserCb.getValue().toString().equals(DataFlow.account.getUserName())) 
+        if(deleteUserCb.getValue() != null && deleteUserCb.getValue().toString().equals(Account.getUserName())) 
             errorMessage += "You cannot delete yourself!\n"; 
         
         if(passwordField.getText() == null || passwordField.getLength() == 0 || !passwordField.getText().matches("^[a-zA-Z0-9_]*$"))

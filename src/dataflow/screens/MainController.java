@@ -9,6 +9,7 @@ import dataflow.Account;
 import dataflow.DataFlow;
 import dataflow.MySQLDb;
 import dataflow.Utility;
+import dataflow.Weather;
 import dataflow.screens.dialog.UserCreateDialogController;
 import dataflow.screens.dialog.UserDeleteDialogController;
 import java.io.IOException;
@@ -30,15 +31,16 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import org.apache.commons.lang3.text.WordUtils;
 
 /**
@@ -47,8 +49,6 @@ import org.apache.commons.lang3.text.WordUtils;
  * @author Johnnie Ho
  */
 public class MainController extends ControlledScreen implements Initializable {
-
-    Account account = DataFlow.account;
         
     @FXML
     private Label label;
@@ -97,6 +97,12 @@ public class MainController extends ControlledScreen implements Initializable {
     
     @FXML
     private Button pConfirmButton;
+    
+    @FXML
+    private Text adminStatusText;
+    
+    @FXML
+    private ProgressBar test;
 
     /**
      * Initializes the controller class.
@@ -105,19 +111,19 @@ public class MainController extends ControlledScreen implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setPersonalPageDisabled(true);
         
-        if(DataFlow.account.getAccessLevel() < Account.SUPERVISOR){
+        if(Account.getAccessLevel() < Account.SUPERVISOR){
             addUser.setDisable(true);
             deleteUser.setDisable(true);
             mainTab2.setDisable(true);
         }
-        else if(DataFlow.account.getAccessLevel() == Account.SUPERVISOR){
+        else if(Account.getAccessLevel() == Account.SUPERVISOR){
             deleteUser.setDisable(true);
         }
         
-        pFirstName.setText(DataFlow.account.getFirstName());
-        pLastName.setText(DataFlow.account.getLastName());
-        if(DataFlow.account.getEmail() != null)
-            pEmail.setText(DataFlow.account.getEmail());
+        pFirstName.setText(Account.getFirstName());
+        pLastName.setText(Account.getLastName());
+        if(Account.getEmail() != null)
+            pEmail.setText(Account.getEmail());
         else
             pEmail.setText("-No Email Found-");
         
@@ -125,9 +131,9 @@ public class MainController extends ControlledScreen implements Initializable {
 
     @Override
     public void prepare() {
-            showUserName.setText("Welcome, " + WordUtils.capitalizeFully(account.getFirstName()) + " " + WordUtils.capitalizeFully(account.getLastName()) + "!");
+            showUserName.setText("Welcome, " + WordUtils.capitalizeFully(Account.getFirstName()) + " " + WordUtils.capitalizeFully(Account.getLastName()) + "!");
             String access = "";
-            switch(DataFlow.account.getAccessLevel()){
+            switch(Account.getAccessLevel()){
                 case Account.NORMAL:
                     access = "Normal Account";
                     break;
@@ -300,5 +306,22 @@ public class MainController extends ControlledScreen implements Initializable {
             }
         });         
         return true;
+    }
+    
+    @FXML
+    public void fetchWeatherButton(ActionEvent event){
+        test.setProgress(0.25);
+        adminStatusText.setText("Fetching weather information...");
+        
+        Runnable task = () -> {
+            test.setProgress(0.5);
+            Weather.getWeather();
+            // code goes here.
+            test.setProgress(1);
+            adminStatusText.setText("Successfully fetched the latest weather information.");
+        };    
+        Utility.executor.execute(task);  
+        
+        Utility.executor.shutdown();
     }
 }

@@ -9,64 +9,68 @@ package dataflow;
  *
  * @author Johnnie Ho
  */
-public class Account {
+public final class Account {
     
-    private String userName;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private int accessLevel;
+    private static String userName = "";
+    private static String firstName;
+    private static String lastName;
+    private static String email;
+    private static int accessLevel;
     
     public static final int NORMAL = 1;
     public static final int SUPERVISOR = 2;
-    public static final int ADMIN = 3;
+    public static final int ADMIN = 3;    
     
-    public Account(){
+    public static boolean getAccount(){
+        return !userName.equals("");
+    }
+    
+    public static String getUserName(){
+       return userName;
+    }
+
+    public static String getFirstName() {
+        return firstName;
+    }
+
+    public static void setFirstName(String firstName) {
+        Account.firstName = firstName;
+    }
+
+    public static String getLastName() {
+        return lastName;
+    }
+
+    public static void setLastName(String lastName) {
+        Account.lastName = lastName;
+    }
+
+    public static String getEmail() {
+        return email;
+    }
+
+    public static void setEmail(String email) {
+        Account.email = email;
+    }       
+    
+    public static int getAccessLevel(){
+        return accessLevel;
+    }
+    
+    public static void setUserName(String userName){
+        Account.userName = userName;
+    }        
+    
+    public static void setAccessLevel(int accessLevel){
+        Account.accessLevel = accessLevel;
+    }
+    
+    public static void resetAccount(){
         userName = "";
         firstName = "";
         lastName = "";
         email = "";
-        accessLevel = NORMAL;  
-    }
-    
-    public String getUserName(){
-       return userName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }       
-    
-    public int getAccessLevel(){
-        return accessLevel;
-    }
-    
-    public void setUserName(String userName){
-        this.userName = userName;
-    }        
-    
-    public void setAccessLevel(int accessLevel){
-        this.accessLevel = accessLevel;
+        accessLevel = NORMAL;          
     }
     
 }

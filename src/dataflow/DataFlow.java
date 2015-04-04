@@ -5,14 +5,8 @@
  */
 package dataflow;
 
-import dataflow.feed.api.FacebookAPI;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
-import java.util.Map;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,7 +17,6 @@ import javafx.stage.Stage;
  */
 public class DataFlow extends Application {
     
-    public static Account account = null;
     public static HashMap<String, String> screens = new HashMap<>();    
                                                     
     public static Stage stage;
@@ -79,4 +72,13 @@ public class DataFlow extends Application {
             stage.setTitle(screen + " Page");
         }
     }           
+    
+    public static boolean validateLogin(String username, String password){
+        MySQLDb db = new MySQLDb();
+        if(db.validateLogin(username, password)){
+            
+            return true;
+        }
+        return false;
+    }
 }

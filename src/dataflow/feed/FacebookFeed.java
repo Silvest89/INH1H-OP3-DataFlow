@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class FacebookFeed extends Feed {
     
-    ArrayList<String> likeList = new ArrayList();
+    private ArrayList<String> likeList = new ArrayList();
     
     public FacebookFeed(long id, long timeStamp, String user, String location, String text, String feedType){
         super(id, timeStamp, user, location, text, feedType);        

@@ -38,7 +38,7 @@ public class ControlledScreen {
     
     @FXML
     private void logOut(ActionEvent event) {
-        DataFlow.account = null;        
+        Account.resetAccount();
         DataFlow.setScreen("Login");
     }     
 }

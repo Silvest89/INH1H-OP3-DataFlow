@@ -49,7 +49,7 @@ public class LoginController extends ControlledScreen implements Initializable {
         
         try {
             mySQL.validateLogin(username.getText(), password.getText());
-            if(DataFlow.account != null){
+            if(Account.getAccount()){
                 label.setTextFill(Color.web("#00AF33"));
                 label.setText("Logging in.");
                 DataFlow.mainContainer.unloadScreen("Login");

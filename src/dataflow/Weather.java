@@ -66,7 +66,7 @@ public class Weather {
         String key = "c6aee37b80d801b44279ac16374db";
         Calendar fromTime = Calendar.getInstance();
         Date weatherDate = new Date();
-        for(int i = 1; i <= 6; i++){
+        for(int i = 1; i < 6; i++){
             weatherDate.setTime(weatherDate.getTime() - (86400000));
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String date = format.format(weatherDate);
@@ -74,9 +74,10 @@ public class Weather {
             try {  
                 MySQLDb db = new MySQLDb();
                 JSONObject jsonObject = new JSONObject(jsonString).getJSONObject("data");
+                System.out.println(jsonObject);
                 db.insertWeather(date, jsonObject);           
             } catch (JSONException e) {
-                e.printStackTrace();
+                throw e;
             }
         }           
     }

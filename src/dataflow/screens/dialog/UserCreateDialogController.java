@@ -50,7 +50,7 @@ public class UserCreateDialogController extends Dialog implements Initializable 
     public void initialize(URL url, ResourceBundle rb) {
         // TODO                
         accessChoiceBox.getItems().add("User");
-        if(DataFlow.account.getAccessLevel() == Account.ADMIN){
+        if(Account.getAccessLevel() == Account.ADMIN){
             accessChoiceBox.getItems().add("Supervisor");        
             accessChoiceBox.getItems().add("Admin");
         }

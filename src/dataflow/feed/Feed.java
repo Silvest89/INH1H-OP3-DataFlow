@@ -20,9 +20,7 @@ public class Feed {
     private String location;
     private String text;
     private String timeString;
-    private String feedType;
-    
-    private static ArrayList<Feed> feedList;    
+    private String feedType;    
     
     public Feed(long id, long timeStamp, String user, String location, String text, String feedType){
         this.id = id;    
@@ -33,55 +31,54 @@ public class Feed {
         this.location = location;
         this.text = text;        
         
-        this.feedType = feedType;
-        feedList.add(this);        
+        this.feedType = feedType;    
     }
 
-    public long getId() {
+    public final long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public final void setId(long id) {
         this.id = id;
     }
 
-    public long getTimeStamp() {
+    public final long getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(long timeStamp) {
+    public final void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
     }
 
-    public String getUser() {
+    public final String getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public final void setUser(String user) {
         this.user = user;
     }
 
-    public String getLocation() {
+    public final String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public final void setLocation(String location) {
         this.location = location;
     }
 
-    public String getText() {
+    public final String getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public final void setText(String text) {
         this.text = text;
     }
 
-    public String getTimeString() {
+    public final String getTimeString() {
         return timeString;
     }
 
-    public void setTimeString(String timeString) {
+    public final void setTimeString(String timeString) {
         this.timeString = timeString;
     }            
 }

@@ -8,6 +8,8 @@ package dataflow;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.scene.control.Alert;
@@ -20,7 +22,9 @@ import javafx.stage.Stage;
  * @author Johnnie Ho
  */
 public class Utility {
-   
+    private static final int MYTHREADS = 30;
+    public static final ExecutorService executor = Executors.newFixedThreadPool(MYTHREADS);
+
     public static void alertWindow(Stage stage, AlertType alertType, String title, String header, String content){
         Alert alert = new Alert(alertType);
         alert.initOwner(stage);
