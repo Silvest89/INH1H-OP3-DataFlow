@@ -62,9 +62,9 @@ import sun.misc.BASE64Encoder;
 
 public class GraphsController extends ControlledScreen implements Initializable {
     
-    public static ObservableList<String> positiveCommentList;
-    public static ObservableList<String> negativeCommentList;
-    public static ObservableList<String> neutralCommentList;
+    public static ObservableList<String> positiveCommentList = FXCollections.observableArrayList();
+    public static ObservableList<String> negativeCommentList = FXCollections.observableArrayList();
+    public static ObservableList<String> neutralCommentList = FXCollections.observableArrayList();
     public static ArrayList<String> positiveCommentList2 = new ArrayList<String>();
     public static ArrayList<String> negativeCommentList2 = new ArrayList<String>();
     public static ArrayList<String> neutralCommentList2 = new ArrayList<String>();
