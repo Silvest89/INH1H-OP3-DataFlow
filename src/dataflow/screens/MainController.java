@@ -9,6 +9,9 @@ import dataflow.Account;
 import dataflow.DataFlow;
 import dataflow.database.MySQLDb;
 import dataflow.Utility;
+import dataflow.feed.api.FacebookAPI;
+import dataflow.feed.api.InstagramAPI;
+import dataflow.feed.api.TwitterAPI;
 import dataflow.feed.api.Weather;
 import dataflow.screens.dialog.UserCreateDialogController;
 import dataflow.screens.dialog.UserDeleteDialogController;
@@ -17,6 +20,8 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +33,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -41,7 +47,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.apache.commons.lang3.text.WordUtils;
 
 /**
  * FXML MainController class
@@ -102,7 +107,13 @@ public class MainController extends ControlledScreen implements Initializable {
     private Text adminStatusText;
     
     @FXML
-    private ProgressBar test;
+    private ProgressBar commandProgress;
+    
+    @FXML
+    private ChoiceBox commandChoice;
+    
+    @FXML
+    private Button executeCommand;
 
     /**
      * Initializes the controller class.
@@ -110,6 +121,12 @@ public class MainController extends ControlledScreen implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setPersonalPageDisabled(true);
+        ObservableList<String> commands = FXCollections.observableArrayList();
+        commands.add("Fetch Weather");
+        commands.add("Update Twitter");
+        commands.add("Update Instagram");
+        commands.add("Update Facebook");
+        commandChoice.setItems(commands);
         
         if(Account.getAccessLevel() < Account.SUPERVISOR){
             addUser.setDisable(true);
@@ -319,18 +336,50 @@ public class MainController extends ControlledScreen implements Initializable {
      */
     @FXML
     public void fetchWeatherButton(ActionEvent event){
-        test.setProgress(0.25);
-        adminStatusText.setText("Fetching weather information...");
+        executeCommand.setDisable(true);
+        commandProgress.setProgress(0.25);
         
         Runnable task = () -> {
-            test.setProgress(0.5);
-            Weather.getWeather();
-            // code goes here.
-            test.setProgress(1);
-            adminStatusText.setText("Successfully fetched the latest weather information.");
-        };    
-        Utility.executor.execute(task);  
+            switch(commandChoice.getValue().toString()){
+                case "Fetch Weather":{
+                    adminStatusText.setText("Fetching weather information...");
+                    commandProgress.setProgress(0.5);
+                    Weather.getWeather();                        
+                    adminStatusText.setText("Successfully fetched the latest weather information.");
+                    break;
+                }
+                case "Update Instagram":{
+                    adminStatusText.setText("Grabbing latest Instagram feeds...");
+                    InstagramAPI instagram = new InstagramAPI();
+                    commandProgress.setProgress(0.5);
+                    instagram.setKeyword("boijmans");
+                    instagram.fetchFeed();
+                    adminStatusText.setText("Successfully grabbed latest Instagram feeds...");
+                    break;
+                }    
+                case "Update Twitter":{
+                    adminStatusText.setText("Grabbing latest Twitter feeds...");
+                    TwitterAPI twitter = new TwitterAPI();
+                    commandProgress.setProgress(0.5);
+                    twitter.setKeyword("boijmans");
+                    twitter.fetchFeed();
+                    adminStatusText.setText("Successfully grabbed latest Twitter feeds...");
+                    break;
+                }    
+                case "Update Facebook":{
+                    adminStatusText.setText("Grabbing latest Facebook posts...");
+                    FacebookAPI facebook = new FacebookAPI();
+                    commandProgress.setProgress(0.5);
+                    facebook.fetchFeed();
+                    adminStatusText.setText("Successfully grabbed latest Facebook posts...");
+                    break;
+                }                    
+            }      
+            commandProgress.setProgress(1);
+            executeCommand.setDisable(false);  
+            Thread.currentThread().interrupt();
+        };            
         
-        Utility.executor.shutdown();
+        Utility.executor.execute(task);                  
     }
 }

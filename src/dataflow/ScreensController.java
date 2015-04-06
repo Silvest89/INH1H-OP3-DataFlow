@@ -34,7 +34,7 @@ public class ScreensController  extends StackPane {
     }
 
     /**
-     * Method whichh adds the screen to the collection
+     * Method which adds the screen to the collection
      **/
     public void addScreen(String name, Node screen) {
         screens.put(name, screen);
@@ -56,19 +56,18 @@ public class ScreensController  extends StackPane {
      * @param resource FXML file of the screen to be loaded
      * @return 
      */
-    public boolean loadScreen(String name, String resource) {
+    public boolean loadScreen(String name, String resource) { 
         try {
             FXMLLoader myLoader = new FXMLLoader(getClass().getResource(resource));
             Parent loadScreen = (Parent) myLoader.load();
             ControlledScreen myScreenController = ((ControlledScreen) myLoader.getController());
             myScreenController.setScreenParent(this);
             myScreenController.prepare();
-            addScreen(name, loadScreen);
-            // System.out.println(name + resource);
+            addScreen(name, loadScreen);             
             return true;
             
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }

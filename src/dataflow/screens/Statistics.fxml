@@ -60,11 +60,6 @@
          </font>
       </Label>
       <Button layoutX="48.0" layoutY="66.0" mnemonicParsing="false" text="Print out page" />
-      <Label fx:id="showPageName" layoutX="210.0" layoutY="45.0" prefHeight="42.0" prefWidth="260.0" text="Page Name">
-         <font>
-            <Font name="System Bold Italic" size="20.0" />
-         </font>
-      </Label>
       <TableView fx:id="tweetBox" layoutX="210.0" layoutY="110.0" prefHeight="200.0" prefWidth="559.0">
          <columns>
             <TableColumn fx:id="idCol" prefWidth="43.0" text="ID" />

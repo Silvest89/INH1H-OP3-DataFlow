@@ -18,12 +18,13 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 /**
- * Class containing handy methods which can be used thoughout the application
+ * Class containing handy methods which can be used throughout the application
  * @author Johnnie Ho
  */
 public class Utility {
-    private static final int MYTHREADS = 30;
-    public static final ExecutorService executor = Executors.newFixedThreadPool(MYTHREADS);
+    //private static final int MYTHREADS = 5;
+    public static final ExecutorService executor = Executors.newCachedThreadPool();
+  
 
     /**
      * Method which shows an alert window with the given parameters
@@ -64,7 +65,7 @@ public class Utility {
  
     /**
      * Method which uses regex to check if a given string is really a valid email address
-     * @param email email which has to be valitated
+     * @param email email which has to be validated
      * @return true or false, based on the fact if the email is valid
      */
     public static boolean EmailValidator(String email) {

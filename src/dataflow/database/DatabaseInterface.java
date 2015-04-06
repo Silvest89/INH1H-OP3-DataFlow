@@ -40,6 +40,10 @@ public interface DatabaseInterface {
     public Weather fetchWeatherByDate(long timeStamp);
     public double fetchWeatherTemperatureByDate(String date);
     
+    public long getRecentFacebookPost();
+    
+    public String getRecentTwitterId();
+    
     public void insertInstagramId(String minId);    
     public void updateInstagramId(String minId, String nextMinId);    
     public String getRecentInstagramId();

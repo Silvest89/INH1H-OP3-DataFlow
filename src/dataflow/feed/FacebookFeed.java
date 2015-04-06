@@ -9,7 +9,7 @@ import dataflow.database.MySQLDb;
 import java.util.ArrayList;
 
 /**
- * Class for facebook feeds
+ * Class for Facebook feeds
  * @author Johnnie Ho
  */
 public class FacebookFeed extends Feed {
@@ -17,7 +17,7 @@ public class FacebookFeed extends Feed {
     private ArrayList<String> likeList = new ArrayList();
     
     /**
-     * Constructor class which created a facebook feed object
+     * Constructor class which creates a Facebook feed object
      * @param id
      * @param timeStamp
      * @param user
@@ -31,7 +31,7 @@ public class FacebookFeed extends Feed {
 
     /**
      * Method which returns the number of likes per post
-     * @return an arraylist containing the number of likes 
+     * @return an ArrayList containing the number of likes 
      */
     public ArrayList<String> getLikeList() {
         if(likeList == null || likeList.isEmpty()){

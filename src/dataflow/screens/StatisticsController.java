@@ -51,9 +51,6 @@ public class StatisticsController extends ControlledScreen implements Initializa
     @FXML
     private Label label;
     
-    @FXML
-    private Label showPageName;
-    
     @FXML 
     private Label showAccessLevel;
     
@@ -90,8 +87,7 @@ public class StatisticsController extends ControlledScreen implements Initializa
     private Text clouds;    
     @FXML
     private Region weatherRegion;
-    @FXML
-    private Label showPageName1;
+
     
     /**
      * Initializes the controller class.
@@ -116,12 +112,6 @@ public class StatisticsController extends ControlledScreen implements Initializa
     public void prepare () {
         //setWelcomeMessage(showUserName, showAccessLevel);
         //showUserName.setText("Welcome, " + Account.getUserName() + "!");
-        showPageName.setText(pageName); 
-    }
-    
-    @FXML
-    public void goToMain (ActionEvent event) {
-        DataFlow.setScreen("Main");
     }
 
     /**

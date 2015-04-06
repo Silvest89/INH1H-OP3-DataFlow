@@ -44,11 +44,15 @@ public final class FacebookAPI extends FeedAPI{
      */
     @Override
     public void fetchFeed() {
-
+        Connection<Post> messages = null;
         MySQLDb db = new MySQLDb();
         //Fetches the feed on the boijmans museum page
-        Connection<Post> messages = facebookClient.fetchConnection("boijmans/feed", Post.class, Parameter.with("until", "1426291200"/*"1427068800"*/), Parameter.with("since", /*"1424649600"*/ "1426118400"));
-
+        long latest = db.getRecentFacebookPost();
+        if(latest != 0)
+            messages = facebookClient.fetchConnection("boijmans/feed", Post.class, Parameter.with("since", latest));
+        else
+            messages = facebookClient.fetchConnection("boijmans/feed", Post.class, Parameter.with("since", /*"1424649600"*/ "1425168000"));
+        
         //Loops through all posts and gets the useful information
         //Then saves it all in variables for adding it in the database later
         for (List<Post> connectionPage : messages) {

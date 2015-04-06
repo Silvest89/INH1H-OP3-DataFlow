@@ -29,7 +29,7 @@
          <effect>
             <DropShadow />
          </effect></Rectangle>
-      <MenuBar layoutX="202.0" layoutY="1.0" prefHeight="42.0" prefWidth="383.0">
+      <MenuBar layoutX="202.0" layoutY="1.0" prefHeight="42.0" prefWidth="584.0">
         <menus>
           <Menu mnemonicParsing="false" text="Home">
             <items>
@@ -59,11 +59,6 @@
          </font>
       </Label>
       <Button layoutX="48.0" layoutY="66.0" mnemonicParsing="false" text="Print out page" />
-      <Label fx:id="showPageName" layoutX="210.0" layoutY="45.0" prefHeight="42.0" prefWidth="260.0" text="Page Name">
-         <font>
-            <Font name="System Bold Italic" size="20.0" />
-         </font>
-      </Label>
       <BarChart fx:id="bcTweets" layoutX="204.0" layoutY="79.0" prefHeight="231.0" prefWidth="572.0" title="Messages per day">
         <xAxis>
           <CategoryAxis label="Day" side="BOTTOM" />
@@ -77,7 +72,7 @@
           <CategoryAxis label="Day" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis label="Temperature" prefHeight="138.0" prefWidth="43.0" side="LEFT" upperBound="30.0" />
+          <NumberAxis forceZeroInRange="false" label="Temperature" prefHeight="138.0" prefWidth="43.0" side="LEFT" />
         </yAxis>
       </LineChart>
       <PieChart fx:id="pcDistr" layoutX="553.0" layoutY="330.0" prefHeight="181.0" prefWidth="120.0" title="Media Distrubution" />

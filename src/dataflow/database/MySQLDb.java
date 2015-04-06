@@ -122,7 +122,7 @@ public class MySQLDb implements DatabaseInterface {
                     .prepareStatement("SELECT username FROM accounts WHERE username = ? AND password = ? AND access_level >= ?");
             preparedStatement.setString(1, Account.getUserName());
             preparedStatement.setString(2, Base64.getEncoder().encodeToString(hash));
-            preparedStatement.setInt(2, accessLevel);
+            preparedStatement.setInt(3, accessLevel);
             resultSet = preparedStatement.executeQuery();
             return resultSet.next();
         }catch (SQLException ex) {
@@ -140,9 +140,34 @@ public class MySQLDb implements DatabaseInterface {
      * @return
      */
     @Override
-    public boolean updateAccountDetails(String firstName, String lastName, String email, String password){
-        if(!Utility.passwordValidation(password))
-            return false;   
+    public boolean updateAccountDetails(String firstName, String lastName, String email, String password){      
+        try{
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(password.getBytes("UTF-8"));
+            byte[] hash = md.digest();
+            
+            if(password.length() > 0 || !password.equals("")){
+                preparedStatement = connect
+                    .prepareStatement("UPDATE accounts SET first_name = ?, last_name = ?, email = ?, password = ? WHERE username = ?");                
+            }
+            else
+                preparedStatement = connect
+                    .prepareStatement("UPDATE accounts SET first_name = ?, last_name = ?, email = ? WHERE username = ?");                
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, email);    
+            if(password.length() > 0 || !password.equals("")){
+                preparedStatement.setString(4, Base64.getEncoder().encodeToString(hash));
+                preparedStatement.setString(5, Account.getUserName());  
+            }
+            else
+                preparedStatement.setString(4, Account.getUserName());
+            
+            preparedStatement.executeUpdate();        
+        }
+        catch (SQLException | UnsupportedEncodingException | NoSuchAlgorithmException ex) {
+            Logger.getLogger(MySQLDb.class.getName()).log(Level.SEVERE, null, ex);
+        }          
         
         return true;
     }
@@ -477,6 +502,39 @@ public class MySQLDb implements DatabaseInterface {
         return 0;
     }
     
+    public long getRecentFacebookPost(){
+        try {
+            preparedStatement = connect
+                    .prepareStatement("SELECT timestamp from data_feed WHERE feed_type = 'Facebook' ORDER BY timestamp DESC LIMIT 1");
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong("timestamp");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLDb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0;        
+    }
+    
+    @Override
+    public String getRecentTwitterId(){
+        try {
+            preparedStatement = connect
+                    .prepareStatement("SELECT feed_id from data_feed WHERE feed_type = 'Twitter' ORDER BY timestamp DESC LIMIT 1");
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("feed_id");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLDb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;        
+    }
+    
     /**
      * Method which inserts an Instagram ID into the database
      * @param minId the ID of the post
@@ -514,7 +572,7 @@ public class MySQLDb implements DatabaseInterface {
     }    
     
     /**
-     * Methid which gets the most recent instagram ID
+     * Method which gets the most recent instagram ID
      * @return the most recent instagram ID
      */
     @Override

@@ -81,9 +81,10 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="247.0">
                      <children>
-                        <Button layoutX="31.0" layoutY="14.0" mnemonicParsing="false" onAction="#fetchWeatherButton" text="Fetch latest weather" />
+                        <Button fx:id="executeCommand" layoutX="214.0" layoutY="17.0" mnemonicParsing="false" onAction="#fetchWeatherButton" text="Execute" />
                         <Text fx:id="adminStatusText" layoutX="31.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="313.13671875" />
-                        <ProgressBar fx:id="test" layoutX="31.0" layoutY="115.0" prefWidth="200.0" progress="0.0" />
+                        <ProgressBar fx:id="commandProgress" layoutX="31.0" layoutY="115.0" prefWidth="200.0" progress="0.0" />
+                        <ChoiceBox fx:id="commandChoice" layoutX="31.0" layoutY="14.0" prefWidth="150.0" />
                      </children></AnchorPane>
             </content>
           </Tab>

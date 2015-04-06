@@ -64,7 +64,11 @@ public final class TwitterAPI extends FeedAPI {
         // setCount: the maximum amount of tweets returned
         // setSince: as it suggests, retrieve tweets since the given date
         query.setCount(200);
-        query.setSince("2015-03-01");
+        String sinceId = db.getRecentTwitterId();
+        if(sinceId != null)
+            query.setSinceId(Long.parseLong(sinceId));
+        else
+            query.setSince("2015-04-01");
                 
         // Prints out every tweet returned
         try {
@@ -72,11 +76,10 @@ public final class TwitterAPI extends FeedAPI {
             
             for (Status status : result.getTweets()) {
                 long id = status.getId();
-                long timeStamp = status.getCreatedAt().getTime();
+                long timeStamp = status.getCreatedAt().getTime() / 1000L;
                 String user = status.getUser().getName();
                 String location = "" + status.getGeoLocation();
                 String text = status.getText();
-                
                 db.insertFeed("Twitter", Long.toString(id), text, user, timeStamp, location);
                  
             }

@@ -33,7 +33,7 @@ public class Weather {
     private String description;
         
     /**
-     * Contructor class which constructs a weather object
+     * Constructor class which constructs a weather object
      * @param id
      * @param date
      * @param icon
@@ -86,8 +86,8 @@ public class Weather {
     }
     
     /**
-     * Method which returns the descrpition of the weather
-     * @return the descrpition of the weather
+     * Method which returns the description of the weather
+     * @return the description of the weather
      */
     public String getDescription(){
         return description;
@@ -108,7 +108,6 @@ public class Weather {
             try {  
                 MySQLDb db = new MySQLDb();
                 JSONObject jsonObject = new JSONObject(jsonString).getJSONObject("data");
-                System.out.println(jsonObject);
                 db.insertWeather(date, jsonObject);           
             } catch (JSONException e) {
                 throw e;

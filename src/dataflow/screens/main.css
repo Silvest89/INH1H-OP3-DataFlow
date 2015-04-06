@@ -28,6 +28,9 @@
     -fx-opacity: 0.9;
 }
 
+#commandChoice{
+    -fx-text-fill: white;
+}
 .context-menu {
     -fx-background-color: derive(#1d1d1d,20%);
     -fx-background-insets: 0, 1, 2;
@@ -37,6 +40,12 @@
 }
 .menu .left-container {
     -fx-background-color: black;
+}
+
+#commandChoice .label{
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
 }
 
 .label{
