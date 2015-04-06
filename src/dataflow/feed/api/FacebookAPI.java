@@ -51,7 +51,7 @@ public final class FacebookAPI extends FeedAPI{
         if(latest != 0)
             messages = facebookClient.fetchConnection("boijmans/feed", Post.class, Parameter.with("since", latest));
         else
-            messages = facebookClient.fetchConnection("boijmans/feed", Post.class, Parameter.with("since", 1426809600));
+            messages = facebookClient.fetchConnection("boijmans/feed", Post.class, Parameter.with("since", 1425168000));
         
         //Loops through all posts and gets the useful information
         //Then saves it all in variables for adding it in the database later

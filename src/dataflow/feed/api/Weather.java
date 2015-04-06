@@ -121,6 +121,18 @@ public class Weather {
         }           
     }
     
+    public static void getWeatherByDay(String date){
+        String key = "c6aee37b80d801b44279ac16374db";
+        String jsonString = callURL("https://api.worldweatheronline.com/free/v2/past-weather.ashx?q=Rotterdam&format=json&tp=24&key=c6aee37b80d801b44279ac16374db&date=" + date);    
+        try {  
+            MySQLDb db = new MySQLDb();
+            JSONObject jsonObject = new JSONObject(jsonString).getJSONObject("data");
+            db.insertWeather(date, jsonObject);           
+        } catch (JSONException e) {
+            e.getMessage();
+        }
+    }                  
+    
     /**
      * Method which builds the string of the URL to call
      * @param myURL the URL which must become a callURL

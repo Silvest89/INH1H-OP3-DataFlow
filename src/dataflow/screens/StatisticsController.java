@@ -6,15 +6,15 @@ package dataflow.screens;
  * and open the template in the editor.
  */
 
-import dataflow.Account;
-import dataflow.DataFlow;
 import dataflow.database.MySQLDb;
 import dataflow.feed.Feed;
 import dataflow.feed.api.Weather;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +24,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -87,6 +88,8 @@ public class StatisticsController extends ControlledScreen implements Initializa
     private Text clouds;    
     @FXML
     private Region weatherRegion;
+    @FXML
+    private Button updateWeatherButton;
 
     
     /**
@@ -176,14 +179,12 @@ public class StatisticsController extends ControlledScreen implements Initializa
         MySQLDb db = new MySQLDb();        
         Weather weather = db.fetchWeatherByDate(tweet.getTimeStamp()); 
         if(weather == null){
-            minTemp.setText("");
-            maxTemp.setText("");
-            clouds.setText("");
-            weatherDescription.setText("No weather data found.");            
+            updateWeatherInfo(null);
+            updateWeatherButton.setVisible(true);
             return;
         }
         try {
-
+            updateWeatherButton.setVisible(false);
             String fullUrlPath = weather.getIcon();
             URL url = new URL(fullUrlPath);
             BufferedImage img = ImageIO.read(url);
@@ -192,10 +193,35 @@ public class StatisticsController extends ControlledScreen implements Initializa
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }           
-        minTemp.setText(weather.getMinTemp() + "°C");
-        maxTemp.setText(weather.getMaxTemp() + "°C");
-        clouds.setText(weather.getClouds() + "%");
-        weatherDescription.setText(weather.getDescription());
+        updateWeatherInfo(weather);
+    }
+    
+    @FXML
+    public void updateWeather(ActionEvent event){        
+        Feed feed = tweetBox.getSelectionModel().selectedItemProperty().get();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        if(format.format(new Date()).equals(format.format(feed.getTimeStamp() * 1000L)))
+            return;
+        Weather.getWeatherByDay(format.format(feed.getTimeStamp()));
+        MySQLDb db = new MySQLDb();        
+        Weather weather = db.fetchWeatherByDate(feed.getTimeStamp());     
+        updateWeatherInfo(weather);
+        updateWeatherButton.setVisible(false);
+    }
+    
+    public void updateWeatherInfo(Weather weather){
+        if(weather == null){
+            minTemp.setText("");
+            maxTemp.setText("");
+            clouds.setText("");
+            weatherDescription.setText("No weather data found.");    
+        }
+        else{
+            minTemp.setText(weather.getMinTemp() + "°C");
+            maxTemp.setText(weather.getMaxTemp() + "°C");
+            clouds.setText(weather.getClouds() + "%");
+            weatherDescription.setText(weather.getDescription());    
+        }
     }
 
 }

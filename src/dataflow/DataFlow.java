@@ -6,7 +6,13 @@
 package dataflow;
 
 import dataflow.database.MySQLDb;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,7 +28,7 @@ public class DataFlow extends Application {
                                                     
     public static Stage stage;
     public static ScreensController mainContainer;    
-    
+
     /**
      * Method which starts the application by reading the config file andloads the screens
      * @param stage
@@ -33,8 +39,8 @@ public class DataFlow extends Application {
         this.stage = stage;
         
         Config.readConfig();
-        MySQLDb.getDataSource();   
-
+        MySQLDb.getDataSource();      
+ 
         screens.put("Login", "screens/Login.fxml");
         screens.put("Main", "screens/Main.fxml");
         screens.put("Statistics", "screens/Statistics.fxml");

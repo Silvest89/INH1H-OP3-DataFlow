@@ -420,7 +420,7 @@ public class MySQLDb implements DatabaseInterface {
     }
     
     /**
-     * Methid which calculates the number of feeds per day
+     * Method which calculates the number of feeds per day
      * @param feedType The feed type (Facebook, twitter, instagram)
      * @param date The date of which the number of feeds has to be calculated
      * @return

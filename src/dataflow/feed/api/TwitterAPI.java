@@ -63,12 +63,12 @@ public final class TwitterAPI extends FeedAPI {
         
         // setCount: the maximum amount of tweets returned
         // setSince: as it suggests, retrieve tweets since the given date
-        query.setCount(200);
+        query.setCount(500);
         String sinceId = db.getRecentTwitterId();
         if(sinceId != null)
             query.setSinceId(Long.parseLong(sinceId));
         else
-            query.setSince("2015-04-01");
+            query.setSince("2015-03-01");
                 
         // Prints out every tweet returned
         try {

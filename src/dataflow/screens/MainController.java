@@ -56,54 +56,27 @@ import javafx.stage.Stage;
  * @author Johnnie Ho
  */
 public class MainController extends ControlledScreen implements Initializable {
-        
-    @FXML
-    private Label label;
 
     @FXML
-    private Label showUserName;
+    private Label showUserName, showPageName, showAccessLevel;
 
     @FXML
-    private Label showPageName;
-    
-    @FXML
-    private Label showAccessLevel;
-
-    @FXML
-    private Button logOutButton;
-    
-    @FXML
-    private Button addUser;
-    
-    @FXML 
-    private Button deleteUser;
+    private Button logOutButton, addUser, deleteUser, pConfirmButton, executeCommand;    
     
     @FXML
     private TabPane mainTabPane;
     
     @FXML
-    private Tab mainTab1;
+    private Tab mainTab1, mainTab2;    
     
     @FXML
-    private Tab mainTab2;
-    
-    @FXML
-    private TextField pFirstName;
-    
-    @FXML
-    private TextField pLastName;
-    
-    @FXML
-    private TextField pEmail;
+    private TextField pFirstName, pLastName, pEmail;    
     
     @FXML
     private PasswordField pPassword;
 
     @FXML
     private ToggleButton pEditButton;
-    
-    @FXML
-    private Button pConfirmButton;
     
     @FXML
     private Text adminStatusText;
@@ -113,9 +86,6 @@ public class MainController extends ControlledScreen implements Initializable {
     
     @FXML
     private ChoiceBox commandChoice;
-    
-    @FXML
-    private Button executeCommand;
 
     /**
      * Initializes the controller class.

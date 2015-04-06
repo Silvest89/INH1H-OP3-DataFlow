@@ -86,7 +86,8 @@
       <Text fx:id="clouds" layoutX="562.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Button layoutX="68.0" layoutY="164.0" mnemonicParsing="false" onAction="#goToGraphs" text="Graphs" />
       <Label layoutX="244.0" layoutY="489.0" text="Description" />
-      <Text fx:id="weatherDescription" layoutX="240.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="weatherDescription" layoutX="240.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Button layoutX="295.0" layoutY="330.0" mnemonicParsing="false" onAction="#deleteFeed" text="Delete" />
+      <Button fx:id="updateWeatherButton" layoutX="231.0" layoutY="543.0" mnemonicParsing="false" onAction="#updateWeather" text="Update Weather" visible="false" />
    </children>
 </AnchorPane>

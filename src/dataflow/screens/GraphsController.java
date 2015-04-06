@@ -29,6 +29,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 
 /**
  * FXML GraphsController class
@@ -52,8 +53,12 @@ public class GraphsController extends ControlledScreen implements Initializable 
     @FXML 
     private ChoiceBox mediaChoiceDay;
     @FXML
-    private Label twitterPie, facebookPie, instagramPie;
-
+    private Label twitterPie, facebookPie, instagramPie, sentimentFeed;
+    @FXML
+    private PieChart pnnTweets;
+    @FXML
+    private BarChart<String, Number> pnntweets2;
+    
     ArrayList<String> days = new ArrayList<>();
     
 
@@ -126,7 +131,55 @@ public class GraphsController extends ControlledScreen implements Initializable 
             lcWeather.getData().addAll(lcSeries);
             
             pcDistr.getData().addAll(d.getMediaDistribution());
+            // sentiment tweets chart data
+            XYChart.Series pnnSeries = new XYChart.Series();
+            pnnSeries.getData().add(new XYChart.Data(sdf.format(todayMin6), d.getFeedsPerDay("Twitter", todayMin6)));
+            pnnSeries.getData().add(new XYChart.Data(sdf.format(todayMin5), d.getFeedsPerDay("Twitter", todayMin5)));
+            pnnSeries.getData().add(new XYChart.Data(sdf.format(todayMin4), d.getFeedsPerDay("Twitter", todayMin4)));
+            pnnSeries.getData().add(new XYChart.Data(sdf.format(todayMin3), d.getFeedsPerDay("Twitter", todayMin3)));
+            pnnSeries.getData().add(new XYChart.Data(sdf.format(todayMin2), d.getFeedsPerDay("Twitter", todayMin2)));
+            pnnSeries.getData().add(new XYChart.Data(sdf.format(todayMin1), d.getFeedsPerDay("Twitter", todayMin1)));
             
+            XYChart.Series pnnSeries2 = new XYChart.Series();
+            pnnSeries2.getData().add(new XYChart.Data(sdf.format(todayMin6), d.getFeedsPerDay("Twitter", todayMin6)));
+            pnnSeries2.getData().add(new XYChart.Data(sdf.format(todayMin5), d.getFeedsPerDay("Twitter", todayMin5)));
+            pnnSeries2.getData().add(new XYChart.Data(sdf.format(todayMin4), d.getFeedsPerDay("Twitter", todayMin4)));
+            pnnSeries2.getData().add(new XYChart.Data(sdf.format(todayMin3), d.getFeedsPerDay("Twitter", todayMin3)));
+            pnnSeries2.getData().add(new XYChart.Data(sdf.format(todayMin2), d.getFeedsPerDay("Twitter", todayMin2)));
+            pnnSeries2.getData().add(new XYChart.Data(sdf.format(todayMin1), d.getFeedsPerDay("Twitter", todayMin1)));
+            
+            XYChart.Series pnnSeries3 = new XYChart.Series();
+            pnnSeries3.getData().add(new XYChart.Data(sdf.format(todayMin6), d.getFeedsPerDay("Twitter", todayMin6)));
+            pnnSeries3.getData().add(new XYChart.Data(sdf.format(todayMin5), d.getFeedsPerDay("Twitter", todayMin5)));
+            pnnSeries3.getData().add(new XYChart.Data(sdf.format(todayMin4), d.getFeedsPerDay("Twitter", todayMin4)));
+            pnnSeries3.getData().add(new XYChart.Data(sdf.format(todayMin3), d.getFeedsPerDay("Twitter", todayMin3)));
+            pnnSeries3.getData().add(new XYChart.Data(sdf.format(todayMin2), d.getFeedsPerDay("Twitter", todayMin2)));
+            pnnSeries3.getData().add(new XYChart.Data(sdf.format(todayMin1), d.getFeedsPerDay("Twitter", todayMin1)));
+             
+            pnntweets2.getData().addAll(pnnSeries, pnnSeries2, pnnSeries3);            
+            
+            ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+                new PieChart.Data("Positive", 5),
+                new PieChart.Data("Negative", 7),
+                new PieChart.Data("Neutral",  9));
+                    sentimentFeed.setTextFill(Color.BLACK);
+                    sentimentFeed.setStyle("-fx-font: 16 arial;");
+                    
+            pnnTweets.setData(pieChartData);
+            
+            for (final PieChart.Data data : pnnTweets.getData()) {
+            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,
+                e -> {
+                    double total = 0;
+                    for (PieChart.Data ds : pnnTweets.getData()) {
+                        total += ds.getPieValue();
+                    }                    
+                    String text = String.format("%.1f%%", 100*data.getPieValue()/total) ;
+                    sentimentFeed.setText(text);
+                 }
+                );
+            }                        
         } catch (Exception e) {
             e.printStackTrace();
         }

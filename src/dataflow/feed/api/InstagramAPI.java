@@ -75,7 +75,7 @@ public final class InstagramAPI extends FeedAPI {
                     String nextMinId = mediaFeed.getPagination().getMinTagId();
                     if(nextMinId == null)
                         return;
-                    db.updateInstagramId(minId, nextMinId);            
+                    db.updateInstagramId(minId, nextMinId);   
             }
             else{
                 mediaFeed = instagram.getRecentMediaTags(keyword);
@@ -88,7 +88,7 @@ public final class InstagramAPI extends FeedAPI {
 
                 MediaFeed recentMediaNextPage = instagram.getRecentMediaNextPage(mediaFeed.getPagination());
                 int counter = 0;
-                while (recentMediaNextPage.getPagination() != null && counter < 5) {
+                while (recentMediaNextPage.getPagination() != null && counter < 10) {
                     mediaFeeds.addAll(recentMediaNextPage.getData());
                     recentMediaNextPage = instagram.getRecentMediaNextPage(recentMediaNextPage.getPagination());
                     counter++;

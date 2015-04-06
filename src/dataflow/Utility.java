@@ -24,6 +24,9 @@ import javafx.stage.Stage;
 public class Utility {
     //private static final int MYTHREADS = 5;
     public static final ExecutorService executor = Executors.newCachedThreadPool();
+    public static int COMMENT_POSITIVE = 0;
+    public static int COMMENT_NEGATIVE = 1;
+    public static int COMMENT_NEUTRAL = 2;
   
 
     /**
@@ -120,4 +123,39 @@ public class Utility {
         calendar.set(Calendar.MILLISECOND, 999);
         return calendar.getTime();
     }    
+    
+    public static Date getStartMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        return calendar.getTime();
+    }    
+    
+    public static Date getEndOfMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return calendar.getTime();
+    }        
+    
+    public int commentChecker(String text){
+        if(text.matches(".*(mooi|goed|leuk|fantastisch|prachtig).*")){
+            return COMMENT_POSITIVE;
+        }            
+        else if(text.matches(".*(lelijk|stom|saai|kut|verschrikkelijk|slecht).*")){
+            return COMMENT_NEGATIVE;
+        }
+        else{
+            //if the comment is not positve or negative the method will automatically assign it the neutral value
+            return COMMENT_NEUTRAL;
+        }
+   }    
 }

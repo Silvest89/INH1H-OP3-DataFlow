@@ -62,6 +62,24 @@
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab text="Untitled Tab 3">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <children>
+<PieChart fx:id="pnnTweets" layoutX="112.0" layoutY="14.0" prefHeight="259.0" prefWidth="355.0" title="Sentiment Tweets" />
+      <BarChart fx:id="pnntweets2" layoutX="68.0" layoutY="297.0" prefHeight="189.0" prefWidth="442.0" title="Sentiment Tweets per day">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </BarChart>
+                        <Label fx:id="sentimentFeed" layoutX="275.0" layoutY="125.0" />
+      </children>
+                    </AnchorPane>        
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="550.0" layoutY="43.0" opacity="0.24" stroke="BLACK" strokeType="INSIDE" width="202.0">
