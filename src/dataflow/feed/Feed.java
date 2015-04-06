@@ -22,7 +22,7 @@ public class Feed {
     private final String feedType;    
     
     /**
-     * Constructor class contructing a feed object
+     * Constructor class constructing a feed object
      * @param id
      * @param timeStamp
      * @param user
@@ -32,7 +32,7 @@ public class Feed {
      */
     public Feed(long id, long timeStamp, String user, String location, String text, String feedType){
         this.id = id;    
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm z");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         this.timeString = format.format(timeStamp * 1000L);
         this.timeStamp = timeStamp;
         this.user = user;

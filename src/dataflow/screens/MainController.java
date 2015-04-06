@@ -16,7 +16,9 @@ import dataflow.feed.api.Weather;
 import dataflow.screens.dialog.UserCreateDialogController;
 import dataflow.screens.dialog.UserDeleteDialogController;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -320,11 +322,13 @@ public class MainController extends ControlledScreen implements Initializable {
             try{
                 MySQLDb db = new MySQLDb();
                 if(db.checkAccount(usernamePassword, Account.NORMAL)){                        
-                    db.updateAccountDetails(pFirstName.getText(), pLastName.getText(), pEmail.getText(), pPassword.getText());                    
+                    db.updateAccountDetails(pFirstName.getText(), pLastName.getText(), pEmail.getText(), pPassword.getText());    
+                    pEditButton.setSelected(false);
+                    setPersonalPageDisabled(true);
                 }
             }
-            catch(Exception e){
-                e.printStackTrace();
+            catch(UnsupportedEncodingException | NoSuchAlgorithmException e){
+                e.getMessage();
             }
         });         
         return true;
@@ -377,7 +381,7 @@ public class MainController extends ControlledScreen implements Initializable {
             }      
             commandProgress.setProgress(1);
             executeCommand.setDisable(false);  
-            Thread.currentThread().interrupt();
+            //Thread.currentThread().interrupt();
         };            
         
         Utility.executor.execute(task);                  

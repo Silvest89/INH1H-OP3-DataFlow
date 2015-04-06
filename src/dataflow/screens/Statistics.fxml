@@ -87,5 +87,6 @@
       <Button layoutX="68.0" layoutY="164.0" mnemonicParsing="false" onAction="#goToGraphs" text="Graphs" />
       <Label layoutX="244.0" layoutY="489.0" text="Description" />
       <Text fx:id="weatherDescription" layoutX="240.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Button layoutX="295.0" layoutY="330.0" mnemonicParsing="false" onAction="#deleteFeed" text="Delete" />
    </children>
 </AnchorPane>

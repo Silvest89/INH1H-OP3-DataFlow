@@ -5,15 +5,18 @@
  */
 package dataflow.screens;
 
+import dataflow.Utility;
 import dataflow.database.MySQLDb;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,6 +25,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -45,6 +49,10 @@ public class GraphsController extends ControlledScreen implements Initializable 
     private LineChart<String, Number> lcWeather;
     @FXML
     private PieChart pcDistr;
+    @FXML 
+    private ChoiceBox mediaChoiceDay;
+    @FXML
+    private Label twitterPie, facebookPie, instagramPie;
 
     ArrayList<String> days = new ArrayList<>();
     
@@ -56,6 +64,19 @@ public class GraphsController extends ControlledScreen implements Initializable 
     public void initialize(URL url, ResourceBundle rb) {
         try {
             MySQLDb d = new MySQLDb();
+            ObservableList<String> mediaChoice = FXCollections.observableArrayList();
+            Date date = new Date();
+            SimpleDateFormat day = new SimpleDateFormat("dd-MM-yyyy");
+            for(int i = 0; i < 7; i++){
+                date.setTime(date.getTime() - 86400000);                
+                mediaChoice.add(day.format(date));
+            }
+            mediaChoiceDay.setItems(mediaChoice);
+            mediaChoiceDay.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                mediaChoiceChanged(newValue);
+                //System.out.println("ListView Selection Changed (selected: " + newValue.toString() + ")");                
+            });
+                
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YY");
 
@@ -132,6 +153,28 @@ public class GraphsController extends ControlledScreen implements Initializable 
 
         return dataset;
     }
+    
+    private void mediaChoiceChanged(Object value){
+        MySQLDb db = new MySQLDb();
+        pcDistr.getData().clear();
+        SimpleDateFormat day = new SimpleDateFormat("dd-MM-yyyy");
+        Date d1 = null;
+        try {
+            d1 = day.parse(value.toString());
+        } catch (ParseException ex) {
+            Logger.getLogger(GraphsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                Date startDay = Utility.getStartOfDay(d1);
+        Date endDay = Utility.getEndOfDay(d1);
+        ObservableList<PieChart.Data> test = db.getMediaDistributionPerDay(startDay.getTime() / 1000L, endDay.getTime() / 1000L);
+        double totalCount = test.get(0).getPieValue() + test.get(1).getPieValue() + test.get(2).getPieValue();
+        
+        twitterPie.setText(String.format("%.2f", (test.get(0).getPieValue() / totalCount) * 100) + "%");
+        facebookPie.setText(String.format("%.2f", (test.get(1).getPieValue() / totalCount) * 100) + "%");
+        instagramPie.setText(String.format("%.2f", (test.get(2).getPieValue() / totalCount) * 100) + "%");
+        
+        pcDistr.getData().addAll(test);
+    }    
 }
 
 /**
@@ -175,4 +218,5 @@ class HoveredNode extends StackPane {
         label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
         return label;
     }
+   
 }

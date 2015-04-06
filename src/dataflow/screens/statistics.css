@@ -52,3 +52,9 @@
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
 }
+
+#mediaChoiceDay .label{
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+}

@@ -288,12 +288,12 @@ public class MySQLDb implements DatabaseInterface {
      * @param name the name of the post
      */
     @Override
-    public void insertFacebookLikes(int resultNumber, String name) {
+    public void insertFacebookLikes(int resultNumber, int count) {
         try {
             preparedStatement = connect
                     .prepareStatement("INSERT INTO feed_facebook(feed_id, likes) VALUES (?, ?)");
             preparedStatement.setInt(1, resultNumber);
-            preparedStatement.setString(2, name);
+            preparedStatement.setInt(2, count);
             preparedStatement.executeUpdate();
             
         } catch (Exception e) {
@@ -301,6 +301,44 @@ public class MySQLDb implements DatabaseInterface {
         } finally {
             //close();
         }
+    }
+    
+    @Override
+    public boolean removeFeed(Feed feed){
+        try {
+            preparedStatement = connect
+                    .prepareStatement("DELETE FROM data_feed WHERE id = ?");
+            preparedStatement.setLong(1, feed.getId());
+            if(preparedStatement.executeUpdate() > 0)
+                return true;
+
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            close();
+        }       
+        return false;
+    }
+    
+    @Override
+    public ArrayList<Feed> searchFeed(String searchText){
+        try {
+            ArrayList<Feed> tweetAL = new ArrayList<>();
+            preparedStatement = connect
+                    .prepareStatement("SELECT * FROM data_feed WHERE message LIKE ?");
+            preparedStatement.setString(1, "%"+searchText+"%");
+            resultSet = preparedStatement.executeQuery();
+            
+            while (resultSet.next()) {
+                Feed t = new Feed(resultSet.getLong("id"), resultSet.getLong("timestamp"), resultSet.getString("user"), resultSet.getString("location"), resultSet.getString("message"), resultSet.getString("feed_type"));
+                tweetAL.add(t);
+            }
+            
+            return tweetAL;
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLDb.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        return null;
     }
     
     /**
@@ -597,6 +635,7 @@ public class MySQLDb implements DatabaseInterface {
      * @return an observable list containing the number of messages per social media: (#TwitterPosts, #FacebookPosts, #InstagramPosts)
      * @throws Exception 
      */
+    @Override
     public ObservableList<PieChart.Data> getMediaDistribution() throws Exception {
         final ObservableList<PieChart.Data> counts = FXCollections.observableArrayList();
         preparedStatement = connect.
@@ -628,6 +667,56 @@ public class MySQLDb implements DatabaseInterface {
         
         return counts;
     }
+    
+    @Override
+    public ObservableList<PieChart.Data> getMediaDistributionPerDay(long startDay, long endDay){
+        try {
+            final ObservableList<PieChart.Data> counts = FXCollections.observableArrayList();
+            preparedStatement = connect.
+                    prepareStatement("SELECT COUNT(*) from data_feed WHERE feed_type = ? AND timestamp >= ? AND timestamp <= ?");
+            preparedStatement.setString(1, "Twitter");
+            preparedStatement.setLong(2, startDay);
+            preparedStatement.setLong(3, endDay);
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                counts.add(new PieChart.Data("Twitter", resultSet.getInt(1)));
+            }
+            else
+                counts.add(new PieChart.Data("Twitter", 0));
+
+            preparedStatement = connect.
+                    prepareStatement("SELECT COUNT(*) from data_feed WHERE feed_type = ? AND timestamp >= ? AND timestamp <= ?");
+            preparedStatement.setString(1, "Facebook");
+            preparedStatement.setLong(2, startDay);
+            preparedStatement.setLong(3, endDay);            
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                counts.add(new PieChart.Data("Facebook", resultSet.getInt(1)));
+            }
+            else
+                counts.add(new PieChart.Data("Facebook", 0));
+
+            preparedStatement = connect.
+                    prepareStatement("SELECT COUNT(*) from data_feed WHERE feed_type = ? AND timestamp >= ? AND timestamp <= ?");
+            preparedStatement.setString(1, "Instagram");
+            preparedStatement.setLong(2, startDay);
+            preparedStatement.setLong(3, endDay);            
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                counts.add(new PieChart.Data("Instagram", resultSet.getInt(1)));
+            }
+            else
+                counts.add(new PieChart.Data("Instagram", 0));
+            
+            return counts;
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLDb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }    
     
     /**
      * Method which closes the database connection

@@ -5,7 +5,6 @@
  */
 package dataflow;
 
-import dataflow.*;
 import dataflow.screens.ControlledScreen;
 import java.util.HashMap;
 import javafx.animation.KeyFrame;

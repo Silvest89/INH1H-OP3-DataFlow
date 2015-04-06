@@ -20,6 +20,50 @@
         <URL value="@statistics.css" />
     </stylesheets>
    <children>
+      <TabPane layoutX="206.0" layoutY="50.0" prefHeight="539.0" prefWidth="577.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Untitled Tab 1">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BarChart fx:id="bcTweets" layoutX="3.0" layoutY="8.0" prefHeight="231.0" prefWidth="572.0" title="Messages per day">
+                          <xAxis>
+                            <CategoryAxis label="Day" side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis label="Tweets" side="LEFT" />
+                          </yAxis>
+                        </BarChart>
+                        <LineChart fx:id="lcWeather" layoutX="9.0" layoutY="247.0" prefHeight="260.0" prefWidth="569.0" title="Weather">
+                          <xAxis>
+                            <CategoryAxis label="Day" side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis forceZeroInRange="false" label="Temperature" prefHeight="138.0" prefWidth="43.0" side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Untitled Tab 2">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <PieChart fx:id="pcDistr" layoutX="14.0" layoutY="37.0" prefHeight="447.0" prefWidth="285.0" title="Media Distribubution" />
+                        <ChoiceBox fx:id="mediaChoiceDay" layoutX="331.0" layoutY="37.0" prefWidth="150.0" />
+                        <Label layoutX="331.0" layoutY="131.0" text="Twitter" />
+                        <Label layoutX="331.0" layoutY="173.0" text="Facebook" />
+                        <Label layoutX="329.0" layoutY="215.0" text="Instagram" />
+                        <Label fx:id="twitterPie" layoutX="416.0" layoutY="131.0" text="Label" />
+                        <Label fx:id="facebookPie" layoutX="416.0" layoutY="173.0" text="Label" />
+                        <Label fx:id="instagramPie" layoutX="416.0" layoutY="215.0" text="Label" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="550.0" layoutY="43.0" opacity="0.24" stroke="BLACK" strokeType="INSIDE" width="202.0">
          <effect>
             <DropShadow />
@@ -38,7 +82,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Statistics">
             <items>
-              <MenuItem mnemonicParsing="false" text="Statistics" />
+              <MenuItem mnemonicParsing="false" onAction="#goToStatistics" text="Statistics" />
                   <MenuItem mnemonicParsing="false" onAction="#goToGraphs" text="Graphs" />
             </items>
           </Menu>
@@ -52,29 +96,12 @@
             <DropShadow />
          </effect>
       </MenuBar>
-      <Button layoutX="65.0" layoutY="330.0" mnemonicParsing="false" text="Log out" />
+      <Button layoutX="65.0" layoutY="330.0" mnemonicParsing="false" onAction="#logOut" text="Log out" />
       <Label fx:id="label" alignment="CENTER" prefHeight="42.0" prefWidth="202.0" text="Dataflow Pro" textAlignment="CENTER">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
       <Button layoutX="48.0" layoutY="66.0" mnemonicParsing="false" text="Print out page" />
-      <BarChart fx:id="bcTweets" layoutX="204.0" layoutY="79.0" prefHeight="231.0" prefWidth="572.0" title="Messages per day">
-        <xAxis>
-          <CategoryAxis label="Day" side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis label="Tweets" side="LEFT" />
-        </yAxis>
-      </BarChart>
-      <LineChart fx:id="lcWeather" layoutX="221.0" layoutY="307.0" prefHeight="260.0" prefWidth="312.0" title="Weather">
-        <xAxis>
-          <CategoryAxis label="Day" side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis forceZeroInRange="false" label="Temperature" prefHeight="138.0" prefWidth="43.0" side="LEFT" />
-        </yAxis>
-      </LineChart>
-      <PieChart fx:id="pcDistr" layoutX="553.0" layoutY="330.0" prefHeight="181.0" prefWidth="120.0" title="Media Distrubution" />
    </children>
 </AnchorPane>

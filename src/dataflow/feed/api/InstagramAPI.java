@@ -93,7 +93,6 @@ public final class InstagramAPI extends FeedAPI {
                     recentMediaNextPage = instagram.getRecentMediaNextPage(recentMediaNextPage.getPagination());
                     counter++;
                 }
-                System.out.println(mediaFeeds.size());
 
                 String location;
                 for (MediaFeedData mediaFeedData : mediaFeeds) {

@@ -120,7 +120,7 @@ public class StatisticsController extends ControlledScreen implements Initializa
      * @throws Exception 
      */
     @FXML
-    private void retrieveData(ActionEvent event) throws Exception {
+    private void retrieveData(ActionEvent event) {
         try {
             MySQLDb d = new MySQLDb();
             ArrayList<Feed> tweetAL = d.retrieveFeeds();
@@ -131,33 +131,43 @@ public class StatisticsController extends ControlledScreen implements Initializa
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.getMessage();
         }
         
         tweetBox.setItems(data);
-        System.out.println(data);
     }
 
     @FXML
     private void searchTweet(ActionEvent event) {
-       /* if(searchText.getText() == null || searchText.getText().length() == 0)
+        MySQLDb db = new MySQLDb();
+        if(searchText.getText() == null || searchText.getText().length() == 0)
             return;
         try {
-            TwitterSearch ts = new TwitterSearch();
-            ArrayList<Tweet> tweetAL = ts.retrieve(searchText.getText());
+            ArrayList<Feed> tweetAL = db.searchFeed(searchText.getText());
             data.clear();
             searchResult.clear();
-            for (Tweet t : tweetAL) {
+            for (Feed t : tweetAL) {
                 searchResult.add(t);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.getMessage();
         }
         
-        tweetBox.setItems(searchResult);*/
+        tweetBox.setItems(searchResult);
     }
 
+    @FXML
+    private void deleteFeed(ActionEvent event){
+        Feed feed = tweetBox.getSelectionModel().getSelectedItem();
+        if(feed == null)
+            return;
+        
+        MySQLDb db = new MySQLDb();
+        db.removeFeed(feed);
+        data.remove(feed);  
+    }
+    
     /**
      * Method which retrieves the weather information at the time the given feed was send
      * @param tweet tweet to retrieve weather information from

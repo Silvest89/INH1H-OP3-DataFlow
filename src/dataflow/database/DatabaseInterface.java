@@ -12,7 +12,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.sql.DataSource;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
 import org.json.JSONObject;
 
 /**
@@ -29,8 +30,10 @@ public interface DatabaseInterface {
     public boolean deleteUser(String name);    
     
     public int insertFeed(String feedType, String feedId, String text, String user, long timeStamp, String location);
-    public void insertFacebookLikes(int resultNumber, String name);
+    public void insertFacebookLikes(int resultNumber, int name);
         
+    public boolean removeFeed(Feed feed);
+    public ArrayList<Feed> searchFeed(String searchText);
     public ArrayList<Feed> retrieveFeeds();        
     public ArrayList<String> retrieveFacebookLikes(FacebookFeed fbFeed);   
     public ArrayList<String> getAccountList();
@@ -40,13 +43,15 @@ public interface DatabaseInterface {
     public Weather fetchWeatherByDate(long timeStamp);
     public double fetchWeatherTemperatureByDate(String date);
     
-    public long getRecentFacebookPost();
-    
+    public long getRecentFacebookPost();    
     public String getRecentTwitterId();
     
     public void insertInstagramId(String minId);    
     public void updateInstagramId(String minId, String nextMinId);    
     public String getRecentInstagramId();
     
+    public ObservableList<PieChart.Data> getMediaDistribution()  throws Exception;
+    public ObservableList<PieChart.Data> getMediaDistributionPerDay(long startDay, long endDay);
+            
     public void close();        
 }
