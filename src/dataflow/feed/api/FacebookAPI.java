@@ -23,16 +23,28 @@ public final class FacebookAPI extends FeedAPI{
     public FacebookAPI(){       
         connect();
     }
+    /**
+     * Constructor method constructing a facebookAPI object using the given access token
+     * @param accessToken 
+     */
+    public FacebookAPI(String accessToken){
+        facebookClient = new DefaultFacebookClient(accessToken);
+
+    }
     
     @Override
     public void connect(){
         AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken("954169427935318", "4f7915b1abc5973dcbc9301a86bc33b5");
         String token=accessToken.getAccessToken();        
         facebookClient = new DefaultFacebookClient(token);
-    }
-    
+    }   
+
+    /**
+     * Method which retrieves posts from Facebook 
+     */
     @Override
     public void fetchFeed() {
+
         MySQLDb db = new MySQLDb();
         //Fetches the feed on the boijmans museum page
         Connection<Post> messages = facebookClient.fetchConnection("boijmans/feed", Post.class, Parameter.with("until", "1426291200"/*"1427068800"*/), Parameter.with("since", /*"1424649600"*/ "1426118400"));

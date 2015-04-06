@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- *
+ * Class for handline
  * @author Johnnie Ho
  */
 public class Config {
@@ -21,6 +21,9 @@ public class Config {
     private static String dbuser;
     private static String dbpassword;    
     
+    /**
+     * Method which reads the config file
+     */
     public static void readConfig(){
     	Properties prop = new Properties();
     	InputStream input = null;
@@ -55,18 +58,34 @@ public class Config {
         }
     }
 
+    /**
+     * Method which returns the name of the database, as stated in the config file
+     * @return the name of the database
+     */
     public static String getDb() {
         return db;
     }
     
+    /**
+     * Method which returns the link to the database, as stated in the config file
+     * @return the link to the database
+     */
     public static String getDatabase() {
         return database;
     }
 
+    /**
+     * Method which returns the user of the database
+     * @return the userName which has access to the database
+     */
     public static String getDbuser() {
         return dbuser;
     }
 
+    /**
+     * Method which returns the password of the user of the database
+     * @return the password of the user of the database
+     */
     public static String getDbpassword() {
         return dbpassword;
     }    

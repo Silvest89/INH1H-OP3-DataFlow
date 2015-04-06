@@ -6,7 +6,7 @@
 package dataflow.feed.api;
 
 /**
- *
+ * Interface which can be implemented if new feed types arrive
  * @author Johnnie Ho
  */
 abstract class FeedAPI {

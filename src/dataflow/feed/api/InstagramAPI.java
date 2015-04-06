@@ -18,7 +18,7 @@ import org.jinstagram.entity.users.feed.MediaFeedData;
 import org.jinstagram.exceptions.InstagramException;
 
 /**
- *
+ * Class for Instagram message retrieval
  * @author Johnnie Ho
  */
 public final class InstagramAPI extends FeedAPI {
@@ -30,6 +30,9 @@ public final class InstagramAPI extends FeedAPI {
         connect();
     }    
     
+    /**
+     * Method which connects to Instagram
+     */
     @Override
     public void connect(){
         InstagramService service = new InstagramAuthService()
@@ -41,14 +44,25 @@ public final class InstagramAPI extends FeedAPI {
         instagram = new Instagram("3fc9480725944608aa51213d49cbb706");                
     }
     
+    /**
+     * Method which gets the keyword
+     * @return keyword which is used to search posts
+     */
     public String getKeyword(){
         return keyword;
     }
     
+    /**
+     * Method which sets the keywords
+     * @param keyword the new keyword
+     */
     public void setKeyword(String keyword){
         this.keyword = keyword;
     }
     
+    /**
+     * Method which fetches posts
+     */
     @Override
     public void fetchFeed(){        
         

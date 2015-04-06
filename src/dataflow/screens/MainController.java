@@ -44,8 +44,8 @@ import javafx.stage.Stage;
 import org.apache.commons.lang3.text.WordUtils;
 
 /**
- * FXML Controller class
- *
+ * FXML MainController class
+ * Contains all methods concerning the main screen
  * @author Johnnie Ho
  */
 public class MainController extends ControlledScreen implements Initializable {
@@ -129,11 +129,19 @@ public class MainController extends ControlledScreen implements Initializable {
         
     }
 
+    /**
+     * Method which prepares the screen based on the accessLevel of the logged in account
+     */
     @Override
     public void prepare() {
         setWelcomeMessage(showUserName, showAccessLevel);
     }
 
+    /**
+     * Methods which opens an alert window for user addition
+     * @param event
+     * @return 
+     */
     @FXML
     public boolean openAddUser(ActionEvent event) {
         try{
@@ -167,6 +175,11 @@ public class MainController extends ControlledScreen implements Initializable {
         return false;
     }
 
+    /**
+     * Method which opens an alert window for user deletion
+     * @param event
+     * @return 
+     */
     @FXML
     public boolean openDeleteUser(ActionEvent event) {
         try{
@@ -216,6 +229,11 @@ public class MainController extends ControlledScreen implements Initializable {
         pPassword.setDisable(state);
     }
     
+    /**
+     * Method which checks the input by passing the input texts to the regex validator in the Utility class
+     * @param event
+     * @return 
+     */
     @FXML
     public boolean actionConfirmEdit(ActionEvent event){   
         boolean error = false;
@@ -295,6 +313,10 @@ public class MainController extends ControlledScreen implements Initializable {
         return true;
     }
     
+    /**
+     * Method which fetches the most recent weather information when a button is clicked
+     * @param event 
+     */
     @FXML
     public void fetchWeatherButton(ActionEvent event){
         test.setProgress(0.25);
