@@ -20,7 +20,7 @@
         <URL value="@statistics.css" />
     </stylesheets>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="739.0" layoutY="43.0" opacity="0.24" stroke="BLACK" strokeType="INSIDE" width="202.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#939ca4" height="475.0" layoutY="43.0" opacity="0.24" stroke="BLACK" strokeType="INSIDE" width="202.0">
          <effect>
             <DropShadow />
          </effect>
@@ -83,5 +83,13 @@
       </LineChart>
       <PieChart fx:id="pcDistr" layoutX="563.0" layoutY="336.0" prefHeight="181.0" prefWidth="120.0" title="Media Distrubution" />
       <PieChart fx:id="pnnTweets" layoutX="518.0" layoutY="546.0" prefHeight="222.0" prefWidth="271.0" title="Sentiment Tweets" />
+      <BarChart fx:id="pnntweets2" layoutX="65.0" layoutY="563.0" prefHeight="189.0" prefWidth="442.0" title="Sentiment Tweets per day">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </BarChart>
    </children>
 </AnchorPane>

@@ -84,7 +84,9 @@ public class GraphsController extends ControlledScreen implements Initializable 
     private PieChart pcDistr;
     @FXML
     private PieChart pnnTweets;
-
+    @FXML
+    private BarChart<String, Number> pnntweets2;
+    
     ArrayList<String> days = new ArrayList<>();
     
 
@@ -128,7 +130,33 @@ public class GraphsController extends ControlledScreen implements Initializable 
             bcSeries1.getData().add(new XYChart.Data(sdf.format(todayMin3), d.getFeedsPerDay("Twitter", todayMin3)));
             bcSeries1.getData().add(new XYChart.Data(sdf.format(todayMin2), d.getFeedsPerDay("Twitter", todayMin2)));
             bcSeries1.getData().add(new XYChart.Data(sdf.format(todayMin1), d.getFeedsPerDay("Twitter", todayMin1)));
-
+            
+            // sentiment tweets chart data
+            XYChart.Series pnnSeries = new XYChart.Series();
+            pnnSeries.getData().add(new XYChart.Data(sdf.format(todayMin6), d.getFeedsPerDay("Twitter", todayMin6)));
+            pnnSeries.getData().add(new XYChart.Data(sdf.format(todayMin5), d.getFeedsPerDay("Twitter", todayMin5)));
+            pnnSeries.getData().add(new XYChart.Data(sdf.format(todayMin4), d.getFeedsPerDay("Twitter", todayMin4)));
+            pnnSeries.getData().add(new XYChart.Data(sdf.format(todayMin3), d.getFeedsPerDay("Twitter", todayMin3)));
+            pnnSeries.getData().add(new XYChart.Data(sdf.format(todayMin2), d.getFeedsPerDay("Twitter", todayMin2)));
+            pnnSeries.getData().add(new XYChart.Data(sdf.format(todayMin1), d.getFeedsPerDay("Twitter", todayMin1)));
+            
+            XYChart.Series pnnSeries2 = new XYChart.Series();
+            pnnSeries2.getData().add(new XYChart.Data(sdf.format(todayMin6), d.getFeedsPerDay("Twitter", todayMin6)));
+            pnnSeries2.getData().add(new XYChart.Data(sdf.format(todayMin5), d.getFeedsPerDay("Twitter", todayMin5)));
+            pnnSeries2.getData().add(new XYChart.Data(sdf.format(todayMin4), d.getFeedsPerDay("Twitter", todayMin4)));
+            pnnSeries2.getData().add(new XYChart.Data(sdf.format(todayMin3), d.getFeedsPerDay("Twitter", todayMin3)));
+            pnnSeries2.getData().add(new XYChart.Data(sdf.format(todayMin2), d.getFeedsPerDay("Twitter", todayMin2)));
+            pnnSeries2.getData().add(new XYChart.Data(sdf.format(todayMin1), d.getFeedsPerDay("Twitter", todayMin1)));
+            
+            XYChart.Series pnnSeries3 = new XYChart.Series();
+            pnnSeries3.getData().add(new XYChart.Data(sdf.format(todayMin6), d.getFeedsPerDay("Twitter", todayMin6)));
+            pnnSeries3.getData().add(new XYChart.Data(sdf.format(todayMin5), d.getFeedsPerDay("Twitter", todayMin5)));
+            pnnSeries3.getData().add(new XYChart.Data(sdf.format(todayMin4), d.getFeedsPerDay("Twitter", todayMin4)));
+            pnnSeries3.getData().add(new XYChart.Data(sdf.format(todayMin3), d.getFeedsPerDay("Twitter", todayMin3)));
+            pnnSeries3.getData().add(new XYChart.Data(sdf.format(todayMin2), d.getFeedsPerDay("Twitter", todayMin2)));
+            pnnSeries3.getData().add(new XYChart.Data(sdf.format(todayMin1), d.getFeedsPerDay("Twitter", todayMin1)));
+             
+            pnntweets2.getData().addAll(pnnSeries, pnnSeries2, pnnSeries3);
             bcTweets.getData().add(bcSeries1);
             
             XYChart.Series lcSeries = new XYChart.Series();
