@@ -10,3 +10,10 @@
     -fx-border-style: solid;
     -fx-border-width: 2;
 }
+
+#showUserName{
+    -fx-font-weight: bold;
+}
+#showAccessLevel{
+    -fx-text-fill: green;
+}

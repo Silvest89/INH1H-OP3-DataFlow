@@ -38,7 +38,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Statistics">
             <items>
-              <MenuItem mnemonicParsing="false" text="Statistics" />
+              <MenuItem mnemonicParsing="false" onAction="#goToStatistics" text="Statistics" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -58,8 +58,6 @@
          </font>
       </Label>
       <Button layoutX="48.0" layoutY="66.0" mnemonicParsing="false" text="Print out page" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="31.0" layoutX="640.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="151.0" />
-      <Label fx:id="showUserName" alignment="CENTER" layoutX="640.0" layoutY="10.0" prefHeight="31.0" prefWidth="151.0" text="User" />
       <Label fx:id="showPageName" layoutX="210.0" layoutY="45.0" prefHeight="42.0" prefWidth="260.0" text="Page Name">
          <font>
             <Font name="System Bold Italic" size="20.0" />

@@ -5,6 +5,7 @@
  */
 package dataflow.screens.dialog;
 
+import dataflow.database.MySQLDb;
 import dataflow.screens.dialog.Dialog;
 import dataflow.*;
 import java.net.URL;

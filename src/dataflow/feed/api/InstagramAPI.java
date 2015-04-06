@@ -5,7 +5,7 @@
  */
 package dataflow.feed.api;
 
-import dataflow.MySQLDb;
+import dataflow.database.MySQLDb;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +21,7 @@ import org.jinstagram.exceptions.InstagramException;
  *
  * @author Johnnie Ho
  */
-public final class InstagramAPI implements FeedAPI {
+public final class InstagramAPI extends FeedAPI {
     
     private Instagram instagram;
     private String keyword;
@@ -41,12 +41,10 @@ public final class InstagramAPI implements FeedAPI {
         instagram = new Instagram("3fc9480725944608aa51213d49cbb706");                
     }
     
-    @Override
     public String getKeyword(){
         return keyword;
     }
     
-    @Override
     public void setKeyword(String keyword){
         this.keyword = keyword;
     }
@@ -76,7 +74,7 @@ public final class InstagramAPI implements FeedAPI {
 
                 MediaFeed recentMediaNextPage = instagram.getRecentMediaNextPage(mediaFeed.getPagination());
                 int counter = 0;
-                while (recentMediaNextPage.getPagination() != null && counter < 4) {
+                while (recentMediaNextPage.getPagination() != null && counter < 5) {
                     mediaFeeds.addAll(recentMediaNextPage.getData());
                     recentMediaNextPage = instagram.getRecentMediaNextPage(recentMediaNextPage.getPagination());
                     counter++;

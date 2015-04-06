@@ -5,7 +5,7 @@
  */
 package dataflow.feed;
 
-import dataflow.MySQLDb;
+import dataflow.database.MySQLDb;
 import java.util.ArrayList;
 
 /**

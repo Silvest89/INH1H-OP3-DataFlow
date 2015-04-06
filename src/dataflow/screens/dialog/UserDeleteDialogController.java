@@ -6,7 +6,7 @@
 package dataflow.screens.dialog;
 
 import dataflow.Account;
-import dataflow.MySQLDb;
+import dataflow.database.MySQLDb;
 import dataflow.Utility;
 import java.net.URL;
 import java.util.ArrayList;

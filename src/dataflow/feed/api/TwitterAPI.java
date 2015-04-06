@@ -1,13 +1,13 @@
 package dataflow.feed.api;
 
-import dataflow.MySQLDb;
+import dataflow.database.MySQLDb;
 import java.util.ArrayList;
 import java.util.Date;
 import twitter4j.*;
 import java.util.logging.Logger;
 import twitter4j.conf.ConfigurationBuilder;
 
-public final class TwitterAPI implements FeedAPI {
+public final class TwitterAPI extends FeedAPI {
     
     Twitter twitter;
     String keyword;
@@ -29,12 +29,10 @@ public final class TwitterAPI implements FeedAPI {
         twitter = tf.getInstance();        
     }        
     
-    @Override
     public String getKeyword(){
         return keyword;
     }
     
-    @Override
     public void setKeyword(String keyword){
         this.keyword = keyword;
     }

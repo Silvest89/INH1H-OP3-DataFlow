@@ -5,7 +5,7 @@
  */
 package dataflow.screens;
 
-import dataflow.MySQLDb;
+import dataflow.database.MySQLDb;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -126,10 +126,6 @@ public class GraphsController extends ControlledScreen implements Initializable 
         }
 
         return dataset;
-    }
-
-    @FXML
-    private void goToMain(ActionEvent event) {
     }
 }
 

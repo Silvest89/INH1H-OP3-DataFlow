@@ -7,9 +7,9 @@ package dataflow.screens;
 
 import dataflow.Account;
 import dataflow.DataFlow;
-import dataflow.MySQLDb;
+import dataflow.database.MySQLDb;
 import dataflow.Utility;
-import dataflow.Weather;
+import dataflow.feed.api.Weather;
 import dataflow.screens.dialog.UserCreateDialogController;
 import dataflow.screens.dialog.UserDeleteDialogController;
 import java.io.IOException;
@@ -131,20 +131,7 @@ public class MainController extends ControlledScreen implements Initializable {
 
     @Override
     public void prepare() {
-            showUserName.setText("Welcome, " + WordUtils.capitalizeFully(Account.getFirstName()) + " " + WordUtils.capitalizeFully(Account.getLastName()) + "!");
-            String access = "";
-            switch(Account.getAccessLevel()){
-                case Account.NORMAL:
-                    access = "Normal Account";
-                    break;
-                case Account.SUPERVISOR:
-                    access = "Supervisor Account";
-                    break;
-                case Account.ADMIN:
-                    access = "Admin Account";
-                    break;                 
-            }                
-            showAccessLevel.setText(access);
+        setWelcomeMessage(showUserName, showAccessLevel);
     }
 
     @FXML

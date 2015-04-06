@@ -9,6 +9,8 @@ import dataflow.ScreensController;
 import dataflow.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import org.apache.commons.lang3.text.WordUtils;
 
 /**
  *
@@ -41,4 +43,20 @@ public class ControlledScreen {
         Account.resetAccount();
         DataFlow.setScreen("Login");
     }     
+    public void setWelcomeMessage(Label user, Label accessText){
+        user.setText("Welcome, " + WordUtils.capitalizeFully(Account.getFirstName()) + " " + WordUtils.capitalizeFully(Account.getLastName()) + "!");
+        String access = "";
+        switch(Account.getAccessLevel()){
+            case Account.NORMAL:
+                access = "Normal Account";
+                break;
+            case Account.SUPERVISOR:
+                access = "Supervisor Account";
+                break;
+            case Account.ADMIN:
+                access = "Admin Account";
+                break;                 
+        }      
+        accessText.setText(access);
+    }
 }

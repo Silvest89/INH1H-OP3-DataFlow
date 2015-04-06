@@ -8,9 +8,9 @@ package dataflow.screens;
 
 import dataflow.Account;
 import dataflow.DataFlow;
-import dataflow.MySQLDb;
+import dataflow.database.MySQLDb;
 import dataflow.feed.Feed;
-import dataflow.Weather;
+import dataflow.feed.api.Weather;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -53,6 +53,9 @@ public class StatisticsController extends ControlledScreen implements Initializa
     
     @FXML
     private Label showPageName;
+    
+    @FXML 
+    private Label showAccessLevel;
     
     @FXML
     private Label showUserName;
@@ -108,7 +111,8 @@ public class StatisticsController extends ControlledScreen implements Initializa
     
     @Override
     public void prepare () {
-        showUserName.setText("Welcome, " + Account.getUserName() + "!");
+        //setWelcomeMessage(showUserName, showAccessLevel);
+        //showUserName.setText("Welcome, " + Account.getUserName() + "!");
         showPageName.setText(pageName); 
     }
     

@@ -9,12 +9,7 @@ package dataflow.feed.api;
  *
  * @author Johnnie Ho
  */
-public interface FeedAPI {
-    
-    public void connect();    
-    public void fetchFeed();
-    
-    public String getKeyword();
-    public void setKeyword(String keyword);
-    
+abstract class FeedAPI {
+    abstract void connect();    
+    abstract void fetchFeed();    
 }

@@ -6,7 +6,7 @@
 package dataflow.screens;
 
 import dataflow.DataFlow;
-import dataflow.MySQLDb;
+import dataflow.database.MySQLDb;
 import dataflow.*;
 
 import java.net.URL;

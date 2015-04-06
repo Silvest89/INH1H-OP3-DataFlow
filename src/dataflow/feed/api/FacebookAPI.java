@@ -4,12 +4,12 @@ import com.restfb.*;
 import com.restfb.FacebookClient.AccessToken;
 import com.restfb.types.NamedFacebookType;
 import com.restfb.types.Post;
-import dataflow.MySQLDb;
+import dataflow.database.MySQLDb;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class FacebookAPI{
+public final class FacebookAPI extends FeedAPI{
     //This line of code holds the auth key to connect to facebook
     FacebookClient facebookClient = null;
 
@@ -20,11 +20,19 @@ public class FacebookAPI{
     public String location;
     public String feedType;
 
-    public FacebookAPI(String accessToken){
-        facebookClient = new DefaultFacebookClient(accessToken);
+    public FacebookAPI(){       
+        connect();
     }
     
-    public void fetch() {
+    @Override
+    public void connect(){
+        AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken("954169427935318", "4f7915b1abc5973dcbc9301a86bc33b5");
+        String token=accessToken.getAccessToken();        
+        facebookClient = new DefaultFacebookClient(token);
+    }
+    
+    @Override
+    public void fetchFeed() {
         MySQLDb db = new MySQLDb();
         //Fetches the feed on the boijmans museum page
         Connection<Post> messages = facebookClient.fetchConnection("boijmans/feed", Post.class, Parameter.with("until", "1426291200"/*"1427068800"*/), Parameter.with("since", /*"1424649600"*/ "1426118400"));
@@ -64,15 +72,6 @@ public class FacebookAPI{
                     throw e;
                 }
             }
-
         }
-    }
-    
-    public FacebookAPI(){
-                AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken("954169427935318", "4f7915b1abc5973dcbc9301a86bc33b5");
-        String token=accessToken.getAccessToken();
-        System.out.println(token);
-        FacebookAPI fb = new FacebookAPI(token);
-        fb.fetch();
     }
 }

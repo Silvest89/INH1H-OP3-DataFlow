@@ -6,7 +6,6 @@
 package dataflow.feed;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 /**
  *
@@ -20,7 +19,7 @@ public class Feed {
     private String location;
     private String text;
     private String timeString;
-    private String feedType;    
+    private final String feedType;    
     
     public Feed(long id, long timeStamp, String user, String location, String text, String feedType){
         this.id = id;    
