@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 import org.json.JSONObject;
 
 /**
- *
+ * Interface Class for databases. If new Databases are created, they can implement this interface
  * @author Johnnie Ho
  */
 public interface DatabaseInterface {

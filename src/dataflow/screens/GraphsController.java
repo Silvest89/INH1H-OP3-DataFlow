@@ -27,8 +27,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 /**
- * FXML Controller class
- *
+ * FXML GraphsController class
+ * Contains all methods concerning the graphs screen
  * @author Jesse
  */
 public class GraphsController extends ControlledScreen implements Initializable {
@@ -50,7 +50,7 @@ public class GraphsController extends ControlledScreen implements Initializable 
     
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class and screen.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -111,6 +111,11 @@ public class GraphsController extends ControlledScreen implements Initializable 
         }
     }
 
+    /**
+     * Method which creates text nodes on the weather chart, so the value of each point can be viewed
+     * @param y
+     * @return 
+     */
     public ObservableList<XYChart.Data<String, Number>> plot(double... y) {
         final ObservableList<XYChart.Data<String, Number>> dataset = FXCollections.observableArrayList();
         int i = 0;
@@ -127,12 +132,12 @@ public class GraphsController extends ControlledScreen implements Initializable 
 
         return dataset;
     }
-
-    @FXML
-    private void goToMain(ActionEvent event) {
-    }
 }
 
+/**
+ * Class for the node to be created on the weather line chart
+ * @author Jesse
+ */
 class HoveredNode extends StackPane {
 
     HoveredNode(double value) {
@@ -157,6 +162,11 @@ class HoveredNode extends StackPane {
         });
     }
 
+    /**
+     * Method which actually created the node
+     * @param value the value of the node
+     * @return the node to be showed
+     */
     private Label createDataLabel(double value) {
         final Label label = new Label(value + "");
         label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");

@@ -19,7 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- *
+ * Class which holds weather information
  * @author Johnnie Ho
  */
 public class Weather {
@@ -31,6 +31,16 @@ public class Weather {
     private String maxTemp;
     private String description;
         
+    /**
+     * Contructor class which constructs a weather object
+     * @param id
+     * @param date
+     * @param icon
+     * @param clouds
+     * @param minTemp
+     * @param maxTemp
+     * @param description 
+     */
     public Weather(int id, String date, String icon, String clouds, String minTemp, String maxTemp, String description){
         this.id = id;
         this.date = date;
@@ -42,26 +52,49 @@ public class Weather {
         
     }
     
+    /**
+     * Method which returns the icon of the current weather (sun icon, cloud icon etc.)
+     * @return the icon of the current weather
+     */
     public String getIcon(){
         return icon;
     }
     
+    /**
+     * Method which returns the min. temperature
+     * @return the minimum temperature
+     */
     public String getMinTemp(){
         return minTemp;
     }
     
+    /**
+     * Method which returns the max. temperature
+     * @return the maximum temperature
+     */
     public String getMaxTemp(){
         return maxTemp;
     }    
     
+    /**
+     * Method which returns the cloud percentage
+     * @return the cloud percentage
+     */
     public String getClouds(){
         return clouds;
     }
     
+    /**
+     * Method which returns the descrpition of the weather
+     * @return the descrpition of the weather
+     */
     public String getDescription(){
         return description;
     }
     
+    /**
+     * Method which connects to the weather api and retrieves the weather from the day before today
+     */
     public static void getWeather(){
         String key = "c6aee37b80d801b44279ac16374db";
         Calendar fromTime = Calendar.getInstance();
@@ -82,6 +115,11 @@ public class Weather {
         }           
     }
     
+    /**
+     * Method which builds the string of the URL to call
+     * @param myURL the URL which must become a callURL
+     * @return 
+     */
     public static String callURL(String myURL) {
         //System.out.println("Requested URL:" + myURL);
         StringBuilder sb = new StringBuilder();

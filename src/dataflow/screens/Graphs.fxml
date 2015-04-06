@@ -39,6 +39,7 @@
           <Menu mnemonicParsing="false" text="Statistics">
             <items>
               <MenuItem mnemonicParsing="false" text="Statistics" />
+                  <MenuItem mnemonicParsing="false" onAction="#goToGraphs" text="Graphs" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

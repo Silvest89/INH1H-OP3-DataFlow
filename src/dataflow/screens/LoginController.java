@@ -22,8 +22,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
 /**
- * FXML Controller class
- *
+ * FXML Login Controller class
+ * Contains all methods concerning login
  * @author Johnnie Ho
  */
 public class LoginController extends ControlledScreen implements Initializable {
@@ -37,6 +37,10 @@ public class LoginController extends ControlledScreen implements Initializable {
     @FXML
     private PasswordField password;
     
+    /**
+     * Method which makes use the user can log in. Uses the validateLogin method from MySQLDb class
+     * @param event 
+     */
     @FXML
     private void login(ActionEvent event) {
         
@@ -74,6 +78,9 @@ public class LoginController extends ControlledScreen implements Initializable {
         // TODO
     }    
     
+    /**
+     * Method which prepares the log in screen for further use (clears the text and password fields)
+     */
     @Override
     public void prepare(){
         username.clear();

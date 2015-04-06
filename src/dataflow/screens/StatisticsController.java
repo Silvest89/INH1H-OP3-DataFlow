@@ -106,6 +106,9 @@ public class StatisticsController extends ControlledScreen implements Initializa
             (observable, oldValue, newValue) -> getWeather(newValue));
     }   
     
+    /**
+     * Method which prepares the screen based on the accessLevel of the current account
+     */
     @Override
     public void prepare () {
         showUserName.setText("Welcome, " + Account.getUserName() + "!");
@@ -117,6 +120,11 @@ public class StatisticsController extends ControlledScreen implements Initializa
         DataFlow.setScreen("Main");
     }
 
+    /**
+     * Method which retrieves feeds from the database to be displayed in a table
+     * @param event
+     * @throws Exception 
+     */
     @FXML
     private void retrieveData(ActionEvent event) throws Exception {
         try {
@@ -155,12 +163,11 @@ public class StatisticsController extends ControlledScreen implements Initializa
         
         tweetBox.setItems(searchResult);*/
     }
-    
-    @FXML
-    private void goToStatistics(ActionEvent event) {
-        
-    }
 
+    /**
+     * Method which retrieves the weather information at the time the given feed was send
+     * @param tweet tweet to retrieve weather information from
+     */
     private void getWeather(Feed tweet) {
         MySQLDb db = new MySQLDb();        
         Weather weather = db.fetchWeatherByDate(tweet.getTimeStamp()); 
@@ -187,8 +194,4 @@ public class StatisticsController extends ControlledScreen implements Initializa
         weatherDescription.setText(weather.getDescription());
     }
 
-    @FXML
-    public void goToGraphs(ActionEvent event) {
-        DataFlow.setScreen("Graphs");
-    }
 }

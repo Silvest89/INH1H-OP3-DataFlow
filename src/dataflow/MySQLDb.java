@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 import sun.misc.BASE64Encoder;
 
 /**
- *
+ * Class which regulates all methods that have something to de which the database
  * @author Johnnie Ho
  */
 public class MySQLDb implements DatabaseInterface {
@@ -39,7 +39,7 @@ public class MySQLDb implements DatabaseInterface {
     private static MysqlDataSource mysql = null;
         
     /**
-     *
+     * Contructor method for the database
      */
     public MySQLDb() {
         // This will load the MySQL driver, each DB has its own driver     
@@ -51,8 +51,8 @@ public class MySQLDb implements DatabaseInterface {
     }
 
     /**
-     *
-     * @return
+     * Method which reads the config file and sets up the connection
+     * @return the Datasource of the connection
      */
     public static DataSource getDataSource() {      
         mysql = new MysqlDataSource();
@@ -64,10 +64,10 @@ public class MySQLDb implements DatabaseInterface {
     }
     
     /**
-     *
+     * Method which validates the login by checking if the account exists in the database
      * @param username
      * @param password
-     * @return
+     * @return true or false, based on the fact if the account exists or not
      */
     @Override
     public boolean validateLogin(String username, String password) {
@@ -128,7 +128,7 @@ public class MySQLDb implements DatabaseInterface {
     }
     
     /**
-     *
+     * Method which can be used to update account information
      * @param firstName
      * @param lastName
      * @param email
@@ -208,13 +208,13 @@ public class MySQLDb implements DatabaseInterface {
     }    
     
     /**
-     *
-     * @param feedType
-     * @param feedId
-     * @param text
-     * @param user
-     * @param timeStamp
-     * @param location
+     * Methid which insert a feed into the database, with the given parameters
+     * @param feedType type of the feed. Can be "Twitter", "Facebook" or "Instagram"
+     * @param feedId the id of the feed
+     * @param text the actual message
+     * @param user the user which posted the message
+     * @param timeStamp the time at which the user posted the message
+     * @param location the location from which the user posted
      * @return
      */
     @Override
@@ -254,9 +254,9 @@ public class MySQLDb implements DatabaseInterface {
     }
 
     /**
-     *
-     * @param resultNumber
-     * @param name
+     * Method which inserts the number of likes into the database
+     * @param resultNumber the number of likes
+     * @param name the name of the post
      */
     @Override
     public void insertFacebookLikes(int resultNumber, String name) {
@@ -301,9 +301,9 @@ public class MySQLDb implements DatabaseInterface {
     }
     
     /**
-     *
-     * @param fbFeed
-     * @return
+     * Method which gets the number of likes of the given facebook post
+     * @param fbFeed the post of which the number of likes has to be retrieved from
+     * @return 
      */
     @Override
     public ArrayList<String> retrieveFacebookLikes(FacebookFeed fbFeed){
@@ -353,9 +353,9 @@ public class MySQLDb implements DatabaseInterface {
     }
     
     /**
-     *
-     * @param feedType
-     * @param date
+     * Methid which calculates the number of feeds per day
+     * @param feedType The feed type (Facebook, twitter, instagram)
+     * @param date The date of which the number of feeds has to be calculated
      * @return
      * @throws Exception
      */
@@ -382,9 +382,9 @@ public class MySQLDb implements DatabaseInterface {
     }
 
     /**
-     *
-     * @param timeStamp
-     * @param jsonWeather
+     * Method which inserts the weather information of the given time into the database
+     * @param timeStamp the current time
+     * @param jsonWeather a JSON object containing weather information
      */
     @Override
     public void insertWeather(String timeStamp, JSONObject jsonWeather){
@@ -423,9 +423,9 @@ public class MySQLDb implements DatabaseInterface {
     }
 
     /**
-     *
-     * @param timeStamp
-     * @return
+     * Method which gets the weather based on a given timeStamp
+     * @param timeStamp the time of which you want to know the weather (unix format)
+     * @return a weather Object containing weather information
      */
     @Override
     public Weather fetchWeatherByDate(long timeStamp) {
@@ -449,9 +449,9 @@ public class MySQLDb implements DatabaseInterface {
     }
 
     /**
-     *
-     * @param date
-     * @return
+     * Method which returns the temperature on a given date
+     * @param date the date of which the temperature has to be retrieved
+     * @return double containing the temperature of that date
      */
     @Override
     public double fetchWeatherTemperatureByDate(String date) {
@@ -474,8 +474,8 @@ public class MySQLDb implements DatabaseInterface {
     }
     
     /**
-     *
-     * @param minId
+     * Method which inserts an Instagram ID into the database
+     * @param minId the ID of the post
      */
     @Override
     public void insertInstagramId(String minId){
@@ -491,9 +491,9 @@ public class MySQLDb implements DatabaseInterface {
     }
     
     /**
-     *
-     * @param minId
-     * @param nextMinId
+     * Method which updates a given ID to a new ID
+     * @param minId the old ID
+     * @param nextMinId the new ID
      */
     @Override
     public void updateInstagramId(String minId, String nextMinId) {
@@ -510,8 +510,8 @@ public class MySQLDb implements DatabaseInterface {
     }    
     
     /**
-     *
-     * @return
+     * Methid which gets the most recent instagram ID
+     * @return the most recent instagram ID
      */
     @Override
     public String getRecentInstagramId(){
@@ -530,6 +530,11 @@ public class MySQLDb implements DatabaseInterface {
         return null;
     }        
 
+    /**
+     * Method which calculates the number of messages per social media
+     * @return an observable list containing the number of messages per social media: (#TwitterPosts, #FacebookPosts, #InstagramPosts)
+     * @throws Exception 
+     */
     public ObservableList<PieChart.Data> getMediaDistribution() throws Exception {
         final ObservableList<PieChart.Data> counts = FXCollections.observableArrayList();
         preparedStatement = connect.
@@ -563,7 +568,7 @@ public class MySQLDb implements DatabaseInterface {
     }
     
     /**
-     *
+     * Method which closes the database connection
      */
     @Override
     public void close() {

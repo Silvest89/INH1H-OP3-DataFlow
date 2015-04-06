@@ -18,13 +18,21 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 /**
- *
+ * Class containing handy methods which can be used thoughout the application
  * @author Johnnie Ho
  */
 public class Utility {
     private static final int MYTHREADS = 30;
     public static final ExecutorService executor = Executors.newFixedThreadPool(MYTHREADS);
 
+    /**
+     * Method which shows an alert window with the given parameters
+     * @param stage the stage on which the alert has to be opened
+     * @param alertType the type of the alert
+     * @param title the title of the alert
+     * @param header the header of the alert
+     * @param content the content of the alert
+     */
     public static void alertWindow(Stage stage, AlertType alertType, String title, String header, String content){
         Alert alert = new Alert(alertType);
         alert.initOwner(stage);
@@ -35,6 +43,14 @@ public class Utility {
         alert.showAndWait();
     }
     
+    /**
+     * Method which shows a confirmation alert with the given parameters (same as 'alertWindow')
+     * @param stage
+     * @param title
+     * @param header
+     * @param content
+     * @return 
+     */
     public static Optional<ButtonType> confirmationWindow(Stage stage, String title, String header, String content){
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.initOwner(stage);
@@ -46,6 +62,11 @@ public class Utility {
         return result;  
     }        
  
+    /**
+     * Method which uses regex to check if a given string is really a valid email address
+     * @param email email which has to be valitated
+     * @return true or false, based on the fact if the email is valid
+     */
     public static boolean EmailValidator(String email) {
         String EMAIL_PATTERN = 
 		"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -55,6 +76,11 @@ public class Utility {
         return matcher.matches();
     }    
     
+    /**
+     * Method which uses regex to check if a name is valid
+     * @param name the name to be validated
+     * @return true or false, based on the fact if the name is valid
+     */
     public static boolean nameValidation(String name){
         if(name == null || name.length() == 0 || !name.matches("[a-zA-Z ]*"))
             return false;
@@ -62,6 +88,11 @@ public class Utility {
         return true;
     }
     
+    /**
+     * Method which uses regex to check is a password is valid
+     * @param password password to be validated
+     * @return true or false, based on the fact if the password is valid
+     */
     public static boolean passwordValidation(String password){
         if(password == null || password.length() == 0 || !password.matches("^[a-zA-Z0-9_]*$"))
             return false;   

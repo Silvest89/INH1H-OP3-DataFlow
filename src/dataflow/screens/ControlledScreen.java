@@ -11,7 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 /**
- *
+ * Class which holds all methods concerning screen traversal
  * @author Johnnie Ho
  */
 public class ControlledScreen {
@@ -34,6 +34,11 @@ public class ControlledScreen {
     @FXML
     private void goToStatistics(ActionEvent event) {
         DataFlow.setScreen("Statistics");
+    }
+    
+    @FXML
+    private void goToGraphs(ActionEvent event) {
+        DataFlow.setScreen("Graphs");
     }
     
     @FXML

@@ -57,6 +57,10 @@ public class UserCreateDialogController extends Dialog implements Initializable 
         accessChoiceBox.setValue("User");
     }        
     
+    /**
+     * Method which handles what to do when the OK button is clicked
+     * @throws Exception 
+     */
     @FXML
     private void handleOk() throws Exception {
         if (isInputValid()) {
@@ -82,6 +86,10 @@ public class UserCreateDialogController extends Dialog implements Initializable 
         }
     }
     
+    /**
+     * Method which checks if the given input is valid
+     * @return true or false, based on the fact if the input is valid
+     */
     private boolean isInputValid() {
         String errorMessage = "";
         if(firstNameField.getText() == null || firstNameField.getLength() == 0 || !firstNameField.getText().matches("[a-zA-Z ]*"))

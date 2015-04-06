@@ -19,11 +19,18 @@ public class FacebookAPI{
     public String text;
     public String location;
     public String feedType;
-
+    
+    /**
+     * Contructor method constructing a facebookAPI object using the given access token
+     * @param accessToken 
+     */
     public FacebookAPI(String accessToken){
         facebookClient = new DefaultFacebookClient(accessToken);
     }
     
+    /**
+     * Method which retrieves posts from facebook 
+     */
     public void fetch() {
         MySQLDb db = new MySQLDb();
         //Fetches the feed on the boijmans museum page
