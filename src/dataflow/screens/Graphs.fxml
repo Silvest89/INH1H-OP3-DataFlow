@@ -26,7 +26,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <BarChart fx:id="bcTweets" layoutX="3.0" layoutY="8.0" prefHeight="231.0" prefWidth="572.0" title="Messages per day">
+                        <BarChart fx:id="bcTweets" layoutX="3.0" layoutY="38.0" prefHeight="231.0" prefWidth="572.0" title="Messages per day">
                           <xAxis>
                             <CategoryAxis label="Day" side="BOTTOM" />
                           </xAxis>
@@ -34,7 +34,7 @@
                             <NumberAxis label="Messages" side="LEFT" />
                           </yAxis>
                         </BarChart>
-                        <LineChart fx:id="lcWeather" layoutX="9.0" layoutY="247.0" prefHeight="260.0" prefWidth="569.0" title="Weather">
+                        <LineChart fx:id="lcWeather" layoutX="9.0" layoutY="269.0" prefHeight="238.0" prefWidth="569.0" title="Weather">
                           <xAxis>
                             <CategoryAxis label="Day" side="BOTTOM" />
                           </xAxis>
@@ -78,6 +78,21 @@
                         <Label fx:id="sentimentFeed" layoutX="270.0" layoutY="108.0" />
       </children>
                     </AnchorPane>        
+               </content>
+            </Tab>
+            <Tab text="Returning Users">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="returningTable" layoutX="28.0" layoutY="189.0" prefHeight="301.0" prefWidth="521.0">
+                          <columns>
+                            <TableColumn fx:id="returnUser" prefWidth="150.0" text="User" />
+                            <TableColumn fx:id="returnCount" minWidth="0.0" prefWidth="349.0" text="Count" />
+                          </columns>
+                        </TableView>
+                        <ChoiceBox fx:id="returnChoice" layoutX="399.0" layoutY="137.0" prefWidth="150.0" />
+                     </children>
+                  </AnchorPane>
                </content>
             </Tab>
         </tabs>

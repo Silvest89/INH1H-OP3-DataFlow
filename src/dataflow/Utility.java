@@ -149,6 +149,13 @@ public class Utility {
         return calendar.getTime();
     }        
     
+    public static Date getPreviousMonth(Date date, int amount) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.roll(Calendar.MONTH, -amount);
+        return calendar.getTime();
+    }            
+    
     public static int commentChecker(String text){
         text = text.toLowerCase();
         if(text.matches(".*(aanrader|mooi|uitstekend|goed|leuk|fantastisch|prachtig|krachtig|inspirerend|sympathiek|gezellig|tip|terug|ideaal|moeite waard|enjoy|sprakeloos|ontroer).*")){
