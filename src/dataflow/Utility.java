@@ -24,9 +24,12 @@ import javafx.stage.Stage;
 public class Utility {
     //private static final int MYTHREADS = 5;
     public static final ExecutorService executor = Executors.newCachedThreadPool();
-    public static int COMMENT_POSITIVE = 0;
-    public static int COMMENT_NEGATIVE = 1;
-    public static int COMMENT_NEUTRAL = 2;
+    public static final int COMMENT_POSITIVE = 0;
+    public static final int COMMENT_NEGATIVE = 1;
+    public static final int COMMENT_NEUTRAL = 2;
+    
+    public static final int WEATHER_POSITIVE = 0;
+    public static final int WEATHER_NEGATIVE = 1;
   
 
     /**
@@ -124,7 +127,7 @@ public class Utility {
         return calendar.getTime();
     }    
     
-    public static Date getStartMonth(Date date) {
+    public static Date getStartOfMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -146,16 +149,27 @@ public class Utility {
         return calendar.getTime();
     }        
     
-    public int commentChecker(String text){
-        if(text.matches(".*(mooi|goed|leuk|fantastisch|prachtig).*")){
+    public static int commentChecker(String text){
+        text = text.toLowerCase();
+        if(text.matches(".*(aanrader|mooi|uitstekend|goed|leuk|fantastisch|prachtig|krachtig|inspirerend|sympathiek|gezellig|tip|terug|ideaal|moeite waard|enjoy|sprakeloos|ontroer).*")){
             return COMMENT_POSITIVE;
         }            
-        else if(text.matches(".*(lelijk|stom|saai|kut|verschrikkelijk|slecht).*")){
+        else if(text.matches(".*(lelijk|stom|saai|kut|verschrikkelijk|slecht|belediging|fake|gaar).*")){
             return COMMENT_NEGATIVE;
         }
         else{
             //if the comment is not positve or negative the method will automatically assign it the neutral value
             return COMMENT_NEUTRAL;
         }
-   }    
+    }  
+    
+    public static int weatherChecker(String description){
+        description = description.toLowerCase();
+        if(description.matches(".*(sunny|cloudy|overcast|light drizzle).*")){
+            return WEATHER_POSITIVE;
+        }            
+        else {
+            return WEATHER_NEGATIVE;
+        }
+    }
 }

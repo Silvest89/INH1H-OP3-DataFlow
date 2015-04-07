@@ -22,7 +22,7 @@
    <children>
       <TabPane layoutX="206.0" layoutY="50.0" prefHeight="539.0" prefWidth="577.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Untitled Tab 1">
+          <Tab text="Message Analysis">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -46,7 +46,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Untitled Tab 2">
+          <Tab text="Media Distribution">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -62,12 +62,12 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Untitled Tab 3">
+            <Tab text="Sentiment Analysis">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
-<PieChart fx:id="pnnTweets" layoutX="112.0" layoutY="14.0" prefHeight="259.0" prefWidth="355.0" title="Sentiment Tweets" />
-      <BarChart fx:id="pnntweets2" layoutX="68.0" layoutY="297.0" prefHeight="189.0" prefWidth="442.0" title="Sentiment Tweets per day">
+<PieChart fx:id="pnnTweets" layoutX="112.0" layoutY="14.0" prefHeight="216.0" prefWidth="355.0" title="Sentiment Tweets" />
+      <BarChart fx:id="pnntweets2" layoutY="236.0" prefHeight="261.0" prefWidth="577.0" title="Sentiment Tweets per day">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
