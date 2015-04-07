@@ -9,6 +9,7 @@ import dataflow.ScreensController;
 import dataflow.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import org.apache.commons.lang3.text.WordUtils;
 
@@ -48,6 +49,12 @@ public class ControlledScreen {
         Account.resetAccount();
         DataFlow.setScreen("Login");
     }     
+    
+    @FXML
+    private void aboutScreen(ActionEvent event){
+        Utility.alertWindow(null, Alert.AlertType.INFORMATION, "About", "Data Flow Pro 2015\u00a9", "Jesse van Breda\nJohnnie Ho\nAnton Vu");
+    }
+    
     public void setWelcomeMessage(Label user, Label accessText){
         user.setText("Welcome, " + WordUtils.capitalizeFully(Account.getFirstName()) + " " + WordUtils.capitalizeFully(Account.getLastName()) + "!");
         String access = "";
