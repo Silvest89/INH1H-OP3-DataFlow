@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -376,7 +377,29 @@ public class MySQLDb implements DatabaseInterface {
         }
         return null;
     }
+    
+    public ArrayList<Feed> retrieveFeedsPerMonth(long start, long end) {
+        try {
+            ArrayList<Feed> tweetAL = new ArrayList<>();
+            preparedStatement = connect
+                    .prepareStatement("SELECT * FROM data_feed WHERE timestamp >= ? AND timestamp <= ?");
+            preparedStatement.setLong(1, start);
+            preparedStatement.setLong(2, end);
+            resultSet = preparedStatement.executeQuery();
 
+            while (resultSet.next()) {
+                Feed t = new Feed(resultSet.getLong("id"), resultSet.getLong("timestamp"), resultSet.getString("user"), resultSet.getString("location"), resultSet.getString("message"), resultSet.getString("feed_type"));
+                tweetAL.add(t);
+            }
+
+            return tweetAL;
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLDb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }    
+
+    @Override
     public ArrayList<Feed> retrieveFeedsPerMediaByDay(String feedType, Date date) {
         try {
             Date startOfDay = Utility.getStartOfMonth(date);
@@ -400,8 +423,46 @@ public class MySQLDb implements DatabaseInterface {
             Logger.getLogger(MySQLDb.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-
     }
+    
+    public HashMap<Integer, Integer> retrieveSentiment(Date date) {
+        try {
+            Date startOfDay = Utility.getStartOfMonth(date);
+            Date endOfDay = Utility.getEndOfMonth(date);
+
+            preparedStatement = connect
+                    .prepareStatement("SELECT * FROM data_feed WHERE feed_type = 'Twitter' and timestamp >= ? AND timestamp <= ?");
+            preparedStatement.setLong(1, startOfDay.getTime() / 1000L);
+            preparedStatement.setLong(2, endOfDay.getTime() / 1000L);
+            resultSet = preparedStatement.executeQuery();
+
+            HashMap<Integer, Integer> map = new HashMap<>();
+            int negFeeds = 0, neutralFeeds = 0, posFeeds = 0;
+            while (resultSet.next()) {
+                switch(Utility.commentChecker(resultSet.getString("message"))){
+                    case Utility.COMMENT_NEGATIVE:
+                        negFeeds++;
+                        break;
+
+                    case Utility.COMMENT_NEUTRAL:
+                        neutralFeeds++;
+                        break;
+
+                    case Utility.COMMENT_POSITIVE:
+                        posFeeds++;
+                        break;
+                } 
+            }
+            map.put(Utility.COMMENT_POSITIVE, posFeeds);
+            map.put(Utility.COMMENT_NEUTRAL, neutralFeeds);
+            map.put(Utility.COMMENT_NEGATIVE, negFeeds);
+            return map;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLDb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }    
 
     /**
      * Method which gets the number of likes of the given facebook post

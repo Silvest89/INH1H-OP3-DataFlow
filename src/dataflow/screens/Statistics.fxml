@@ -17,7 +17,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="786.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataflow.screens.StatisticsController">
     <stylesheets>
-        <URL value="@statistics.css" />
+        <URL value="@main.css" />
     </stylesheets>
    <children>
       <Region fx:id="weatherRegion" layoutX="211.0" layoutY="380.0" prefHeight="200.0" prefWidth="559.0" />
@@ -45,7 +45,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#aboutScreen" text="About" />
             </items>
           </Menu>
         </menus>

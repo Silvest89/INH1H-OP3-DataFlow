@@ -17,7 +17,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="786.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataflow.screens.GraphsController">
     <stylesheets>
-        <URL value="@statistics.css" />
+        <URL value="@main.css" />
     </stylesheets>
    <children>
       <TabPane layoutX="206.0" layoutY="50.0" prefHeight="539.0" prefWidth="577.0" tabClosingPolicy="UNAVAILABLE">
@@ -26,15 +26,15 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <BarChart fx:id="bcTweets" layoutX="3.0" layoutY="8.0" prefHeight="231.0" prefWidth="572.0" title="Messages per day">
+                        <BarChart fx:id="bcTweets" layoutX="3.0" layoutY="38.0" prefHeight="231.0" prefWidth="572.0" title="Messages per day">
                           <xAxis>
                             <CategoryAxis label="Day" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis label="Tweets" side="LEFT" />
+                            <NumberAxis label="Messages" side="LEFT" />
                           </yAxis>
                         </BarChart>
-                        <LineChart fx:id="lcWeather" layoutX="9.0" layoutY="247.0" prefHeight="260.0" prefWidth="569.0" title="Weather">
+                        <LineChart fx:id="lcWeather" layoutX="9.0" layoutY="269.0" prefHeight="238.0" prefWidth="569.0" title="Weather">
                           <xAxis>
                             <CategoryAxis label="Day" side="BOTTOM" />
                           </xAxis>
@@ -55,9 +55,9 @@
                         <Label layoutX="331.0" layoutY="131.0" text="Twitter" />
                         <Label layoutX="331.0" layoutY="173.0" text="Facebook" />
                         <Label layoutX="329.0" layoutY="215.0" text="Instagram" />
-                        <Label fx:id="twitterPie" layoutX="416.0" layoutY="131.0" text="Label" />
-                        <Label fx:id="facebookPie" layoutX="416.0" layoutY="173.0" text="Label" />
-                        <Label fx:id="instagramPie" layoutX="416.0" layoutY="215.0" text="Label" />
+                        <Label fx:id="twitterPie" layoutX="416.0" layoutY="131.0" />
+                        <Label fx:id="facebookPie" layoutX="416.0" layoutY="173.0" />
+                        <Label fx:id="instagramPie" layoutX="416.0" layoutY="215.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -69,15 +69,30 @@
 <PieChart fx:id="pnnTweets" layoutX="112.0" layoutY="14.0" prefHeight="216.0" prefWidth="355.0" title="Sentiment Tweets" />
       <BarChart fx:id="pnntweets2" layoutY="236.0" prefHeight="261.0" prefWidth="577.0" title="Sentiment Tweets per day">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <CategoryAxis label="Date" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis label="Tweets" side="LEFT" />
         </yAxis>
       </BarChart>
-                        <Label fx:id="sentimentFeed" layoutX="275.0" layoutY="125.0" />
+                        <Label fx:id="sentimentFeed" layoutX="270.0" layoutY="108.0" />
       </children>
                     </AnchorPane>        
+               </content>
+            </Tab>
+            <Tab text="Returning Users">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="returningTable" layoutX="28.0" layoutY="189.0" prefHeight="301.0" prefWidth="521.0">
+                          <columns>
+                            <TableColumn fx:id="returnUser" prefWidth="150.0" text="User" />
+                            <TableColumn fx:id="returnCount" minWidth="0.0" prefWidth="349.0" text="Count" />
+                          </columns>
+                        </TableView>
+                        <ChoiceBox fx:id="returnChoice" layoutX="399.0" layoutY="137.0" prefWidth="150.0" />
+                     </children>
+                  </AnchorPane>
                </content>
             </Tab>
         </tabs>
@@ -106,7 +121,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#aboutScreen" text="About" />
             </items>
           </Menu>
         </menus>

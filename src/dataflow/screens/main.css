@@ -2,6 +2,12 @@
  * Empty Stylesheet file.
  */
 
+#loginHeader{
+    -fx-font-size: 22px;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-weight: bold;
+}
+
 .mainFxmlClass {
     -fx-background-image: url("background.jpg");
 }
@@ -51,4 +57,65 @@
 .label{
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
+}
+
+.button, .toggle-button {
+    -fx-background-color: 
+        #090a0c,
+        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+        linear-gradient(#20262b, #191d22),
+        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-padding: 5 10 5 10;
+}
+.button Text, .toggle-button Text {
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+}
+
+.button:hover, .toggle-button:hover, .toggle-button:selected{
+    -fx-background-color: 
+        #090a0c,
+        linear-gradient(#191d22 0%, #1f2429 20%, #38424b 100%),
+        linear-gradient(#191d22, #20262b),
+        radial-gradient(center 50% 0%, radius 100%, rgba(255,255,255,0), rgba(114,131,148,0.9));
+}
+
+.progress-bar > .bar {
+    -fx-background-color: linear-gradient(
+        from 0px .75em to .75em 0px,
+        repeat,
+        -fx-accent 0%,
+        -fx-accent 49%,
+        derive(-fx-accent, 30%) 50%,
+        derive(-fx-accent, 30%) 99%
+        );
+}
+
+.choice-box{
+      -fx-background-color: 
+        #090a0c,
+        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+        linear-gradient(#20262b, #191d22),
+        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-font-size: 9px;
+    -fx-max-width : 150px;   
+    -fx-max-height : 10px;
+}
+
+.choice-box:hover {
+    -fx-background-color: 
+        #090a0c,
+        linear-gradient(#191d22 0%, #1f2429 20%, #38424b 100%),
+        linear-gradient(#191d22, #20262b),
+        radial-gradient(center 50% 0%, radius 100%, rgba(255,255,255,0), rgba(114,131,148,0.9));
+}
+
+.choice-box .label {
+    -fx-text-fill: white;
 }

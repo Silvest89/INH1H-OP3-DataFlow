@@ -35,6 +35,7 @@ public interface DatabaseInterface {
     public boolean removeFeed(Feed feed);
     public ArrayList<Feed> searchFeed(String searchText);
     public ArrayList<Feed> retrieveFeeds();        
+    public ArrayList<Feed> retrieveFeedsPerMediaByDay(String feedType, Date date);
     public ArrayList<String> retrieveFacebookLikes(FacebookFeed fbFeed);   
     public ArrayList<String> getAccountList();
     public int getFeedsPerDay(String feedType, Date date) throws Exception;

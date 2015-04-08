@@ -5,6 +5,7 @@
  */
 package dataflow.screens;
 
+import dataflow.ReturnUser;
 import dataflow.Utility;
 import dataflow.database.MySQLDb;
 import dataflow.feed.Feed;
@@ -13,9 +14,13 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
@@ -33,6 +38,9 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -57,13 +65,21 @@ public class GraphsController extends ControlledScreen implements Initializable 
     @FXML
     private PieChart pcDistr;
     @FXML
-    private ChoiceBox mediaChoiceDay;
+    private ChoiceBox mediaChoiceDay, returnChoice, sentimentChoice;
     @FXML
     private Label twitterPie, facebookPie, instagramPie, sentimentFeed;
     @FXML
     private PieChart pnnTweets;
     @FXML
     private BarChart<String, Number> pnntweets2;
+    @FXML 
+    private TableView returningTable;
+    @FXML
+    private TableColumn<ReturnUser, String> returnUser;
+    @FXML
+    private TableColumn<ReturnUser, Integer> returnCount;    
+    
+    final ObservableList<ReturnUser> data = FXCollections.observableArrayList();
 
     private ArrayList<Date> days = new ArrayList<>();
 
@@ -79,20 +95,32 @@ public class GraphsController extends ControlledScreen implements Initializable 
         try {
             MySQLDb d = new MySQLDb();
             ObservableList<String> mediaChoice = FXCollections.observableArrayList();
+            ObservableList<String> returnChoiceOb = FXCollections.observableArrayList();
             Date date = new Date();
             SimpleDateFormat day = new SimpleDateFormat("dd-MM-yyyy");
             for (int i = 0; i < 7; i++) {
                 date.setTime(date.getTime() - 86400000);
-                mediaChoice.add(day.format(date));
+                mediaChoice.add(day.format(date));                
             }
             mediaChoiceDay.setItems(mediaChoice);
+            
+            day = new SimpleDateFormat("MM-yyyy");
+            for (int i = 1; i < 4; i++) {
+                Date date2 = Utility.getPreviousMonth(new Date(), i);                
+                returnChoiceOb.add(day.format(date2));                
+            }            
+            returnChoice.setItems(returnChoiceOb);
             mediaChoiceDay.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 mediaChoiceChanged(newValue);
                 //System.out.println("ListView Selection Changed (selected: " + newValue.toString() + ")");                
             });
+            returnChoice.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                returnChoiceChanged(newValue);
+                //System.out.println("ListView Selection Changed (selected: " + newValue.toString() + ")");                
+            });            
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YY");
-
+            SimpleDateFormat sdf2 = new SimpleDateFormat("MM-YYYY");
             SimpleDateFormat sdfReverse = new SimpleDateFormat("YYYY-MM-dd");
 
             Date todayMin1 = new Date(System.currentTimeMillis() - (1 * 86400000));
@@ -126,7 +154,6 @@ public class GraphsController extends ControlledScreen implements Initializable 
                     public void changed(ObservableValue<? extends Node> ov, Node oldNode, Node newNode) {
                         if (newNode != null) {
                             if (w != null) {
-                                System.out.println(data2.getYValue().intValue());
                                 if (Utility.weatherChecker(w.getDescription()) == Utility.WEATHER_POSITIVE) {
                                     newNode.setStyle("-fx-bar-fill: green;");
                                 } else {
@@ -153,49 +180,43 @@ public class GraphsController extends ControlledScreen implements Initializable 
 
             lcWeather.getData().addAll(lcSeries);
 
-            pcDistr.getData().addAll(d.getMediaDistribution());
-
-            ArrayList<Feed> feedAL = d.retrieveFeedsPerMediaByDay("Twitter", todayMin1);
-            for (Iterator<Feed> it = feedAL.iterator(); it.hasNext();) {
-                Feed f = it.next();
-                switch (Utility.commentChecker(f.getText())) {
-                    case Utility.COMMENT_NEGATIVE:
-                        negFeeds++;
-                        break;
-
-                    case Utility.COMMENT_NEUTRAL:
-                        neutralFeeds++;
-                        break;
-
-                    case Utility.COMMENT_POSITIVE:
-                        posFeeds++;
-                        break;
-                }
+            pcDistr.getData().addAll(d.getMediaDistribution());   
+            
+            returnUser.setCellValueFactory(new PropertyValueFactory<>("userName"));
+            returnCount.setCellValueFactory(new PropertyValueFactory<>("count"));
+        
+            ArrayList<Feed> feeds = d.retrieveFeeds();
+            ArrayList<String> list = new ArrayList<>();            
+            for (int i = 0; i < feeds.size(); i++) {
+			list.add(feeds.get(i).getUser());
             }
-
-            System.out.println(negFeeds);
-            System.out.println(posFeeds);
-            System.out.println(neutralFeeds);
+            Set<String> uniqueSet = new HashSet<>(list);              
+            for (String temp : uniqueSet) {
+                data.add(new ReturnUser(temp, Collections.frequency(list, temp)));
+            }
+            returningTable.setItems(data);
+            
+            HashMap<Integer, Integer> map = d.retrieveSentiment(todayMin1);
             // sentiment tweets chart data
             XYChart.Series pnnSeries = new XYChart.Series();
             pnnSeries.setName("Positive");
-            pnnSeries.getData().add(new XYChart.Data(sdf.format(todayMin1), posFeeds));
+            pnnSeries.getData().add(new XYChart.Data(sdf2.format(todayMin1), map.get(Utility.COMMENT_POSITIVE)));
 
             XYChart.Series pnnSeries2 = new XYChart.Series();
             pnnSeries2.setName("Neutral");
-            pnnSeries2.getData().add(new XYChart.Data(sdf.format(todayMin1), neutralFeeds));
+            pnnSeries2.getData().add(new XYChart.Data(sdf2.format(todayMin1), map.get(Utility.COMMENT_NEUTRAL)));
 
             XYChart.Series pnnSeries3 = new XYChart.Series();
             pnnSeries3.setName("Negative");
-            pnnSeries3.getData().add(new XYChart.Data(sdf.format(todayMin1), negFeeds));
+            pnnSeries3.getData().add(new XYChart.Data(sdf2.format(todayMin1), map.get(Utility.COMMENT_NEGATIVE)));
 
             pnntweets2.getData().addAll(pnnSeries, pnnSeries2, pnnSeries3);
 
             ObservableList<PieChart.Data> pieChartData
                     = FXCollections.observableArrayList(
-                            new PieChart.Data("Positive", posFeeds),
-                            new PieChart.Data("Neutral", neutralFeeds),
-                            new PieChart.Data("Negative", negFeeds));
+                            new PieChart.Data("Positive", map.get(Utility.COMMENT_POSITIVE)),
+                            new PieChart.Data("Neutral", map.get(Utility.COMMENT_NEUTRAL)),
+                            new PieChart.Data("Negative", map.get(Utility.COMMENT_NEGATIVE)));
             sentimentFeed.setTextFill(Color.BLACK);
             sentimentFeed.setStyle("-fx-font: 16 arial;");
 
@@ -263,6 +284,31 @@ public class GraphsController extends ControlledScreen implements Initializable 
 
         pcDistr.getData().addAll(test);
     }
+    private void returnChoiceChanged(Object value) {
+        data.clear();
+        MySQLDb db = new MySQLDb();
+        SimpleDateFormat day = new SimpleDateFormat("MM-yyyy");
+        Date d1 = null;
+        try {
+            d1 = day.parse(value.toString());
+            System.out.println(d1.getTime());
+        } catch (ParseException ex) {
+            Logger.getLogger(GraphsController.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        Date startDay = Utility.getStartOfMonth(d1);
+        Date endDay = Utility.getEndOfMonth(d1);
+        ArrayList<Feed> feeds = db.retrieveFeedsPerMonth(startDay.getTime() / 1000L, endDay.getTime() / 1000L);
+            ArrayList<String> list = new ArrayList<>();            
+            for (int i = 0; i < feeds.size(); i++) {
+			list.add(feeds.get(i).getUser());
+            }
+            Set<String> uniqueSet = new HashSet<>(list);              
+            for (String temp : uniqueSet) {
+                data.add(new ReturnUser(temp, Collections.frequency(list, temp)));
+            }
+            returningTable.setItems(data);
+        
+    }    
 }
 
 /**

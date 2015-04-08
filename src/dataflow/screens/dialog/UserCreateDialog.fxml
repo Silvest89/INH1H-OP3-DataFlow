@@ -9,7 +9,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="275.0" prefWidth="275.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dataflow.screens.dialog.UserCreateDialogController">
     <stylesheets>
-        <URL value="@usercreatedialog.css" />
+        <URL value="@../main.css" />
     </stylesheets>
    <children>       
       <Label layoutX="15.0" layoutY="15.0" prefHeight="17.0" prefWidth="72.0" text="Username" />
