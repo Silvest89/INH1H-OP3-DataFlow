@@ -76,7 +76,6 @@ public class UserCreateDialogController extends Dialog implements Initializable 
                     accessLevel = Account.ADMIN;
                     break;                                                            
             }
-            System.out.println("test");
             if(!db.createUser(userNameField.getText(), passwordField.getText(), firstNameField.getText(), lastNameField.getText(), emailField.getText(), accessLevel)){
                 Utility.alertWindow(dialogStage, AlertType.ERROR, "Error", "An error occurred during account creation.", "This username may already be in use.");       
             }

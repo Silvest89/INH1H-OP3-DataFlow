@@ -69,9 +69,8 @@ public class UserDeleteDialogController extends Dialog implements Initializable 
 
                 if (result.get() == ButtonType.OK){
                     db.deleteUser(deleteUserCb.getValue().toString());
-                } else {
                     Utility.alertWindow(dialogStage, AlertType.INFORMATION, "Success.", null, "The account has been successfully deleted.");
-                }      
+                }
                 dialogStage.close();
             }
             else{

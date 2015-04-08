@@ -128,6 +128,7 @@ public class MySQLDb implements DatabaseInterface {
             preparedStatement.setString(1, Account.getUserName());
             preparedStatement.setString(2, Base64.getEncoder().encodeToString(hash));
             preparedStatement.setInt(3, accessLevel);
+            
             resultSet = preparedStatement.executeQuery();
             return resultSet.next();
         } catch (SQLException ex) {
