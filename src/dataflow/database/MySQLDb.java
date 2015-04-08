@@ -378,6 +378,7 @@ public class MySQLDb implements DatabaseInterface {
         return null;
     }
     
+    @Override
     public ArrayList<Feed> retrieveFeedsPerMonth(long start, long end) {
         try {
             ArrayList<Feed> tweetAL = new ArrayList<>();
@@ -425,6 +426,7 @@ public class MySQLDb implements DatabaseInterface {
         return null;
     }
     
+    @Override
     public HashMap<Integer, Integer> retrieveSentiment(Date date) {
         try {
             Date startOfDay = Utility.getStartOfMonth(date);
@@ -649,6 +651,7 @@ public class MySQLDb implements DatabaseInterface {
         return 0;
     }
 
+    @Override
     public long getRecentFacebookPost() {
         try {
             preparedStatement = connect
