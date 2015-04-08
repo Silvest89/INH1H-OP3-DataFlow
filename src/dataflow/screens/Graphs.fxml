@@ -67,9 +67,9 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
 <PieChart fx:id="pnnTweets" layoutX="112.0" layoutY="14.0" prefHeight="216.0" prefWidth="355.0" title="Sentiment Tweets" />
-      <BarChart fx:id="pnntweets2" layoutY="236.0" prefHeight="261.0" prefWidth="577.0" title="Sentiment Tweets per day">
+      <BarChart fx:id="pnntweets2" layoutY="236.0" prefHeight="261.0" prefWidth="577.0" title="Sentiment Tweets per month">
         <xAxis>
-          <CategoryAxis label="Date" side="BOTTOM" />
+          <CategoryAxis label="Month" side="BOTTOM" />
         </xAxis>
         <yAxis>
           <NumberAxis label="Tweets" side="LEFT" />
